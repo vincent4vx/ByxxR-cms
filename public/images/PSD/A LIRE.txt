@@ -1,0 +1,14 @@
+Enregistrez votre image en la nommant 
+
+		bgHead_(+ un numéro).png < Dans le dossier 'style/img/header' !
+
+Pui dans la config,
+à l'endroit de définition du header mettez le numéro que vous avez utilisé pour enregistrez votre image !
+
+	
+
+	### Exemple :
+
+
+Mon header est : 			bgHead_150.png
+Le code de ma config sera donc :	$header = 150;

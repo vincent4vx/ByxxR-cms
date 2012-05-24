@@ -1,0 +1,64 @@
+{# template des news #}
+{% extends "layout.html.twig" %}
+
+{% block title_img %}{{ img("title/img_accueil.png") }}{% endblock %}
+
+{% block page %}
+    {% set datas = getCache(name) %}
+    {% if datas == false %}
+        {% filter cache(name) %}
+            {% for new in news %}
+            <fieldset>
+                {{ _self.title_new(new.type, new.titre, new.auteur) }}<br/>
+                {{ new.text|nl2br }}
+            </fieldset>
+            <br/>
+            {% else %}
+            <center><font color="red">Aucunes nouvelles disponibles !</font></center>
+            {% endfor %}
+                <br/>
+            <div class="pagination">
+                {{ pagination(pagi_current, pagi_end, url('home', 'news')) }}
+            </div>
+        {% endfilter %}
+    {% else %}
+            {{ datas|raw }}
+    {% endif %}
+{% endblock %}
+
+{% macro title_new(type, titre, auteur) %}
+    {% if type == 1 %}
+    <div class="titleNews_infos">
+        <span class="title_infos">
+            {{ img("devtool/money.png", "devtoolIcon") }} Information : 
+        </span>
+        {{ titre }}
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>{{ auteur }}</b>
+        </small>
+    </div>
+    {% elseif type == 2 %}
+    <div class="titleNews_news">
+        <span class="title_news">
+            {{ img("devtool/money.png", "devtoolIcon") }} New : 
+        </span>
+        {{ titre }}
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>{{ auteur }}</b>
+        </small>
+    </div>
+    {% elseif type == 3 %}
+    <div class="titleNews_announce">
+        <span class="title_announce">
+            {{ img("devtool/money.png", "devtoolIcon") }} Annonce : 
+        </span>
+        {{ titre }}
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>{{ auteur }}</b>
+        </small>
+    </div>
+    {% endif %}
+{% endmacro %}

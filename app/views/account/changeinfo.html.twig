@@ -1,0 +1,15 @@
+{# template de modification de ses informations #}
+<fieldset id="infos">
+    <legend>Modifier ses inforations</legend>
+    <form action="{{ url("account", "changeinfo") }}" method="post">
+        <table>
+            <tr>
+                <td colspan="2"><textarea name="infos" cols="50" rows="10">{{ account.infos }}</textarea></td>
+            </tr>
+            <tr>
+                <td><input type="submit" style="width: 99%;" value="Enregistrer" /></td>
+                <td><input type="reset" style="width: 99%;" value="Annuler" /></td>
+            </tr>
+        </table>
+    </form>
+</fieldset>

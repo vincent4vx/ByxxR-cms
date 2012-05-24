@@ -1,0 +1,21 @@
+{# template info (présentation du serveur) #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/img_presentation.png") }}
+{% endblock %}
+{% block page %}
+    <b><u><font color="red">Rates :</font></u></b>
+    <br/>
+    <ul id="rates">
+        <li>Expérience: <em>{{ config.server.rates.xp }}</em></li>
+        <li>Drop: <em>{{ config.server.rates.drop }}</em></li>
+        <li>Kamas: <em>{{ config.server.rates.kamas }}</em></li>
+        <li>Honneur: <em>{{ config.server.rates.honor }}</em></li>
+        <li>Défie: <em>{{ config.server.rates.pvp }}</em></li>
+    </ul>
+    <br/>
+    <b><u><font color="red">Histoire :</font></u></b><br/><br/>
+    {{ config.server.histoire }}
+{% endblock %}

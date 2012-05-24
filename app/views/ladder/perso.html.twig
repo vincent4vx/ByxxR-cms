@@ -1,0 +1,80 @@
+{# empty Twig template #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/img_ladder.png") }}
+{% endblock %}
+{% block page %}
+    {% set datas = getCache(name) %}
+    {% if datas == false %}
+        {% filter cache(name) %}
+        <table style="width: 95%;margin: auto;">
+            <tr>
+                <th width="8"></th>
+                <th>Nom</th>
+                <th width="30">{{ img("heads/SmallHead_0.png") }}</th>
+                <th>Level</th>
+                <th>{{ link("XP", "ladder", "index?order=xp") }}</th>
+                <th>{{ link("Kamas", "ladder", "index?order=kamas") }}</th>
+            </tr>
+            {% set i = 1 %}
+            {% for perso in persos %}
+                {% if i <= 3 %}
+                <tr class="pos{{ i }}">
+                    <td>{{ img("trophy/trophy_" ~ i ~ ".png") }}</td>
+                {% else %}
+                <tr>
+                    <td>{{ i }}</td>
+                {% endif %}
+                    <td>{{ perso.name }}</td>
+                    <td>{{ _self.head(perso.class, perso.sexe) }}</td>
+                    <td>{{ perso.level }}</td>
+                    <td>{{ perso.xp }}</td>
+                    <td>{{ perso.kamas }}</td>
+                </tr>
+                {% set i = i + 1 %}
+            {% else %}
+                <center><font color="red">Aucuns personnages sur le serveur</font></center>
+            {% endfor %}
+        </table>
+        {% endfilter %}
+    {% else %}
+        {{ datas|raw }}
+    {% endif %}
+{% endblock %}
+
+{% macro head(class, sexe) %}
+    {% if class == 1 %}
+        {% set head = 'feca' %}
+    {% elseif class == 2 %}
+        {% set head = 'osa' %}
+    {% elseif class == 3 %}
+        {% set head = 'enu' %}
+    {% elseif class == 4 %}
+        {% set head = 'sram' %}
+    {% elseif class == 5 %}
+        {% set head = 'xel' %}
+    {% elseif class == 6 %}
+        {% set head = 'eca' %}
+    {% elseif class == 7 %}
+        {% set head = 'eni' %}
+    {% elseif class == 8 %}
+        {% set head = 'iop' %}
+    {% elseif class == 9 %}
+        {% set head = 'cra' %}
+    {% elseif class == 10 %}
+        {% set head = 'sadi' %}
+    {% elseif class == 11 %}
+        {% set head = 'sacri' %}
+    {% elseif class == 12 %}
+        {% set head = 'pand' %}
+    {% endif %}
+
+    {% if sexe == 0 %}
+        {% set head = head ~ '_m' %}
+    {% else %}
+        {% set head = head ~ '_f' %}
+    {% endif %}
+    {{ img("heads/" ~ head ~ ".png") }}
+{% endmacro %}

@@ -1,0 +1,15 @@
+{# template de messages de succès #}
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/" ~ image ~ ".png") }}
+{% endblock %}
+{% block page %}
+    <div class="verifOK">
+        <h3>{{ img("devtool/infos.png") }} {{ titre }}</h3>
+        {{ message|raw }}
+        <hr/>
+        <meta http-equiv="refresh" content="5;url={{ url(controller, method) }}" />
+        {{ link("ne pas patienter", controller, method) }}
+    </div>
+{% endblock %}

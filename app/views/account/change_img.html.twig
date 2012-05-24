@@ -1,0 +1,21 @@
+{# template pour changer d'image #}
+
+<fieldset id="changeimg">
+    <legend>Changer d'Avatar</legend>
+    <form action="{{ url("account", "changeimg") }}" method="post" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td>Choix de l'image : </td>
+                <td>
+                    <input type="hidden" value="MAX_SIZE_FILE" value="150000" />
+                    <input type="file" name="avatar" style="width: 100%;"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Envoyer !" style="width: 99%;" /></td>
+            </tr>
+        </table>
+    </form>
+    <br/>
+    {{ link("Bibliothèque d'images", "account", "listimg") }}
+</fieldset>

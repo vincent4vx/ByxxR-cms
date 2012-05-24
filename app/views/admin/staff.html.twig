@@ -1,0 +1,65 @@
+{# Template pour Modifier le staff #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/img_admin.png") }}
+{% endblock %}
+{% block page %}
+<fieldset>
+    <legend>Modifier les membres</legend>
+    <form action="{{ url("admin", "changerank") }}" method="post">
+        <table style="width: 100%;">
+            <tr>
+                <td><b>Pseudo</b></td><td><b>Rang</b></td><td style="width: 16px;"></td>
+            </tr>
+            {% for account in staff %}
+            <tr>
+                <td>{{ account.pseudo }}</td>
+                <td>
+                    <select class="input" name="{{ account.guid }}" style="width: 100%;">
+                    {% for keyrank in config.admin.rank|keys %}
+                            <option {{ keyrank == account.level ? 'selected="selected"' : '' }} value="{{ keyrank }}">{{ config.admin.rank[keyrank] }}</option>
+                    {% endfor %}
+                    </select>
+                </td>
+                <td>{{ link(img("devtool/delete.png"), "admin", "expulse?id=" ~ account.guid) }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td><input class="input" value="Enregistrer" type="submit" style="width: 99%"/></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</fieldset>
+<br/>
+<center>
+    <fieldset>
+    <legend>Recruter un Joueur</legend>
+    <table style="width: 100%;">
+        <tr>
+            <form action="{{ url("admin", "staff") }}" method="get">
+                <td colspan="2"><input type="text" name="search" class="input" style="width: 99%;" /></td>
+                <td style="width: 100px;"><input class="input" type="submit" value="Rechercher" style="width: 100px;" /></td>
+            </form>
+        </tr>
+        <tr>
+            <td><b>Compte</b></td>
+            <td><b>Pseudo</b></td>
+            <td><b>Recruter</b></td>
+        </tr>
+        {% for gamer in result %}
+            <tr>
+                <td>{{ gamer.account }}</td>
+                <td>{{ gamer.pseudo }}</td>
+                <td>{{ link(img("devtool/add.png"), "admin", "add?id=" ~ gamer.guid) }}</td>
+            </tr>
+            {% else %}
+            <font color="red">Aucuns résultats</font>
+        {% endfor %}
+    </table>
+    </fieldset>
+</center>
+{% endblock %}

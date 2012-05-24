@@ -1,0 +1,34 @@
+{% extends "layout.html.twig" %}
+
+{% block title_img %}{{ img("title/img_admin.png") }}{% endblock %}
+
+{% block page %}
+<fieldset>
+    <legend>Modifier une nouvelle (nouvelle N°<b>{{ new.id }}</b>)</legend>
+    <form action="{{ url("admin","changenew?id=" ~ new.id) }}" method="post">
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <select name="type" class="input" style="width: 100%;">
+                        <option value="1" {{ new.type == 1 ? 'selected' : '' }}>Infos</option>
+                        <option value="2" {{ new.type == 2 ? 'selected' : '' }}>News</option>
+                        <option value="3" {{ new.type == 3 ? 'selected' : '' }}>Annonce</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" name="title" value="{{ new.titre }}" style="width: 99%;" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea name="new" rows="10" cols="50" style="width: 99%;">{{ new.text }}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="reset" value="Annuler"  style="width: 100%;"/></td>
+                <td><input type="submit" value="Enregistrer" style="width: 100%;"/></td>
+            </tr>
+        </table>
+    </form>
+</fieldset>
+{% endblock %}

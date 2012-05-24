@@ -1,0 +1,30 @@
+{# Bibliothèque d'images #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/img_profil.png") }}
+{% endblock %}
+{% block page %}
+    <fieldset>
+        <legend>Mes images</legend>
+    {% for img in account_img %}
+        {% if img != "." and img != ".." %}
+            {{ link(img("avatars/uploaded/" ~ session.getPseudo() ~ "/" ~ img), "account", "changeimg?i=" ~ img ~ "&d=private") }}
+        {% endif %}
+    {% else %}
+        <font color="red"><center>Pas encore d'images upload...</center></font>
+    {% endfor %}
+    </fieldset>
+    <br/>
+    <fieldset>
+        <legend>Images publiques</legend>
+        {% for img in public_img %}
+            {% if img != "." and img != ".." and img != "uploaded" %}
+                {{ link(img("avatars/" ~ img), "account", "changeimg?i=" ~ img ~ "&d=public") }}
+            {% endif %}
+        {% else %}
+            <font color="red"><center>Pas d'images disponibles... (méchant admin radin !)</center></font>
+        {% endfor %}
+    </fieldset>
+{% endblock %}

@@ -1,0 +1,33 @@
+{# template pour le changement de mdp #}
+
+<fieldset id="changepass">
+    <legend>Changer de mot de passe</legend>
+    <form action="{{ url("account", "changepass") }}" method="post">
+        <table>
+            <tr>
+                <td>Ancien mot de passe : </td>
+                <td><input type="password" name="oldpass" {{ error.oldpass ? 'class="inputError"' : '' }} value="{{ post.oldpass }}"/></td>
+            </tr>
+            <tr>
+                <td>Question : </td>
+                <td><b>{{ account.question }}</b></td>
+            </tr>
+            <tr>
+                <td>Réponse : </td>
+                <td><input type="text" name="answer" {{ error.answer ? 'class="inputError"' : '' }} value="{{ post.answer }}" /></td>
+            </tr>
+            <tr>
+                <td>Noveau mot de passe : </td>
+                <td><input type="password" name="npass1" {{ error.npass1 ? 'class="inputError"' : '' }} value="{{ post.npass1 }}" /></td>
+            </tr>
+            <tr>
+                <td>Retapez-le : </td>
+                <td><input type="password" name="npass2" {{ error.npass2 ? 'class="inputError"' : '' }} value="{{ post.npass2 }}"/></td>
+            </tr>
+            <tr>
+                <td>Valider : </td>
+                <td><input type="submit" value="Changer" /></td>
+            </tr>
+        </table>
+    </form>
+</fieldset>

@@ -1,0 +1,58 @@
+{# template de gestion du compte #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/img_profil.png") }}
+{% endblock %}
+{% block page %}
+    {% set datas = getCache(name) %}
+    {% if datas == false %}
+        {% filter cache(name) %}
+        <fieldset>
+            <legend>Mes informations</legend>
+            <table style="width: 100%;">
+                <tr>
+                    <td>Nom de Compte : </td>
+                    <td colspan="2">{{ session.getAccount() }}</td>
+                    <td>{{ img("devtool/delete.png") }}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><b>{{ session.getPseudo }}</b></td>
+                    <td colspan="2">Rang : <b>{{ session.getLevel > 0 ? config.admin.rank[session.getLevel] : 'Joueur' }}</b></td>
+                    <td>{{ link(img("devtool/help.png"), "home", "staff") }}</td>
+                </tr>
+                <tr>
+                    <td rowspan="4">{{ link(img("avatars/" ~ account.avatar), "account", "changeimg#changeimg") }}</td>
+                    <td>Mot de passe : </td>
+                    <td>******</td>
+                    <td>{{ link(img("devtool/edit.png"), "account", "changepass#changepass") }}</td>
+                </tr>
+                <tr>
+                    <td>Email : </td>
+                    <td>{{ account.email }}</td>
+                    <td>{{ img("devtool/edit.png") }}</td>
+                </tr>
+                <tr>
+                    <td>Question : </td>
+                    <td>{{ account.question }}</td>
+                    <td>{{ img("devtool/edit.png") }}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="vertical-align: top;width: 270px;">
+                        <b><u><font color="red">Informations :</font><br/></u></b>
+                        <div style="width: 255px;">{{ account.infos }}</div>
+                    </td>
+                    <td>{{ link(img("devtool/edit.png"), "account", "changeinfo#infos") }}</td>
+                </tr>
+            </table>
+        </fieldset>
+        {% endfilter %}
+    {% else %}
+        {{ datas|raw }}
+    {% endif %}
+{% if not param is empty %}
+    <br/>
+    {% include "account/" ~ param ~ ".html.twig" %}
+{% endif %}
+{% endblock %}

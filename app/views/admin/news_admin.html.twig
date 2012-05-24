@@ -1,0 +1,58 @@
+{% extends "layout.html.twig" %}
+
+{% block title_img %}{{ img("title/img_admin.png") }} {% endblock %}
+
+{% block page %}
+<fieldset>
+    <legend>Publier une nouvelle</legend>
+    <form action="{{ url("admin","addnew") }}" method="post">
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <select name="type" class="input" style="width: 100%;">
+                        <option value="1">Info</option>
+                        <option value="2">News</option>
+                        <option value="3">Annonce</option>
+                    </select>
+                </td>
+                <td><input class="input" style="width: 99%;" type="text" name="title" placeholder="Titre" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><textarea name="new" rows="10" cols="50"></textarea></td>
+            </tr>
+            <tr>
+                <td><input class="input" style="width: 100%;" type="reset" value="annuler" /></td>
+                <td><input class="input" style="width: 100%;" type="submit" value="valider" /></td>
+            </tr>
+        </table>
+    </form>
+</fieldset>
+    <br/><br/>
+<fieldset>
+    <legend>Liste des news</legend>
+    <table style="width: 100%">
+        <tr><th>Type</th><th>Titre</th><th>Auteur</th><th style="width: 16px;"></th><th style="width: 16px;"></th></tr>
+        {% for new in news %}
+            <tr>
+                <td>{{ _self.getType(new.type) }}</td>
+                <td>{{ new.titre }}</td>
+                <td>{{ new.auteur }}</td>
+                <td>{{ link(img("devtool/delete.png"), "admin", "delnew?id=" ~ new.id) }}</td>
+                <td>{{ link(img("devtool/edit.png"), "admin", "changenew?id=" ~ new.id) }}</td>
+            </tr>
+        {% else %}
+            <center><font color="red">Aucunes nouvelles disponibles !</font></center>
+        {% endfor %}
+    </table>
+</fieldset>
+{% endblock %}
+    
+{% macro getType(num) %}
+    {% if num == 1 %}
+        Info
+    {% elseif num == 2 %}
+        New
+    {% elseif num == 3 %}
+        Annonce
+    {% endif %}
+{% endmacro %}    

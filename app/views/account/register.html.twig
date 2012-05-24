@@ -1,0 +1,59 @@
+{# register form template #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/img_inscription.png") }}
+{% endblock %}
+{% block page %}
+    {% if error %}
+        <div class="verifNO">
+            <h3>{{ img("devtool/error.png", "devtollIcon") }}Erreur lors de l'inscription</h3>
+            Les champs suivants sont incorrects, veuillez les corriger.<br/>
+            <ul>
+                {% for champ in errors|keys %}
+                    <li><b>{{ champ }}: </b>{{ errors[champ] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <br/><br/>
+    {% endif %}
+    <table style="margin:auto;">
+        <form method="post" action="{{ url("account", "register") }}?finish=1">
+            <tr>
+                <td> Nom de Compte :</td>
+                <td><input class="input{{ errors["Nom de Compte"] is defined ? "Error" : "" }}" name="name" type="text" value="{{ post.name }}"></td>
+            </tr>
+            <tr>
+                <td> Mot de passe :</td>
+                <td><input class="input{{ errors["Mot de passe"] is defined ? "Error" : "" }}" name="pass" type="password" value="{{ post.pass }}"></td>
+            </tr>
+            <tr>
+                <td>Confirmez le mot de passe :</td>
+                <td><input class="input{{ errors["Confirmez le mot de passe"] is defined ? "Error" : "" }}" name="pass2" type="password" value="{{ post.pass2 }}"></td>
+            </tr>
+            <tr>
+                <td>Votre Pseudo :</td>
+                <td><input class="input{{ errors["Pseudo"] is defined ? "Error" : "" }}" name="pseudo" type="text" value="{{ post.pseudo }}"></td>
+            </tr>
+            <tr>
+                <td>Votre Email :</td>
+                <td><input class="input{{ errors["email"] is defined ? "Error" : "" }}" name="mail" type="text" value="{{ post.mail }}"></td>
+            </tr>
+            <tr>
+                <td>Question Secrète :</td>
+                <td><input class="input" name="secretquestion" type="text" value="{{ post.secretquestion }}"></td>
+            </tr>
+            <tr>
+                <td>Réponse Secrète :</td>
+                <td><input class="input" name="secretanswer" type="text" value="{{ post.secretanswer }}"> </td>
+            </tr>
+            <tr>
+                <td>Valider</td>
+                <td><input class="input" name="ok" value="S'inscrire" type="submit"></td>
+            </tr>
+        </form>
+    </table>
+    <br/>
+    <span style="color:red"><center>En vous inscrivant sur nos serveurs vous prenez donc en compte le <b><a style="color:red" href="{{ url("home", "cgu") }}">réglement</a></span></b> déposé par {{ config.server.name }} !</center></span>
+{% endblock %}

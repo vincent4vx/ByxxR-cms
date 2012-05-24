@@ -1,0 +1,16 @@
+{# template d'erreur 404 not found #}
+{% extends "layout.html.twig" %}
+{% block title_img %}
+    <center>{{ img("title/img_404.png") }}</center>
+{% endblock %}
+    
+{% block page %}
+    <div class="verifNO">
+        <h3>{{ img("devtool/error.png", "devtollIcon") }}Erreur 403</h3>
+        Erreur 403: accès interdit !<br/>
+        La page que vous demandez est réservé à un publique restreint. Cette page demande soit d'être connecté au site, ou d'avoir les droit administrateur.
+        <hr/>
+        {{ link("aller à la page d'acceuil", "home") }}
+        
+   </div>
+{% endblock %}

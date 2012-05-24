@@ -1,0 +1,40 @@
+{# template du ladder de guildes #}
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/img_ladder_guilde.png") }}
+{% endblock %}
+{% block page %}
+    {% set datas = getCache(name) %}
+    {% if datas == false %}
+        {% filter cache(name) %}
+            <table style="margin: auto;width: 85%;">
+                <tr>
+                    <th style="width: 8px;"></th>
+                    <th>Nom</th>
+                    <th>level</th>
+                    <th>XP</th>
+                </tr>
+                {% set i = 1 %}
+                {% for guild in guilds %}
+                    {% if i <= 3 %}
+                        <tr class="pos{{ i }}">
+                            <td>{{ img("trophy/trophy_" ~ i ~ ".png") }}</td>
+                    {% else %}
+                        <tr>
+                            <td>{{ i }}</td>
+                    {% endif %}
+                            <td>{{ guild.name }}</td>
+                            <td>{{ guild.lvl }}</td>
+                            <td>{{ guild.xp }}</td>
+                        </tr>
+                    {% set i = i + 1 %}
+                {% else %}
+                        <center><font color="red">Auncunes Guildes sur le serveur</font></center>
+                {% endfor %}
+            </table>
+        {% endfilter %}
+    {% else %}
+        {{ datas }}
+    {% endif %}
+{% endblock %}

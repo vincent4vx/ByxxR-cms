@@ -1,0 +1,37 @@
+{# Template du ladder de votes #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/img_ladder_vote.png") }}
+{% endblock %}
+{% block page %}
+    {% set datas = getCache(name) %}
+    {% if datas == false %}
+        {% filter cache(name) %}
+            <table style="margin: auto;width: 75%;">
+                <tr>
+                    <th style="width: 8px;"></th>
+                    <th>Pseudo</th>
+                    <th>Votes</th>
+                </tr>
+                {% set i = 1 %}
+                {% for account in accounts %}
+                    {% if i <= 3 %}
+                    <tr class="pos{{ i }}">
+                        <td>{{ img("trophy/trophy_" ~ i ~ ".png") }}</td>
+                    {% else %}
+                    <tr>
+                        <td>{{ i }}</td>
+                    {% endif %}
+                        <td>{{ account.pseudo }}</td>
+                        <td>{{ account.vote }}</td>
+                    </tr>
+                    {% set i = i + 1 %}
+                {% endfor %}
+            </table>
+        {% endfilter %}
+    {% else %}
+        {{ datas }}
+    {% endif %}
+{% endblock %}

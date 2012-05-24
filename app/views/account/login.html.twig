@@ -1,0 +1,31 @@
+{# template de connexion (après échec) #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img("title/img_profil.png") }}
+{% endblock %}
+{% block page %}        
+    <div class="verifNO">
+        <h3>{{ img("devtool/error.png", "devtollIcon") }}Erreur lors de la connexion</h3>
+        Le couple Mot de passe / Nom de compte est invalide !<br/>
+        Il vous reste <b>{{ session.get("attemps") }}</b> tentatives.
+    </div>
+    <br/><br/>
+    <form action="{{ url("account", "login") }}" method="post">
+        <table style="margin: auto;">
+            <tr>
+                <td>Nom de Compte : </td>
+                <td><input name="login" class="input" type="text" /></td>
+            </tr>
+            <tr>
+                <td>Mot de passe : </td>
+                <td><input name="passlog" class="input" type="password" /></td>
+            </tr>
+            <tr>
+                <td>Valider</td>
+                <td><input name="logon" class="input" type="submit" value="Connexion au site"/></td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}
