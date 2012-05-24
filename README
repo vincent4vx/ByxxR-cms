@@ -1,0 +1,38 @@
+######################
+# ByxxR CMS          #
+# auteur : v4vx      #
+# Design : Nicow     #
+# CSS : Nicow & v4vx #
+# code : v4vx        #
+######################
+
+Je vous présente mon projet-cms, ByxxR.
+
+Déjà pourquoi ByxxR ?
+ ByxxR pour Byxx Reload ou Byxx Remake (je sais pas...), mais c'est aussi car Byxx Remake est très probablement déjà pris, donc c'est pour faire différent...
+
+Que sera ce cms ?
+ Ce cms n'aura en fait rien à voir question code à Byxx, contrairement à tout les dérivés de Byxx actuels.
+ D'où le Remake, il est totalement refait de A à Z.
+ Seule chose qui ne changera pas trop, c'est sont design, quasi parfait.
+
+La différence avec byxx
+ La différence avec byxx, c'est que se cms sera le plus sécurisé possible.
+ De plus il est codé le mieux possible, avec des techniques de codage propre.
+ Il est codé en MVC, sur une de mes base, plus légère qu'un framework, et donc plus rapide.
+ Il utilise Twig comme moteur de template, pour pouvoir bien séparer le php du html, et faire le code le plus lisible possible, et modifiable
+ Et enfin utilise PDO permettant de se fier au futur, contrairement à mysql_ qui devrait être bientôt supprimé de php de base. PDO est plus sécurisé que mysql_
+ De plus aucuns shell ne sera ajouté, je peu vous le garantir
+ 
+ Benchmarks : (sur page d'accueil)
+- sans aucuns systèmes de cache (twig et le mien) :
+ Temps d'exécution : 0.1541 sec
+ Utilisation de mémoire : 1559.2 Kb
+
+- Avec tout les caches actifs :
+ Temps d'exécution : 0.0085 sec
+ Utilisation de mémoire : 462.788 Kb
+ 
+ Lien GitHub : https://vincent4vx@github.com/vincent4vx/ByxxR-cms.git
+ 
+ Merci de respecter notre travaille, en laissant le copyright !
