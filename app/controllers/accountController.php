@@ -1,20 +1,25 @@
 <?php
 class account extends controller
 {
+    private $logged;
+    private $id;
+    
     public function __construct() {
         parent::__construct();
+	$this->logged =& $this->session->isLog();
+	$this->id =& $this->session->getId();
     }
     
     public function index()
     {
-        if($this->session->isLog())
+        if($this->logged)
         {
-            if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId()) === false)
+            if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->id) === false)
             {
                 $model = $this->model('maccount');
                 $this->output->view('account/account.html.twig', array(
-                    'account' => $model->getAccount($this->session->getId())
-                ), $this->session->getId());
+                    'account' => $model->getAccount($this->id)
+                ), $this->id);
             }
         }else
         {
@@ -24,7 +29,7 @@ class account extends controller
     
     public function login()
     {
-        if(!$this->session->isLog())
+        if(!$this->logged)
         {
             if($this->session->get('attemps') === false or ($this->session->get('connect_time') !== false and $this->session->get('connect_time') <= time()))
             {
@@ -66,7 +71,7 @@ class account extends controller
     
     public function logout()
     {
-        if($this->session->isLog())
+        if($this->logged)
         {
             $this->session->logout();
             $this->output->success('img_profil', 'Déconnexion', 'Vous êtes maintenant déconnecté !');
@@ -78,7 +83,7 @@ class account extends controller
     
     public function register()
     {
-        if(!$this->session->isLog())
+        if(!$this->logged)
         {
             if(!isset($_GET['finish']))
             {
@@ -156,14 +161,14 @@ class account extends controller
     
     public function changeinfo()
     {
-        if($this->session->isLog())
+        if($this->logged)
         {
             if(isset($_POST['infos']))
             {
                 if(strlen($_POST['infos']) <= 110)
                 {
                     $model = $this->model('maccount');
-                    $model->set($this->session->getId(), 'infos', $_POST['infos']);
+                    $model->set($this->id, 'infos', $_POST['infos']);
                     $this->output->success('img_profil', 'Informations changées', 'Les informations ont été changé avec succès !<br/>Vous allez être redirigé vers la page de profil.', 'account');
                 }else
                 {
@@ -172,16 +177,16 @@ class account extends controller
             }else
             {
                 $model = $this->model('maccount');
-                $infos = $model->get($this->session->getId(), 'infos', true);
-                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array(
+                $infos = $model->get($this->id, 'infos', true);
+                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->id, array(
                     'param' => 'changeinfo',
                     'account' => $infos
                 )) === false)
                 {
                         $this->output->view('account/account.html.twig', array(
-                        'account' => $model->getAccount($this->session->getId()),
+                        'account' => $model->getAccount($this->id),
                         'param' => 'changeinfo'
-                    ), $this->session->getId());
+                    ), $this->id);
                 }
             }
         }else
@@ -192,7 +197,7 @@ class account extends controller
     
     public function changeimg()
     {
-        if($this->session->isLog())
+        if($this->logged)
         {
             if(isset($_FILES['avatar']))
             {
@@ -214,7 +219,7 @@ class account extends controller
                             if(move_uploaded_file($_FILES['avatar']['tmp_name'], $dir_name.'/'.$file_name))
                             {
                                 $model = $this->model('maccount');
-                                $model->set($this->session->getId(), 'avatar', 'uploaded/'.$this->session->getPseudo().'/'.$file_name);
+                                $model->set($this->id, 'avatar', 'uploaded/'.$this->session->getPseudo().'/'.$file_name);
                                 $this->output->success('img_profil', 'Image changée', 'L\'image a été changé avec succès !<br/>Vous allez être redirigé vers la page de profil', 'account');
                             }else
                             {
@@ -240,7 +245,7 @@ class account extends controller
                 {
                     $path = ($_GET['d'] == 'private' ? 'uploaded/'.$this->session->getPseudo().'/' : '').$_GET['i'];
                     $model = $this->model('maccount');
-                    $model->set($this->session->getId(), 'avatar', $path);
+                    $model->set($this->id, 'avatar', $path);
                     $this->output->success('img_profil', 'Image changée', 'L\'image d\'avatar a été changé avec succès !<br/>Vous allez être redirigé vers votre profil', 'account');
                 }else
                 {
@@ -248,13 +253,13 @@ class account extends controller
                 }
             }else
             {
-                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array('param' => 'change_img')) === false)
+                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->id, array('param' => 'change_img')) === false)
                 {
                     $model = $this->model('maccount');
                     $this->output->view('account/account.html.twig', array(
-                        'account' => $model->getAccount($this->session->getId()),
+                        'account' => $model->getAccount($this->id),
                         'param' => 'change_img'
-                    ), $this->session->getId());
+                    ), $this->id);
                 }
             }
         }else
@@ -265,7 +270,7 @@ class account extends controller
     
     public function listimg()
     {
-        if($this->session->isLog())
+        if($this->logged)
         {
             $public_dir = scandir(BASE.'public/images/avatars');
             $private_dir = null;
@@ -285,12 +290,12 @@ class account extends controller
     
     public function changepass()
     {
-        if($this->session->isLog())
+        if($this->logged)
         {
             $model = $this->model('maccount');
             if(!empty($_POST['oldpass']) and !empty($_POST['answer']) and !empty($_POST['npass1']) and !empty($_POST['npass2']))
             {
-                $accountDatas = $model->get($this->session->getId(), array('pass', 'question', 'reponse'));
+                $accountDatas = $model->get($this->id, array('pass', 'question', 'reponse'));
                 $errors = array();
                 $error = false;
                 if($_POST['oldpass'] != $accountDatas['pass'])
@@ -317,7 +322,7 @@ class account extends controller
                 
                 if($error)
                 {
-                    if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array(
+                    if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->id, array(
                         'param' => 'changepass', 
                         'account' => $accountDatas,
                         'errors' => $errors,
@@ -325,26 +330,26 @@ class account extends controller
                     )) === false)
                     {
                         $this->output->view('account/account.html.twig', array(
-                            'account' => $model->getAccount($this->session->getId()),
+                            'account' => $model->getAccount($this->id),
                             'param' => 'changepass',
                             'errors' => $errors,
                             'post' => $_POST
-                        ), $this->session->getId());
+                        ), $this->id);
                     }
                 }else
                 {
-                    $model->set($this->session->getId(), 'pass', $_POST['npass1']);
+                    $model->set($this->id, 'pass', $_POST['npass1']);
                     $this->output->success('img_profil', 'Mot de passe changé', 'Le mot de passe a été changé avec succès !<br/>Vous allez être redirigé vers la page de profil.', 'account');
                 }
             }else
             {
-                $question = $model->get($this->session->getId(), 'question', true);
-                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array('param' => 'changepass', 'account' => $question)) === false)
+                $question = $model->get($this->id, 'question', true);
+                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->id, array('param' => 'changepass', 'account' => $question)) === false)
                 {
                     $this->output->view('account/account.html.twig', array(
-                        'account' => $model->getAccount($this->session->getId()),
+                        'account' => $model->getAccount($this->id),
                         'param' => 'changepass'
-                    ), $this->session->getId());
+                    ), $this->id);
                 }
             }
         }else
@@ -355,18 +360,18 @@ class account extends controller
     
     public function changemail()
     {
-	if($this->session->isLog())
+	if($this->logged)
 	{
 	    $model = $this->model('maccount');
 	    if(!empty($_POST['mail']) and !empty($_POST['pass']))
 	    {
-		$pass = $model->get($this->session->getId(), 'pass');
+		$pass = $model->get($this->id, 'pass');
 		if($_POST['pass'] == $pass)
 		{
 		    $MRegex = '#^[a-z0-9._-]+@[a-z0-9._-]{4,}\.[a-z]{2,4}$#isU';
 		    if(preg_match($MRegex, $_POST['mail']))
 		    {
-			$model->set($this->session->getId(), 'email', $_POST['mail']);
+			$model->set($this->id, 'email', $_POST['mail']);
 			$this->output->success('img_profil', 'Adresse E-mail changée avec succès', 'L\'adresse E-mail a belle est bien était changée avec succès.<br/>Vous allez être redirigé vers la page de profil.', 'account');
 		    }else
 		    {
@@ -378,12 +383,12 @@ class account extends controller
 		}
 	    }else
 	    {
-		if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array('param' => 'changemail')) === false)
+		if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->id, array('param' => 'changemail')) === false)
                 {
                     $this->output->view('account/account.html.twig', array(
-                        'account' => $model->getAccount($this->session->getId()),
+                        'account' => $model->getAccount($this->id),
                         'param' => 'changemail'
-                    ), $this->session->getId());
+                    ), $this->id);
                 }
 	    }
 	}else
