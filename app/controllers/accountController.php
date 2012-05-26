@@ -287,14 +287,60 @@ class account extends controller
     {
         if($this->session->isLog())
         {
+            $model = $this->model('maccount');
             if(!empty($_POST['oldpass']) and !empty($_POST['answer']) and !empty($_POST['npass1']) and !empty($_POST['npass2']))
             {
-                $model = $this->model('maccount');
+                $accountDatas = $model->get($this->session->getId(), array('pass', 'question', 'reponse'));
+                $errors = array();
+                $error = false;
+                if($_POST['oldpass'] != $accountDatas['pass'])
+                {
+                    $error = true;
+                    $errors['oldpass'] = true;
+                }
+                $PRegex = '#^[a-z0-9._-]{6,32}$#isU';
+                if(!preg_match($PRegex, $_POST['npass1']))
+                {
+                    $error = true;
+                    $errors['npass1'] = true;
+                }
+                if($_POST['npass1'] != $_POST['npass2'])
+                {
+                    $error = true;
+                    $errors['npass2'] = true;
+                }
+                if($_POST['answer'] != $accountDatas['reponse'])
+                {
+                    $error = true;
+                    $errors['answer'] = true;
+                }
+                
+                if($error)
+                {
+                    if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array(
+                        'param' => 'changepass', 
+                        'account' => $accountDatas,
+                        'errors' => $errors,
+                        'post' => $_POST
+                    )) === false)
+                    {
+                        $this->output->view('account/account.html.twig', array(
+                            'account' => $model->getAccount($this->session->getId()),
+                            'param' => 'changepass',
+                            'errors' => $errors,
+                            'post' => $_POST
+                        ), $this->session->getId());
+                    }
+                }else
+                {
+                    $model->set($this->session->getId(), 'pass', $_POST['npass1']);
+                    $this->output->success('img_profil', 'Mot de passe changé', 'Le mot de passe a été changé avec succès !<br/>Vous allez être redirigé vers la page de profil.', 'account');
+                }
             }else
             {
-                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array('param' => 'changepass')) === false)
+                $question = $model->get($this->session->getId(), 'question', true);
+                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array('param' => 'changepass', 'account' => $question)) === false)
                 {
-                    $model = $this->model('maccount');
                     $this->output->view('account/account.html.twig', array(
                         'account' => $model->getAccount($this->session->getId()),
                         'param' => 'changepass'
