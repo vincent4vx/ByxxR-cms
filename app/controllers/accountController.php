@@ -352,4 +352,43 @@ class account extends controller
             $this->output->error_403();
         }
     }
+    
+    public function changemail()
+    {
+	if($this->session->isLog())
+	{
+	    $model = $this->model('maccount');
+	    if(!empty($_POST['mail']) and !empty($_POST['pass']))
+	    {
+		$pass = $model->get($this->session->getId(), 'pass');
+		if($_POST['pass'] == $pass)
+		{
+		    $MRegex = '#^[a-z0-9._-]+@[a-z0-9._-]{4,}\.[a-z]{2,4}$#isU';
+		    if(preg_match($MRegex, $_POST['mail']))
+		    {
+			$model->set($this->session->getId(), 'email', $_POST['mail']);
+			$this->output->success('img_profil', 'Adresse E-mail changée avec succès', 'L\'adresse E-mail a belle est bien était changée avec succès.<br/>Vous allez être redirigé vers la page de profil.', 'account');
+		    }else
+		    {
+			$this->output->error('img_profil', 'E-mail invalide', 'L\'E-mail entré n\'est pas valide (schéma : <b>xxx@xxx.xx</b>).', 'account', 'changemail');
+		    }
+		}else
+		{
+		    $this->output->error('img_profil', 'Mot de passe incorrect', 'Le mot de passe entré ne correspond pas à celui présent dans la base de donnée.', 'account', 'changemail');
+		}
+	    }else
+	    {
+		if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array('param' => 'changemail')) === false)
+                {
+                    $this->output->view('account/account.html.twig', array(
+                        'account' => $model->getAccount($this->session->getId()),
+                        'param' => 'changemail'
+                    ), $this->session->getId());
+                }
+	    }
+	}else
+	{
+	    $this->output->error_403();
+	}
+    }
 }
