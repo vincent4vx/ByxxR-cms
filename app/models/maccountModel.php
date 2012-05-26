@@ -127,7 +127,7 @@ class maccount extends model
         {
             $query = 'SELECT ';
             $query .= implode(', ', $var);
-            $query .= ' FROM account WHERE id = :id';
+            $query .= ' FROM account WHERE guid = :id';
             $req = $this->db->prepare($query);
             $req->execute(array(
                 'id' => $account
@@ -135,7 +135,7 @@ class maccount extends model
             return $req->fetch();
         }else
         {
-            $req = $this->db->prepare('SELECT '.$var.' FROM accounts WHERE id = :id');
+            $req = $this->db->prepare('SELECT '.$var.' FROM accounts WHERE guid = :id');
             $req->execute(array(
                 'id' => $account
             ));

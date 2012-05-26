@@ -171,10 +171,14 @@ class account extends controller
                 }
             }else
             {
-                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId()) === false)
+                $model = $this->model('maccount');
+                $infos = $model->get($this->session->getId(), 'infos', true);
+                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array(
+                    'param' => 'changeinfo',
+                    'account' => $infos
+                )) === false)
                 {
-                    $model = $this->model('maccount');
-                    $this->output->view('account/account.html.twig', array(
+                        $this->output->view('account/account.html.twig', array(
                         'account' => $model->getAccount($this->session->getId()),
                         'param' => 'changeinfo'
                     ), $this->session->getId());
@@ -244,7 +248,7 @@ class account extends controller
                 }
             }else
             {
-                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId()) === false)
+                if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->session->getId(), array('param' => 'change_img')) === false)
                 {
                     $model = $this->model('maccount');
                     $this->output->view('account/account.html.twig', array(

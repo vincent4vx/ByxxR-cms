@@ -76,13 +76,13 @@ class __TwigTemplate_e530eddd94aa3ccd33b505d54c06d639 extends Twig_Template
                     <td rowspan=\"4\">";
         // line 26
         if (isset($context["account"])) { $_account_ = $context["account"]; } else { $_account_ = null; }
-        echo $this->env->getExtension('url')->link($this->env->getExtension('assets')->img(("avatars/" . $this->getAttribute($_account_, "avatar"))), "account", "changeimg");
+        echo $this->env->getExtension('url')->link($this->env->getExtension('assets')->img(("avatars/" . $this->getAttribute($_account_, "avatar"))), "account", "changeimg#changeimg");
         echo "</td>
                     <td>Mot de passe : </td>
                     <td>******</td>
                     <td>";
         // line 29
-        echo $this->env->getExtension('assets')->img("devtool/edit.png");
+        echo $this->env->getExtension('url')->link($this->env->getExtension('assets')->img("devtool/edit.png"), "account", "changepass#changepass");
         echo "</td>
                 </tr>
                 <tr>
@@ -99,7 +99,11 @@ class __TwigTemplate_e530eddd94aa3ccd33b505d54c06d639 extends Twig_Template
                 </tr>
                 <tr>
                     <td>Question : </td>
-                    <td>rrgrgeg</td>
+                    <td>";
+        // line 38
+        if (isset($context["account"])) { $_account_ = $context["account"]; } else { $_account_ = null; }
+        echo twig_escape_filter($this->env, $this->getAttribute($_account_, "question"), "html", null, true);
+        echo "</td>
                     <td>";
         // line 39
         echo $this->env->getExtension('assets')->img("devtool/edit.png");
@@ -145,7 +149,7 @@ class __TwigTemplate_e530eddd94aa3ccd33b505d54c06d639 extends Twig_Template
             // line 52
             echo "        ";
             if (isset($context["datas"])) { $_datas_ = $context["datas"]; } else { $_datas_ = null; }
-            echo twig_escape_filter($this->env, $_datas_, "html", null, true);
+            echo $_datas_;
             echo "
     ";
         }
@@ -174,6 +178,6 @@ class __TwigTemplate_e530eddd94aa3ccd33b505d54c06d639 extends Twig_Template
 
     public function getDebugInfo()
     {
-        return array (  157 => 56,  154 => 55,  151 => 54,  144 => 52,  141 => 51,  137 => 11,  133 => 10,  129 => 9,  126 => 8,  117 => 46,  111 => 44,  103 => 39,  95 => 34,  90 => 33,  83 => 29,  76 => 26,  70 => 23,  64 => 22,  59 => 21,  53 => 18,  48 => 17,  41 => 12,  38 => 11,  31 => 6,  28 => 5,);
+        return array (  161 => 56,  158 => 55,  155 => 54,  148 => 52,  145 => 51,  141 => 11,  137 => 10,  133 => 9,  130 => 8,  121 => 46,  115 => 44,  107 => 39,  102 => 38,  95 => 34,  90 => 33,  83 => 29,  76 => 26,  70 => 23,  64 => 22,  59 => 21,  53 => 18,  48 => 17,  41 => 12,  38 => 11,  31 => 6,  28 => 5,);
     }
 }
