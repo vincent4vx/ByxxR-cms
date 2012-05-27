@@ -7,12 +7,21 @@ class output
 {
     protected $twig;
     protected $output = '';
-    
+    protected $cache;
+
+
     public function __construct()
     {
+	//chargement de la classe cache
+	require_once CORE.'cache'.EXT;
+	$this->cache = new cache();
+	
+	//lancement de twig
         require_once CORE.'twig/lib/Twig/Autoloader'.EXT;
         Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem(APP.'views/');
+	
+	//définition du cache twig
         $cache_path = CORE.'cache/twig/';
         if(DEBUG)
         {
@@ -21,65 +30,39 @@ class output
         $this->twig = new Twig_Environment($loader, array(
             'cache' => $cache_path,
         ));
+	
+	//chargement des globals
         global $session;
         $this->twig->addGlobal('config', $GLOBALS['config']);
         $this->twig->addGlobal('session', $session);
+	
+	//ajout de filtres / fonctions
+	$this->twig->addFilter('save', new Twig_Filter_Function('cache::save', array('is_safe' => array('html'))));
         
         //chargement des extensions twig
         include CORE.'twig/extensions/assets'.EXT;
         $this->twig->addExtension(new App\AppBundle\Twig\Extension\assets());
         include CORE.'twig/extensions/url'.EXT;
         $this->twig->addExtension(new App\AppBundle\Twig\Extension\url());
-        include CORE.'twig/extensions/cache'.EXT;
-        $this->twig->addExtension(new App\AppBundle\Twig\Extension\cache());
+	//extension cache obsolète. La classe cache remplace cette extension.
+        //include CORE.'twig/extensions/cache'.EXT;
+        //$this->twig->addExtension(new App\AppBundle\Twig\Extension\cache());
         include CORE.'twig/extensions/tools'.EXT;
         $this->twig->addExtension(new App\AppBundle\Twig\Extension\tools());
     }
     
     public function getCachedView($name, $time = 60, $id = '', $vars = array())
     {
-        if($GLOBALS['config']['cache']['driver'] == 'file')
-        {
-            $filename = CORE.'cache/pages/'.$name.$id.'.cache';
-            if(file_exists($filename))
-            {
-                if((filemtime($filename) + $time) >= time() and !DEBUG)
-                {
-                    $this->output .= $this->twig->render($name, array(
-                        'name' => $name.$id
-                    ) + $vars);
-                }else
-                {
-                    unlink($filename);
-                    return false;
-                }
-            }else
-            {
-                return false;
-            }
-        }elseif($GLOBALS['config']['cache']['driver'] == 'apc')
-        {
-            if(apc_exists($name.$id))
-            {
-                if((apc_fetch($name.$id.'-age') + $time) >= time())
-                {
-                    $this->output .= $this->twig->render($name, array(
-                        'name' => $name.$id
-                    ) + $vars);
-                }else
-                {
-                    apc_delete($name.$id);
-                    apc_delete($name.$id.'-age');
-                    return false;
-                }
-            }else
-            {
-                return false;
-            }
-        }else
-        {
-            return false;
-        }
+	if(($data = $this->cache->get($name, $time, $id)) !== false)
+	{  		
+	    $this->output .= $this->twig->render($name, array(
+		'name' => $name.$id,
+		'cacheData' => $data
+	    ) + $vars);
+	}else
+	{
+	    return false;
+	}
     }
     
     public function view($name, $vars = array(), $id = '')

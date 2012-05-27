@@ -6,9 +6,8 @@
     {{ img("title/img_profil.png") }}
 {% endblock %}
 {% block page %}
-    {% set datas = getCache(name) %}
-    {% if datas == false %}
-        {% filter cache(name) %}
+    {% if not cacheData %}
+        {% filter save(name) %}
         <fieldset>
             <legend>Mes informations</legend>
             <table style="width: 100%;">
@@ -49,7 +48,7 @@
         </fieldset>
         {% endfilter %}
     {% else %}
-        {{ datas|raw }}
+        {{ cacheData|raw }}
     {% endif %}
 {% if not param is empty %}
     <br/>

@@ -11,7 +11,7 @@ define('BASE', __DIR__.'/');
 define('CORE', BASE.'core/');
 define('APP', BASE.'app/');
 define('EXT', '.php');
-define('VERSION', '0.7b');
+define('VERSION', '0.8b');
 define('DEBUG', false);
 define('BENCHMARK', true);
 

@@ -36,90 +36,87 @@ class __TwigTemplate_e530eddd94aa3ccd33b505d54c06d639 extends Twig_Template
 ";
     }
 
-    // line 11
+    // line 10
     public function block___internal_e530eddd94aa3ccd33b505d54c06d639_1($context, array $blocks = array())
     {
-        // line 12
+        // line 11
         echo "        <fieldset>
             <legend>Mes informations</legend>
             <table style=\"width: 100%;\">
                 <tr>
                     <td>Nom de Compte : </td>
                     <td colspan=\"2\">";
-        // line 17
+        // line 16
         if (isset($context["session"])) { $_session_ = $context["session"]; } else { $_session_ = null; }
         echo twig_escape_filter($this->env, $this->getAttribute($_session_, "getAccount", array(), "method"), "html", null, true);
         echo "</td>
                     <td>";
-        // line 18
+        // line 17
         echo $this->env->getExtension('assets')->img("devtool/delete.png");
         echo "</td>
                 </tr>
                 <tr>
                     <td style=\"text-align: center;\"><b>";
-        // line 21
+        // line 20
         if (isset($context["session"])) { $_session_ = $context["session"]; } else { $_session_ = null; }
         echo twig_escape_filter($this->env, $this->getAttribute($_session_, "getPseudo"), "html", null, true);
         echo "</b></td>
                     <td colspan=\"2\">Rang : <b>";
-        // line 22
+        // line 21
         if (isset($context["session"])) { $_session_ = $context["session"]; } else { $_session_ = null; }
         if (isset($context["config"])) { $_config_ = $context["config"]; } else { $_config_ = null; }
         echo twig_escape_filter($this->env, ((($this->getAttribute($_session_, "getLevel") > 0)) ? ($this->getAttribute($this->getAttribute($this->getAttribute($_config_, "admin"), "rank"), $this->getAttribute($_session_, "getLevel"), array(), "array")) : ("Joueur")), "html", null, true);
         echo "</b></td>
                     <td>";
-        // line 23
+        // line 22
         echo $this->env->getExtension('url')->link($this->env->getExtension('assets')->img("devtool/help.png"), "home", "staff");
         echo "</td>
                 </tr>
                 <tr>
                     <td rowspan=\"4\">";
-        // line 26
+        // line 25
         if (isset($context["account"])) { $_account_ = $context["account"]; } else { $_account_ = null; }
         echo $this->env->getExtension('url')->link($this->env->getExtension('assets')->img(("avatars/" . $this->getAttribute($_account_, "avatar"))), "account", "changeimg#changeimg");
         echo "</td>
                     <td>Mot de passe : </td>
                     <td>******</td>
                     <td>";
-        // line 29
+        // line 28
         echo $this->env->getExtension('url')->link($this->env->getExtension('assets')->img("devtool/edit.png"), "account", "changepass#changepass");
         echo "</td>
                 </tr>
                 <tr>
                     <td>Email : </td>
                     <td>";
-        // line 33
+        // line 32
         if (isset($context["account"])) { $_account_ = $context["account"]; } else { $_account_ = null; }
         echo twig_escape_filter($this->env, $this->getAttribute($_account_, "email"), "html", null, true);
         echo "</td>
                     <td>";
-        // line 34
-        echo $this->env->getExtension('assets')->img("devtool/edit.png");
+        // line 33
+        echo $this->env->getExtension('url')->link($this->env->getExtension('assets')->img("devtool/edit.png"), "account", "changemail#changemail");
         echo "</td>
                 </tr>
                 <tr>
                     <td>Question : </td>
                     <td>";
-        // line 38
+        // line 37
         if (isset($context["account"])) { $_account_ = $context["account"]; } else { $_account_ = null; }
         echo twig_escape_filter($this->env, $this->getAttribute($_account_, "question"), "html", null, true);
         echo "</td>
-                    <td>";
-        // line 39
-        echo $this->env->getExtension('assets')->img("devtool/edit.png");
-        echo "</td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td colspan=\"2\" style=\"vertical-align: top;width: 270px;\">
                         <b><u><font color=\"red\">Informations :</font><br/></u></b>
                         <div style=\"width: 255px;\">";
-        // line 44
+        // line 43
         if (isset($context["account"])) { $_account_ = $context["account"]; } else { $_account_ = null; }
         echo twig_escape_filter($this->env, $this->getAttribute($_account_, "infos"), "html", null, true);
         echo "</div>
                     </td>
                     <td>";
-        // line 46
+        // line 45
         echo $this->env->getExtension('url')->link($this->env->getExtension('assets')->img("devtool/edit.png"), "account", "changeinfo#infos");
         echo "</td>
                 </tr>
@@ -133,33 +130,29 @@ class __TwigTemplate_e530eddd94aa3ccd33b505d54c06d639 extends Twig_Template
     {
         // line 9
         echo "    ";
-        if (isset($context["name"])) { $_name_ = $context["name"]; } else { $_name_ = null; }
-        $context["datas"] = $this->env->getExtension('Cache')->getCache($_name_);
-        // line 10
-        echo "    ";
-        if (isset($context["datas"])) { $_datas_ = $context["datas"]; } else { $_datas_ = null; }
-        if (($_datas_ == false)) {
-            // line 11
+        if (isset($context["cacheData"])) { $_cacheData_ = $context["cacheData"]; } else { $_cacheData_ = null; }
+        if ((!$_cacheData_)) {
+            // line 10
             echo "        ";
             if (isset($context["name"])) { $_name_ = $context["name"]; } else { $_name_ = null; }
-            echo $this->env->getExtension('Cache')->cache((string) $this->renderBlock("__internal_e530eddd94aa3ccd33b505d54c06d639_1", $context, $blocks), $_name_);
-            // line 51
+            echo cache::save((string) $this->renderBlock("__internal_e530eddd94aa3ccd33b505d54c06d639_1", $context, $blocks), $_name_);
+            // line 50
             echo "    ";
         } else {
-            // line 52
+            // line 51
             echo "        ";
-            if (isset($context["datas"])) { $_datas_ = $context["datas"]; } else { $_datas_ = null; }
-            echo $_datas_;
+            if (isset($context["cacheData"])) { $_cacheData_ = $context["cacheData"]; } else { $_cacheData_ = null; }
+            echo $_cacheData_;
             echo "
     ";
         }
-        // line 54
+        // line 53
         if (isset($context["param"])) { $_param_ = $context["param"]; } else { $_param_ = null; }
         if ((!twig_test_empty($_param_))) {
-            // line 55
+            // line 54
             echo "    <br/>
     ";
-            // line 56
+            // line 55
             if (isset($context["param"])) { $_param_ = $context["param"]; } else { $_param_ = null; }
             $template = $this->env->resolveTemplate((("account/" . $_param_) . ".html.twig"));
             $template->display($context);
@@ -178,6 +171,6 @@ class __TwigTemplate_e530eddd94aa3ccd33b505d54c06d639 extends Twig_Template
 
     public function getDebugInfo()
     {
-        return array (  161 => 56,  158 => 55,  155 => 54,  148 => 52,  145 => 51,  141 => 11,  137 => 10,  133 => 9,  130 => 8,  121 => 46,  115 => 44,  107 => 39,  102 => 38,  95 => 34,  90 => 33,  83 => 29,  76 => 26,  70 => 23,  64 => 22,  59 => 21,  53 => 18,  48 => 17,  41 => 12,  38 => 11,  31 => 6,  28 => 5,);
+        return array (  154 => 55,  151 => 54,  148 => 53,  141 => 51,  138 => 50,  134 => 10,  130 => 9,  127 => 8,  118 => 45,  112 => 43,  102 => 37,  95 => 33,  90 => 32,  83 => 28,  76 => 25,  70 => 22,  64 => 21,  59 => 20,  53 => 17,  48 => 16,  41 => 11,  38 => 10,  31 => 6,  28 => 5,);
     }
 }

@@ -1,5 +1,155 @@
-                        <center><font color="red">Aucunes nouvelles disponibles !</font></center>
-                        <div class="pagination">
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        51
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        50
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        49
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        48
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        47
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        46
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        45
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        44
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        43
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                        <fieldset>
+                        <div class="titleNews_infos">
+        <span class="title_infos">
+            <img src="http://127.0.0.1/ByxxR/public/images/devtool/money.png" class="devtoolIcon" /> Information : 
+        </span>
+        42
+        <br />
+        <small style="text-align: right;">
+            Posté par <b>script ByxxR</b>
+        </small>
+    </div>
+    <br/>
+                Nouvelle généré automatiquement...
+            </fieldset>
+            <br/>
+                            <br/>
+            <div class="pagination">
                 <a href="http://127.0.0.1/ByxxR/home/news?page=1">&lt;&lt;</a> <a href="http://127.0.0.1/ByxxR/home/news?page=5">&lt;</a> <a href="http://127.0.0.1/ByxxR/home/news?page=1">1</a> <a href="http://127.0.0.1/ByxxR/home/news?page=2">2</a> <a href="http://127.0.0.1/ByxxR/home/news?page=3">3</a> <a href="http://127.0.0.1/ByxxR/home/news?page=4">4</a> <a href="http://127.0.0.1/ByxxR/home/news?page=5">5</a> <b>6</b> <a href="http://127.0.0.1/ByxxR/home/news?page=7">7</a> <a href="http://127.0.0.1/ByxxR/home/news?page=8">8</a> <a href="http://127.0.0.1/ByxxR/home/news?page=9">9</a> <a href="http://127.0.0.1/ByxxR/home/news?page=10">10</a> <a href="http://127.0.0.1/ByxxR/home/news?page=11">11</a> <a href="http://127.0.0.1/ByxxR/home/news?page=7">&gt;</a> <a href="http://127.0.0.1/ByxxR/home/news?page=11">&gt;&gt;</a>
             </div>
         

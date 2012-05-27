@@ -6,21 +6,27 @@
     {{ img("title/img_equipe.png") }}
 {% endblock %}
 {% block page %}
-    <table style="width: 100%;">
-        {% for account in staff %}
-            <tr>
-                <td rowspan="2" style="width: 145px;text-align: center;">
-                    <b>{{ account.pseudo }}</b><br/>
-                    {{ img("avatars/" ~ account.avatar) }}
-                </td>
-                <td>Rang : <b>{{ config.admin.rank[account.level] }}</b></td>
-            </tr>
-            <tr>
-                <td style="vertical-align: top;">
-                    <b><u><font color="red">Informations :</font></u></b><br/>
-                    {{ account.infos is not empty ? account.infos : "Aucunes informations disponibles..." }}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+    {% if not cacheData %}
+	{% filter save(name) %}
+	<table style="width: 100%;">
+	    {% for account in staff %}
+		<tr>
+		    <td rowspan="2" style="width: 145px;text-align: center;">
+			<b>{{ account.pseudo }}</b><br/>
+			{{ img("avatars/" ~ account.avatar) }}
+		    </td>
+		    <td>Rang : <b>{{ config.admin.rank[account.level] }}</b></td>
+		</tr>
+		<tr>
+		    <td style="vertical-align: top;">
+			<b><u><font color="red">Informations :</font></u></b><br/>
+			{{ account.infos is not empty ? account.infos : "Aucunes informations disponibles..." }}
+		    </td>
+		</tr>
+	    {% endfor %}
+	</table>
+	{% endfilter %}
+    {% else %}
+	{{ cacheData|raw }}
+    {% endif %}
 {% endblock %}

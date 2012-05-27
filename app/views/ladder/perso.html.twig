@@ -6,9 +6,8 @@
     {{ img("title/img_ladder.png") }}
 {% endblock %}
 {% block page %}
-    {% set datas = getCache(name) %}
-    {% if datas == false %}
-        {% filter cache(name) %}
+    {% if not cacheData %}
+        {% filter save(name) %}
         <table style="width: 95%;margin: auto;">
             <tr>
                 <th width="8"></th>
@@ -40,7 +39,7 @@
         </table>
         {% endfilter %}
     {% else %}
-        {{ datas|raw }}
+        {{ cacheData|raw }}
     {% endif %}
 {% endblock %}
 

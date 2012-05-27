@@ -4,9 +4,8 @@
 {% block title_img %}{{ img("title/img_accueil.png") }}{% endblock %}
 
 {% block page %}
-    {% set datas = getCache(name) %}
-    {% if datas == false %}
-        {% filter cache(name) %}
+    {% if not cacheData %}
+        {% filter save(name) %}
             {% for new in news %}
             <fieldset>
                 {{ _self.title_new(new.type, new.titre, new.auteur) }}<br/>
@@ -22,7 +21,7 @@
             </div>
         {% endfilter %}
     {% else %}
-            {{ datas|raw }}
+            {{ cacheData|raw }}
     {% endif %}
 {% endblock %}
 
