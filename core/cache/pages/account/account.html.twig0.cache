@@ -20,7 +20,7 @@
                 <tr>
                     <td>Email : </td>
                     <td>vincent.soyuz@hotmail.fr</td>
-                    <td><img src="http://127.0.0.1/ByxxR/public/images/devtool/edit.png" /></td>
+                    <td><a href="http://127.0.0.1/ByxxR/account/changemail#changemail"><img src="http://127.0.0.1/ByxxR/public/images/devtool/edit.png" /></a></td>
                 </tr>
                 <tr>
                     <td>Question : </td>

@@ -43,7 +43,7 @@ class output
             $filename = CORE.'cache/pages/'.$name.$id.'.cache';
             if(file_exists($filename))
             {
-                if((filemtime($filename) + $time) <= time() and !DEBUG)
+                if((filemtime($filename) + $time) >= time() and !DEBUG)
                 {
                     $this->output .= $this->twig->render($name, array(
                         'name' => $name.$id
@@ -61,7 +61,7 @@ class output
         {
             if(apc_exists($name.$id))
             {
-                if((apc_fetch($name.$id.'-age') + $time) <= time())
+                if((apc_fetch($name.$id.'-age') + $time) >= time())
                 {
                     $this->output .= $this->twig->render($name, array(
                         'name' => $name.$id

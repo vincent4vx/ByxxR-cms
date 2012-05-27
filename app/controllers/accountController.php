@@ -6,8 +6,8 @@ class account extends controller
     
     public function __construct() {
         parent::__construct();
-	$this->logged =& $this->session->isLog();
-	$this->id =& $this->session->getId();
+	$this->logged = $this->session->isLog();
+	$this->id = $this->session->getId();
     }
     
     public function index()
