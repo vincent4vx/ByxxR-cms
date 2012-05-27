@@ -34,6 +34,7 @@ class admin extends controller
             {
                 $model = $this->model('maccount');
                 $model->changeLevel($_GET['id'], 1);
+		$this->cache->delete('home/staff.html.twig');
                 $this->output->success('img_admin', 'Membre recruté', 'Le membre a bien été recruté dans staff avec succès !<br/>Vous allez être redirigé vers la page de gestion du staff', 'admin', 'staff');
             }else
             {
@@ -53,6 +54,7 @@ class admin extends controller
             {
                 $model = $this->model('maccount');
                 $model->changeLevel($_GET['id']);
+		$this->cache->delete('home/staff.html.twig');
                 $this->output->success('img_admin', 'Membre renvoyé', 'Le membre a bien été renvoyé du staff avec succès !<br/>Vous allez être redirigé vers la page de gestion du staff', 'admin', 'staff');
             }else
             {
@@ -81,6 +83,7 @@ class admin extends controller
                         continue;
                     }
                 }
+		$this->cache->delete('home/staff.html.twig');
                 $this->output->success('img_admin', 'Rang modifiés', 'Les rang des membres du staff ont été modifié avec succès !<br/>Vous allez être redirigé vers la page de gestion du staff.', 'admin', 'staff');
             }else
             {
@@ -116,6 +119,7 @@ class admin extends controller
             {
                 $newsModel = $this->model('news');
                 $newsModel->deletenew($_GET['id']);
+		$this->cache->purgeDir('home');
                 $this->output->success('img_admin','Suppresion d\'une nouvelle','Nouvelle supprimé avec succès !<br/>Vous allez être redirigé vers la page de gestion des news.', 'admin', 'news');
             }else
             {
@@ -138,6 +142,7 @@ class admin extends controller
             {
                 $newsModel = $this->model('news');
                 $newsModel->addnew($_POST['type'],$_POST['title'],$_POST['new'], $this->session->getPseudo());
+		$this->cache->purgeDir('home');
                 $this->output->success('img_admin','Ajout d\'une nouvelle','Nouvelle ajoutée avec succès !<br/>Vous allez être redirigé vers la page de gestion des news.', 'admin', 'news');
             }
         }else
@@ -170,6 +175,7 @@ class admin extends controller
                     {
                         if($newsModel->changenew($_GET['id'],$_POST['type'],$_POST['title'],$_POST['new']))
                         {
+			    $this->cache->purgeDir('home');
                             $this->output->success('img_admin','Modification de la new','New modifié avec succès.<br/>Vous allez être redirigé vers la page des gestion des news', 'admin', 'news');
                         }else
                         {
@@ -204,6 +210,18 @@ class admin extends controller
        }else
        {
            $this->output->error_403();
+       }
+   }
+   
+   public function emptycache()
+   {
+       if($this->session->isAdmin())
+       {
+	   $info = $this->cache->purge();
+	   $this->output->success('img_admin', 'Cache vidé', 'Le cache a été vidé avec succès. Les fichiers suivants ont été supprimés : <br/><br/>'.implode('<br/>', $info));
+       }else
+       {
+	   $this->output->error_403();
        }
    }
 }

@@ -65,6 +65,7 @@
                             {% if session.superAdmin() %}
                                 <a href="{{ url("admin", "staff") }}"><li>Gérez l'équipe</li></a>
                             {% endif %}
+			    {{ link("<li>Vider le cache</li>", "admin", "emptycache") }}
                             <a href=""><li style="margin-bottom:10px;border-bottom: 1px solid #989898;">Gérez la boutique</li></a>
                         {% endif %}
                         {% if not session.isLog() %}

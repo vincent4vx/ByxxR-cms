@@ -13,8 +13,8 @@ class output
     public function __construct()
     {
 	//chargement de la classe cache
-	require_once CORE.'cache'.EXT;
-	$this->cache = new cache();
+	global $cache;
+	$this->cache =& $cache;
 	
 	//lancement de twig
         require_once CORE.'twig/lib/Twig/Autoloader'.EXT;

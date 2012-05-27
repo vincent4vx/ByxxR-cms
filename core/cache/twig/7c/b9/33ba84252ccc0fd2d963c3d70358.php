@@ -208,40 +208,43 @@ class __TwigTemplate_7cb933ba84252ccc0fd2d963c3d70358 extends Twig_Template
                             ";
             }
             // line 68
-            echo "                            <a href=\"\"><li style=\"margin-bottom:10px;border-bottom: 1px solid #989898;\">Gérez la boutique</li></a>
+            echo "\t\t\t    ";
+            echo $this->env->getExtension('url')->link("<li>Vider le cache</li>", "admin", "emptycache");
+            echo "
+                            <a href=\"\"><li style=\"margin-bottom:10px;border-bottom: 1px solid #989898;\">Gérez la boutique</li></a>
                         ";
         }
-        // line 70
+        // line 71
         echo "                        ";
         if (isset($context["session"])) { $_session_ = $context["session"]; } else { $_session_ = null; }
         if ((!$this->getAttribute($_session_, "isLog", array(), "method"))) {
-            // line 71
+            // line 72
             echo "\t\t\t<div class=\"titleMenuRight\">Pas encore inscris ?</div>
                             <center><a href=\"";
-            // line 72
+            // line 73
             echo twig_escape_filter($this->env, $this->env->getExtension('url')->url("account", "register"), "html", null, true);
             echo "\">";
             echo $this->env->getExtension('assets')->img("imgInscription.png");
             echo "</a></center>
                         ";
         }
-        // line 74
+        // line 75
         echo "                    </div>
                     ";
-        // line 75
+        // line 76
         echo $this->env->getExtension('assets')->img("bottomRight.png", "bgRight");
         echo "
                 </div>
             </div>
                 <div id=\"Content\">
                     ";
-        // line 79
+        // line 80
         echo $this->env->getExtension('assets')->img("topContent.png");
         echo "
                     <div id=\"bgContent\">
                         <div id=\"textContent\">
                             <div id=\"cadre\" style=\"background-image:url('";
-        // line 82
+        // line 83
         echo twig_escape_filter($this->env, $this->env->getExtension('url')->img_url("cadres/backCadre_1.png"), "html", null, true);
         echo "')\">
 \t\t\t\t<div style=\"position:absolute;margin-top:9px;\">Serveur :  
@@ -266,45 +269,45 @@ class __TwigTemplate_7cb933ba84252ccc0fd2d963c3d70358 extends Twig_Template
                         </div>
                     </div>
                     ";
-        // line 104
+        // line 105
         echo $this->env->getExtension('assets')->img("bottomContent.png");
         echo "
                     <center>";
-        // line 105
+        // line 106
         $this->displayBlock('title_img', $context, $blocks);
         echo "</center>
                     ";
-        // line 106
+        // line 107
         echo $this->env->getExtension('assets')->img("topContent.png");
         echo "
                     <div id=\"bgContent\">
 \t\t\t<div id=\"textContent\">
                             ";
-        // line 109
+        // line 110
         $this->displayBlock('page', $context, $blocks);
-        // line 111
+        // line 112
         echo "\t\t\t</div>
                     </div>
                     ";
-        // line 113
+        // line 114
         echo $this->env->getExtension('assets')->img("bottomContent.png");
         echo "
                 </div>
                 <div id=\"footer\">
                     <div class=\"rightFooter\">
                         <b>";
-        // line 117
+        // line 118
         if (isset($context["config"])) { $_config_ = $context["config"]; } else { $_config_ = null; }
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($_config_, "server"), "name"), "html", null, true);
         echo "</b> © 2012 - All rights reserved / Tout droits réservés.<br />
                         <b>ByxxR v";
-        // line 118
+        // line 119
         echo twig_escape_filter($this->env, constant("VERSION"), "html", null, true);
         echo "</b> © 2012 - Css and Design by <b>Nicow</b> & <b>v4vx</b> - Php and Code by <b>v4vx</b>.<br /><br />
 
                         Toutes les images de se site sont la propriétés mêmes de <b>Ankamas Games</b> & <b>ByxxR CMS</b>.<br />
                         <b>";
-        // line 121
+        // line 122
         if (isset($context["config"])) { $_config_ = $context["config"]; } else { $_config_ = null; }
         echo twig_escape_filter($this->env, $this->getAttribute($this->getAttribute($_config_, "server"), "name"), "html", null, true);
         echo "</b> n'est en aucun cas un site lié avec <b>Ankama Games</b>.<br />
@@ -317,15 +320,15 @@ class __TwigTemplate_7cb933ba84252ccc0fd2d963c3d70358 extends Twig_Template
 ";
     }
 
-    // line 105
+    // line 106
     public function block_title_img($context, array $blocks = array())
     {
     }
 
-    // line 109
+    // line 110
     public function block_page($context, array $blocks = array())
     {
-        // line 110
+        // line 111
         echo "                            ";
     }
 
@@ -341,6 +344,6 @@ class __TwigTemplate_7cb933ba84252ccc0fd2d963c3d70358 extends Twig_Template
 
     public function getDebugInfo()
     {
-        return array (  327 => 110,  324 => 109,  319 => 105,  306 => 121,  300 => 118,  295 => 117,  288 => 113,  284 => 111,  282 => 109,  276 => 106,  272 => 105,  268 => 104,  243 => 82,  237 => 79,  230 => 75,  227 => 74,  220 => 72,  217 => 71,  213 => 70,  209 => 68,  203 => 66,  200 => 65,  196 => 64,  192 => 63,  189 => 62,  185 => 61,  178 => 59,  164 => 56,  160 => 55,  154 => 54,  149 => 53,  140 => 48,  134 => 44,  112 => 38,  106 => 36,  103 => 35,  99 => 34,  81 => 28,  77 => 27,  70 => 22,  59 => 20,  49 => 14,  46 => 13,  41 => 11,  36 => 10,  30 => 7,  24 => 5,  19 => 2,  186 => 59,  179 => 56,  174 => 58,  170 => 57,  162 => 48,  155 => 45,  150 => 43,  146 => 52,  138 => 37,  131 => 43,  126 => 41,  122 => 40,  118 => 39,  105 => 28,  96 => 24,  93 => 31,  89 => 30,  85 => 29,  82 => 6,  73 => 20,  69 => 18,  62 => 16,  52 => 12,  47 => 11,  44 => 10,  37 => 9,  34 => 8,  28 => 4,);
+        return array (  330 => 111,  327 => 110,  322 => 106,  309 => 122,  303 => 119,  298 => 118,  291 => 114,  287 => 112,  285 => 110,  279 => 107,  275 => 106,  271 => 105,  246 => 83,  240 => 80,  233 => 76,  230 => 75,  223 => 73,  220 => 72,  216 => 71,  209 => 68,  203 => 66,  200 => 65,  196 => 64,  192 => 63,  189 => 62,  185 => 61,  178 => 59,  164 => 56,  160 => 55,  154 => 54,  149 => 53,  140 => 48,  134 => 44,  112 => 38,  106 => 36,  103 => 35,  99 => 34,  81 => 28,  77 => 27,  70 => 22,  59 => 20,  49 => 14,  46 => 13,  41 => 11,  36 => 10,  30 => 7,  24 => 5,  19 => 2,  186 => 59,  179 => 56,  174 => 58,  170 => 57,  162 => 48,  155 => 45,  150 => 43,  146 => 52,  138 => 37,  131 => 43,  126 => 41,  122 => 40,  118 => 39,  105 => 28,  96 => 24,  93 => 31,  89 => 30,  85 => 29,  82 => 6,  73 => 20,  69 => 18,  62 => 16,  52 => 12,  47 => 11,  44 => 10,  37 => 9,  34 => 8,  28 => 4,);
     }
 }

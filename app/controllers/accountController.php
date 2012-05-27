@@ -169,6 +169,7 @@ class account extends controller
                 {
                     $model = $this->model('maccount');
                     $model->set($this->id, 'infos', $_POST['infos']);
+		    $this->delCache();
                     $this->output->success('img_profil', 'Informations changées', 'Les informations ont été changé avec succès !<br/>Vous allez être redirigé vers la page de profil.', 'account');
                 }else
                 {
@@ -220,6 +221,7 @@ class account extends controller
                             {
                                 $model = $this->model('maccount');
                                 $model->set($this->id, 'avatar', 'uploaded/'.$this->session->getPseudo().'/'.$file_name);
+				$this->delCache();
                                 $this->output->success('img_profil', 'Image changée', 'L\'image a été changé avec succès !<br/>Vous allez être redirigé vers la page de profil', 'account');
                             }else
                             {
@@ -246,6 +248,7 @@ class account extends controller
                     $path = ($_GET['d'] == 'private' ? 'uploaded/'.$this->session->getPseudo().'/' : '').$_GET['i'];
                     $model = $this->model('maccount');
                     $model->set($this->id, 'avatar', $path);
+		    $this->delCache();
                     $this->output->success('img_profil', 'Image changée', 'L\'image d\'avatar a été changé avec succès !<br/>Vous allez être redirigé vers votre profil', 'account');
                 }else
                 {
@@ -339,6 +342,7 @@ class account extends controller
                 }else
                 {
                     $model->set($this->id, 'pass', $_POST['npass1']);
+		    $this->delCache();
                     $this->output->success('img_profil', 'Mot de passe changé', 'Le mot de passe a été changé avec succès !<br/>Vous allez être redirigé vers la page de profil.', 'account');
                 }
             }else
@@ -372,6 +376,7 @@ class account extends controller
 		    if(preg_match($MRegex, $_POST['mail']))
 		    {
 			$model->set($this->id, 'email', $_POST['mail']);
+			$this->delCache();
 			$this->output->success('img_profil', 'Adresse E-mail changée avec succès', 'L\'adresse E-mail a belle est bien était changée avec succès.<br/>Vous allez être redirigé vers la page de profil.', 'account');
 		    }else
 		    {
@@ -395,5 +400,11 @@ class account extends controller
 	{
 	    $this->output->error_403();
 	}
+    }
+    
+    private function delCache()
+    {
+	$file = 'account/account.html.twig'.$this->id;
+	$this->cache->delete($file);
     }
 }

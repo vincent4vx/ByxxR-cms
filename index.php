@@ -19,6 +19,8 @@ if(BENCHMARK)
     $time = microtime(true);
 
 require_once CORE.'loader'.EXT;
+//$core = new core();
+//$core->loadPage();
 
 if(BENCHMARK)
 {
