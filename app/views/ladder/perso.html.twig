@@ -27,7 +27,7 @@
                     <td>{{ i }}</td>
                 {% endif %}
                     <td>{{ perso.name }}</td>
-                    <td>{{ _self.head(perso.class, perso.sexe) }}</td>
+                    <td>{{ img(getHead(perso.class, perso.sexe)) }}</td>
                     <td>{{ perso.level }}</td>
                     <td>{{ perso.xp }}</td>
                     <td>{{ perso.kamas }}</td>
@@ -42,38 +42,3 @@
         {{ cacheData|raw }}
     {% endif %}
 {% endblock %}
-
-{% macro head(class, sexe) %}
-    {% if class == 1 %}
-        {% set head = 'feca' %}
-    {% elseif class == 2 %}
-        {% set head = 'osa' %}
-    {% elseif class == 3 %}
-        {% set head = 'enu' %}
-    {% elseif class == 4 %}
-        {% set head = 'sram' %}
-    {% elseif class == 5 %}
-        {% set head = 'xel' %}
-    {% elseif class == 6 %}
-        {% set head = 'eca' %}
-    {% elseif class == 7 %}
-        {% set head = 'eni' %}
-    {% elseif class == 8 %}
-        {% set head = 'iop' %}
-    {% elseif class == 9 %}
-        {% set head = 'cra' %}
-    {% elseif class == 10 %}
-        {% set head = 'sadi' %}
-    {% elseif class == 11 %}
-        {% set head = 'sacri' %}
-    {% elseif class == 12 %}
-        {% set head = 'pand' %}
-    {% endif %}
-
-    {% if sexe == 0 %}
-        {% set head = head ~ '_m' %}
-    {% else %}
-        {% set head = head ~ '_f' %}
-    {% endif %}
-    {{ img("heads/" ~ head ~ ".png") }}
-{% endmacro %}
