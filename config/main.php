@@ -9,6 +9,7 @@ return array(
     'server' => require_once 'server.php',
     'admin' => require_once 'admin.php',
     'cache' => require_once 'cache.php',
+    'points' => require_once 'points.php',
     //FIN
     
     //url de base (url de racine du cms)

@@ -16,6 +16,14 @@ class tools extends \Twig_Extension
         );
     }
     
+    public function getFilters()
+    {
+	return array(
+	    'bbcode' => new \Twig_Filter_Method($this, 'bbcode', array('is_safe' => array('html')))
+	);
+    }
+
+
     public function pagination($current, $end, $url)
     {
         $return = '';
@@ -87,5 +95,31 @@ class tools extends \Twig_Extension
 	$str_class .= $sexe == 0 ? '_m' : '_f';
 	$path = $big ? 'class/' : 'heads/';
 	return $path.$str_class.'.png';
+    }
+    
+    public function bbcode($str)
+    {
+	$str = htmlspecialchars($str);
+	$str = str_replace('&amp;', '&', $str);
+	$str = preg_replace('#\[u\](.+)\[/u\]#isU', '<u>$1</u>', $str);
+	$str = preg_replace('#\[b\](.+)\[/b\]#isU', '<strong>$1</strong>', $str);
+	$str = preg_replace('#\[i\](.+)\[/i\]#isU', '<em>$1</em>', $str);
+	$str = preg_replace('#\[url=(.+)\](.+)\[/url\]#isU', '<a href="$1">$2</a>', $str);
+	$str = preg_replace('#\[color=(\#[a-f0-9]+)\](.+)\[/color\]#isU', '<font color="$1">$2</font>', $str);
+	$str = preg_replace('#\[size= (xx-small|x-small|small|medium|large|x-large|xx-large)\](.+)\[/size\]#isU', '<span style="font-size: $1;">$2</span>', $str);
+	$str = preg_replace('#\[list=1\](.+)\[/list\]#isU', '<ol>$1</ol>', $str);
+	$str = preg_replace('#\[list\](.+)\[/list\]#isU', '<ul>$1</ul>', $str);
+	$str = preg_replace('#\[\*\](.+)\n#isU', '<li>$1</li>', $str);
+	$str = preg_replace('#\[quote\](.+)\[/quote\]#isU', '<q>$1</q>', $str);
+	
+	
+	//smileys
+	$str = str_replace(':)', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/1.png" />', $str);
+	$str = str_replace(':D', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/2.png" />', $str);
+	$str = str_replace(':(', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/3.png" />', $str);
+	$str = str_replace(';)', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/4.png" />', $str);
+	$str = str_replace(':p', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/5.png" />', $str);
+	$str = str_replace(':o', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/6.png" />', $str);
+	return $str;
     }
 }

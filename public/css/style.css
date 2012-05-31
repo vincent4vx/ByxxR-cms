@@ -263,3 +263,11 @@ input:hover, .input:hover, .inputError:hover{
     background-color: #525252;
     border: 1px solid #989898;
 }
+
+q{
+    margin-left: 25px;
+    display: block;
+    margin-top: 10px;
+    border: 1px dotted #888888;
+    padding: 3px;
+}

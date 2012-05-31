@@ -9,7 +9,7 @@
             {% for new in news %}
             <fieldset>
                 {{ _self.title_new(new.type, new.titre, new.auteur) }}<br/>
-                {{ new.text|nl2br }}
+                {{ new.text|bbcode|nl2br }}
             </fieldset>
             <br/>
             {% else %}

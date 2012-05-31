@@ -3,6 +3,7 @@
 {% block title_img %}{{ img("title/img_admin.png") }}{% endblock %}
 
 {% block page %}
+{% include "editor.twig" %}
 <fieldset>
     <legend>Modifier une nouvelle (nouvelle N°<b>{{ new.id }}</b>)</legend>
     <form action="{{ url("admin","changenew?id=" ~ new.id) }}" method="post">
@@ -21,7 +22,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <textarea name="new" rows="10" cols="50" style="width: 99%;">{{ new.text }}</textarea>
+                    <textarea name="new" rows="10" cols="50" style="width: 99%;" id="edit">{{ new.text|raw }}</textarea>
                 </td>
             </tr>
             <tr>
