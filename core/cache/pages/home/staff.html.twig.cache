@@ -1,0 +1,55 @@
+	<table style="width: 100%;">
+	    		<tr>
+		    <td rowspan="2" style="width: 145px;text-align: center;">
+			<b>Admin</b><br/>
+			<img src="http://127.0.0.1/ByxxR/public/images/avatars/defaut.jpg" />
+		    </td>
+		    <td>Rang : <b>Administrateur</b></td>
+		</tr>
+		<tr>
+		    <td style="vertical-align: top;">
+			<b><u><font color="red">Informations :</font></u></b><br/>
+			Aucunes informations disponibles...
+		    </td>
+		</tr>
+	    		<tr>
+		    <td rowspan="2" style="width: 145px;text-align: center;">
+			<b>v4vx</b><br/>
+			<img src="http://127.0.0.1/ByxxR/public/images/avatars/45.jpg" />
+		    </td>
+		    <td>Rang : <b>Administrateur</b></td>
+		</tr>
+		<tr>
+		    <td style="vertical-align: top;">
+			<b><u><font color="red">Informations :</font></u></b><br/>
+			V4vx est le créateur du CMS ByxxR. Il est codeur php / html / css.
+		    </td>
+		</tr>
+	    		<tr>
+		    <td rowspan="2" style="width: 145px;text-align: center;">
+			<b>[Chef Maitre De Jeu] [Adminits</b><br/>
+			<img src="http://127.0.0.1/ByxxR/public/images/avatars/defaut.jpg" />
+		    </td>
+		    <td>Rang : <b>Super modérateur</b></td>
+		</tr>
+		<tr>
+		    <td style="vertical-align: top;">
+			<b><u><font color="red">Informations :</font></u></b><br/>
+			Aucunes informations disponibles...
+		    </td>
+		</tr>
+	    		<tr>
+		    <td rowspan="2" style="width: 145px;text-align: center;">
+			<b>black-star</b><br/>
+			<img src="http://127.0.0.1/ByxxR/public/images/avatars/defaut.jpg" />
+		    </td>
+		    <td>Rang : <b>Animateur</b></td>
+		</tr>
+		<tr>
+		    <td style="vertical-align: top;">
+			<b><u><font color="red">Informations :</font></u></b><br/>
+			Aucunes informations disponibles...
+		    </td>
+		</tr>
+	    	</table>
+	

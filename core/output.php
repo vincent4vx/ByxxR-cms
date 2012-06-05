@@ -8,6 +8,7 @@ class output
     protected $twig;
     protected $output = '';
     protected $cache;
+    protected $stats;
 
 
     public function __construct()
@@ -49,6 +50,11 @@ class output
         //$this->twig->addExtension(new App\AppBundle\Twig\Extension\cache());
         include CORE.'twig/extensions/tools'.EXT;
         $this->twig->addExtension(new App\AppBundle\Twig\Extension\tools());
+	
+	//chargement des stats
+	include CORE.'stats'.EXT;
+	$stats = new statsTable($this->twig);
+	$this->stats = $stats->getStats();
     }
     
     public function getCachedView($name, $time = 60, $id = '', $vars = array())
@@ -57,7 +63,8 @@ class output
 	{  		
 	    $this->output .= $this->twig->render($name, array(
 		'name' => $name.$id,
-		'cacheData' => $data
+		'cacheData' => $data,
+		'stats' => $this->stats
 	    ) + $vars);
 	}else
 	{
@@ -67,7 +74,10 @@ class output
     
     public function view($name, $vars = array(), $id = '')
     {
-        $vars += array('name' => $name.$id);
+        $vars += array(
+	    'name' => $name.$id,
+	    'stats' => $this->stats
+	);
         $this->output .= $this->twig->render($name, $vars);
     }
     

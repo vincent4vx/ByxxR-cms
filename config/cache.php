@@ -32,5 +32,8 @@ return array(
     'staff' => 12 * 3600,
     
     //idem
-    'profil' => 24 * 3600
+    'profil' => 24 * 3600,
+    
+    //cache des stats à l'acceuil
+    'stats' => 600
 );

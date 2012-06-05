@@ -1,0 +1,21 @@
+{# template pour changer d'eMail #}
+
+<fieldset id="changemail">
+    <legend>Changer l'adresse E-mail</legend>
+    <form action="{{ url("account", "changemail") }}" method="post">
+    <table>
+	<tr>
+	    <td>Mot de passe : </td>
+	    <td><input type="password" name="pass" /></td>
+	</tr>
+	<tr>
+	    <td>Nouvelle adresse E-mail : </td>
+	    <td><input type="email" name="mail" /></td>
+	</tr>
+	<tr>
+	    <td>Valider : </td>
+	    <td><input type="submit" value="Changer" /></td>
+	</tr>
+    </table>
+    </form>
+</fieldset>

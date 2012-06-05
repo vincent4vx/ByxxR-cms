@@ -40,5 +40,11 @@ return array(
     'config' => 'config.xml',
     
     //lien vers l'installateur dofus
-    'dofus' => 'installer.exe'
+    'dofus' => 'installer.exe',
+    
+    //adresse ip du serveur
+    'ip' => '127.0.0.1',
+    
+    //port du serveur
+    'port' => 444
 );

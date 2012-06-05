@@ -52,10 +52,10 @@
                         {% if session.isLog() %}
                         <div class="titleMenuRight">{{ img("devtool/user.png", "devtoolIcon") }} Mon compte</div>
                             <a href="{{ url("account") }}"><li>{{ img("devtool/zoom.png", "devtoolIcon") }} Mon Profil</li></a>
-                            <a href=""><li>{{ img("devtool/cadeau.png", "devtoolIcon") }} Mes Points (<b><small>125</small></b>)</li></a>
+                            {# <a href=""><li>{{ img("devtool/cadeau.png", "devtoolIcon") }} Mes Points (<b><small>125</small></b>)</li></a>
                             <a href="{{ url("account", "persos") }}"><li>{{ img("devtool/bug.png", "devtoolIcon") }} Mes Personnages</li></a>
                             <a href=""><li>{{ img("devtool/construction.png", "devtoolIcon") }} Déblocage</li></a>
-                            <a href=""><li>{{ img("devtool/cart.png", "devtoolIcon") }} Boutique</li></a>
+                            <a href=""><li>{{ img("devtool/cart.png", "devtoolIcon") }} Boutique</li></a> #}
                             <a href="{{ url("account", "logout") }}"><li style="margin-bottom:10px;border-bottom: 1px solid #989898;">{{ img("devtool/close.png", "devtoolIcon") }} Déconnexion</li></a>
                         {% endif %}
                         {% if session.isAdmin() %}
@@ -65,8 +65,8 @@
                             {% if session.superAdmin() %}
                                 <a href="{{ url("admin", "staff") }}"><li>Gérez l'équipe</li></a>
                             {% endif %}
-			    {{ link("<li>Vider le cache</li>", "admin", "emptycache") }}
-                            <a href=""><li style="margin-bottom:10px;border-bottom: 1px solid #989898;">Gérez la boutique</li></a>
+			    {{ link('<li style="margin-bottom:10px;border-bottom: 1px solid #989898;">Vider le cache</li>', "admin", "emptycache") }}
+                            {# <a href=""><li style="margin-bottom:10px;border-bottom: 1px solid #989898;">Gérez la boutique</li></a> #}
                         {% endif %}
                         {% if not session.isLog() %}
 			<div class="titleMenuRight">Pas encore inscris ?</div>
@@ -79,28 +79,7 @@
                 <div id="Content">
                     {{ img("topContent.png") }}
                     <div id="bgContent">
-                        <div id="textContent">
-                            <div id="cadre" style="background-image:url('{{ img_url("cadres/backCadre_1.png") }}')">
-				<div style="position:absolute;margin-top:9px;">Serveur :  
-                                    <span style="color:#11ff00">OnLine</span>
-				</div>
-				<div style="position:absolute;margin-top:30px;">Base de données :  
-                                    <span style="color:#11ff00">OnLine</span>
-				</div>
-				<div style="position:absolute;margin-top:52px;">Comptes :  
-                                    <b>155</b>
-				</div>
-				<div style="position:absolute;margin-top:73px;">Personnages :  
-				 <b>1547</b>
-				</div>
-				<div style="position:absolute;margin-top:94px;">Guildes : 
-                                    <b>10</b>
-				</div>
-				<div style="position:absolute;margin-top:115px;">Connectés : 
-                                    <b>5</b>
-				</div>
-                            </div>
-                        </div>
+			{{ stats|raw }}
                     </div>
                     {{ img("bottomContent.png") }}
                     <center>{% block title_img %}{% endblock %}</center>

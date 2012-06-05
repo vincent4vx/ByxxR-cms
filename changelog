@@ -1,0 +1,79 @@
+commit ecfbfc5ae3133b7a1dcbb9eece0607205e520199
+Author: vincent4vx <=>
+Date:   Sun May 27 13:34:17 2012 +0200
+
+    Amélioration du système de cache
+
+commit c02d3459389c0ba4a31f99cac69a645a0f74e8c3
+Author: vincent4vx <=>
+Date:   Sun May 27 11:49:53 2012 +0200
+
+    Débug du cache et du profil
+
+commit bfe1532d8e0df51a3d77abd364051b78adf61a52
+Author: vincent4vx <=>
+Date:   Sat May 26 19:31:37 2012 +0200
+
+    allègement des getters de sessions dans le controller account
+
+commit 739a51fef2d359b142186636fad54ad31a226ded
+Author: vincent4vx <=>
+Date:   Sat May 26 19:16:50 2012 +0200
+
+    config database
+
+commit 087bb1f76080c60654685dd8b665d9223334f3cb
+Merge: 4566dde 6380be3
+Author: vincent4vx <=>
+Date:   Sat May 26 19:07:50 2012 +0200
+
+    Merge branch 'master' of github.com:vincent4vx/ByxxR-cms
+
+commit 4566ddedef4031d4e09941876be0ab5a8d8c78ab
+Author: vincent4vx <=>
+Date:   Sat May 26 19:04:24 2012 +0200
+
+    Profil : changement d'e-mail
+
+commit a04e47b6d8782e2894f73a33c6403ed5cc60629b
+Author: vincent4vx <=>
+Date:   Sat May 26 18:03:49 2012 +0200
+
+    Profil : changer de mot de passe
+
+commit 31ff8fc3483c032effa635369b788865cb484a8b
+Author: vincent4vx <=>
+Date:   Sat May 26 17:39:05 2012 +0200
+
+    Débug cache sur les pages de profil
+
+commit 6380be31fa9709c7ea33d28725a1ba3734a8e0d9
+Author: vincent4vx <vincent.soyuz@hotmail.fr>
+Date:   Thu May 24 20:28:09 2012 +0300
+
+    Update config/database.php
+
+commit 44f7af8622f5014fdfef39c03dc5dc7fc1b426f0
+Author: vincent4vx <vincent.soyuz@hotmail.fr>
+Date:   Thu May 24 18:32:29 2012 +0300
+
+    Update README
+
+commit 5f037bb5b6aeceaa2e681a35a51de3a73419af08
+Author: vincent4vx <=>
+Date:   Thu May 24 16:58:58 2012 +0200
+
+    Ajout du README
+
+commit 961a7e7b417fd9f4a7f871a434aa711482e90a49
+Author: vincent4vx <=>
+Date:   Thu May 24 16:47:24 2012 +0200
+
+    Lancement du git
+    Tout les fichiers de mon cms sont (enfin) placé sur GitHub.
+
+commit f187543c2c8cd60fe41cd343013f632776b0814e
+Author: vincent4vx <=>
+Date:   Thu May 24 16:28:21 2012 +0200
+
+    first commit

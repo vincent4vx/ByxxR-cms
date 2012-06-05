@@ -1,0 +1,6 @@
+<?php
+$file = fopen("loader.phb");
+bcompiler_write_header($file);
+bcompiler_write_file($file, "loader.php");
+bcompiler_write_footer($file);
+fclose($file);

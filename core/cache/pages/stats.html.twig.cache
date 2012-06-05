@@ -1,0 +1,22 @@
+<div id="textContent">
+    <div id="cadre" style="background-image:url('http://127.0.0.1/ByxxR/public/images/cadres/backCadre_1.png')">
+	<div style="position:absolute;margin-top:9px;">Serveur : 
+	    		<span style="color:#FF0000">OffLine</span>
+	    	</div>
+	<div style="position:absolute;margin-top:30px;">Base de données :
+	    		<span style="color:#11ff00">OnLine</span>
+	    	</div>
+	<div style="position:absolute;margin-top:52px;">Comptes :  
+	    <b>418</b>
+	</div>
+	<div style="position:absolute;margin-top:73px;">Personnages :  
+	    <b>576</b>
+	</div>
+	<div style="position:absolute;margin-top:94px;">Guildes : 
+	    <b>7</b>
+	</div>
+	<div style="position:absolute;margin-top:115px;">Connectés : 
+	    <b>0</b>
+	</div>
+    </div>
+</div>
