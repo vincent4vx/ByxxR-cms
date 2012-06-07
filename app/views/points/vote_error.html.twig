@@ -1,0 +1,15 @@
+{# En cas de votes trop rapprochés #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img %}
+    {{ img('title/img_vote.png') }}
+{% endblock %}
+{% block page %}
+    {{ js('tools') }}
+    Vous avez déjà voté il y a moins de <b>{{ config.points.vote_time }}</b> minutes. Votre vote n'est donc pas pris en compte.<br/>
+    Veuillez revenir dans : {{ img('devtool/time.png') }} <b id="timer"></b>
+    <script>
+	decompte({{ time }}, "timer");
+    </script>
+{% endblock %}

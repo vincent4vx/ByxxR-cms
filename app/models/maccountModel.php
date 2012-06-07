@@ -103,14 +103,17 @@ class maccount extends model
         if(is_array($var))
         {
             $query = 'UPDATE accounts SET ';
+	    $size = sizeof($var);
+	    $numRow = 1;
             foreach ($var as $col => $value)
             {
-                $query .= $col.' = :'.$col.' ';
+                $query .= $col.' = :'.$col.($numRow == $size ? ' ' : ', ');
+		$numRow++;
             }
-            $query .= 'WHERE id = :id';
+            $query .= 'WHERE guid = :id';
             $req = $this->db->prepare($query);
-            $req->bindValue('id', $account, PDO::PARAM_INT);
-            $req->execute($var);
+            //$req->bindValue('id', $account, PDO::PARAM_INT);
+            $req->execute($var + array('id' => $account));
         }else
         {
             $req = $this->db->prepare('UPDATE accounts SET '.$var.' = :value WHERE guid = :id');
@@ -148,5 +151,32 @@ class maccount extends model
                 return $data[$var];
             }
         }
+    }
+    
+    public function canVote($id)
+    {
+	$req = $this->db->prepare('SELECT heurevote AS h FROM accounts WHERE guid = ?');
+	$req->execute(array($id));
+	$timeVote = $req->fetch();
+	$dTime = ($timeVote['h'] + $this->config['points']['vote_time'] * 60) - time();
+	if($dTime <= 0)
+	{
+	    return true;
+	}else
+	{
+	    return $dTime;
+	}
+    }
+    
+    public function addpoints($id, $num, $isVote = false)
+    {
+	$cols = array('points')	;
+	if($isVote)
+	    $cols[] = 'vote';
+	$data = $this->get($id, $cols);
+	$end['points'] = $num + $data['points'];
+	if($isVote)
+	    $end['vote'] = 1 + $data['vote'];
+	$this->set($id, $end);
     }
 }
