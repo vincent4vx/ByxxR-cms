@@ -45,8 +45,15 @@ class account extends controller
                     $data = $model->login($_POST['login'], $_POST['passlog']);
                     if($data !== false)
                     {
-                        $this->session->login($data);
-                        $this->output->success('img_profil', 'Connecté', 'Vous êtes maintenant connecté !');
+			if(in_array(array($data['lastIP'], 'ip' => $data['lastIP']), $model->getIpBlackList()) ||
+				$data['banned'] == 1)
+			{
+			    $this->output->error('img_profil', 'Compte banni', 'Le compte à été banni !');
+			}else
+			{
+			    $this->session->login($data);
+			    $this->output->success('img_profil', 'Connecté', 'Vous êtes maintenant connecté !');
+			}
                     }else
                     {
                         $this->output->view('account/login.html.twig');
@@ -360,6 +367,46 @@ class account extends controller
         {
             $this->output->error_403();
         }
+    }
+    
+    public function delete()
+    {
+	if($this->logged)
+	{
+	    $model = $this->model('maccount');
+	    if(!empty($_POST['reponse']) and !empty($_POST['pass']))
+	    {
+		$pass = $model->get($this->id, 'pass');
+		$reponse = $model->get($this->id, 'reponse');
+		if($_POST['pass'] == $pass)
+		{
+		    if($_POST['reponse'] == $reponse)
+		    {
+			$model->delete($this->id);
+			//$this->output->success('img_profil', 'Compte supprimé avec succès !', 'Le Compte à bien été supprimé.<br/>Vous ne pourrais plus retrouver ni ses personnages, ni tout autres données de ce compte.');
+			$this->logout();
+		    }else
+		    {
+			$this->output->error('img_profil', 'Réponse incorrecte', 'La réponse entré ne correspond pas à celle présente dans la base de donnée.', 'account', 'delete');
+		    }
+		}else
+		{
+		    $this->output->error('img_profil', 'Mot de passe incorrect', 'Le mot de passe entré ne correspond pas à celui présent dans la base de donnée.', 'account', 'delete');
+		}
+	    }else
+	    {
+		if($this->output->getCachedView('account/account.html.twig', $this->config['cache']['profil'], $this->id, array('param' => 'changemail')) === false)
+                {
+                    $this->output->view('account/account.html.twig', array(
+                        'account' => $model->getAccount($this->id),
+                        'param' => 'delete'
+                    ), $this->id);
+                }
+	    }
+	}else
+	{
+	    $this->output->error_403();
+	}
     }
     
     public function changemail()

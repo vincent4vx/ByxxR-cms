@@ -1,0 +1,27 @@
+{# Template de gestion des comptes #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img img('title/img_admin.png') %}
+{% block page %}
+<form action="{{ url('admin', 'accounts') }}" method="get">
+    <table style="width: 95%;">
+	<tr>
+	    <td colspan="3"><input type="text" name="search" style="width: 99%;"/></td>
+	    <td><input type="submit" value="Rechercher !" /></td>
+	</tr>
+	<tr style="text-align: center; font-weight: bold;">
+	    <td>id</td><td>Pseudo</td><td>Compte</td><td style="width: 50px;">Actions</td>
+	</tr>
+	{% for account in accounts %}
+	<tr style="height: 25px;">
+	    <td>{{ account.guid }}</td><td>{{ account.pseudo|length <= 12 ? account.pseudo : account.pseudo|slice(0,11) ~ '...' }}</td><td>{{ account.account|length <= 12 ? account.account : account.account|slice(0,11) ~ '...' }}</td><td style="text-align: center;"><span class="hiddenTools">{{ account.banned == 0 ? link(img('devtool/ban.png'), 'admin', 'ban?id=' ~ account.guid) : link(img('devtool/unban.png'), 'admin', 'unban?id=' ~ account.guid) }} {{ link(img('devtool/ip.png'), 'admin','banip?id=' ~ account.guid) }} {{ link(img('devtool/edit.png'), 'admin', 'account?id=' ~ account.guid) }} {{ link(img('devtool/delete.png'), 'admin', 'delaccount?id=' ~ account.guid) }}</span></td>
+	</tr>
+	{% else %}
+	<tr>
+	    <td colspan="4"><font color=red>Aucuns comptes trouvés !</font></td>
+	</tr>
+	{% endfor %}
+    </table>
+</form>
+{% endblock %}

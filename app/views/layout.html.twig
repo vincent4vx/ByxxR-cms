@@ -27,7 +27,7 @@
                     <a href="{{ url() }}"><li>Accueil</li></a>
                     <a href="{{ url("home", "infos") }}"><li>Présentation</li></a>
                     <a href="{{ url("home", "staff") }}"><li>L'équipe</li></a>
-                    <a href="{{ url("points", "vote") }}"><li><b>Vote & Gagne</b></li></a>
+                    <a href="{{ url("points", "vote") }}" target="_blank"><li><b>Vote & Gagne</b></li></a>
                     <a href="{{ url("home", "cgu") }}"><li style="border-bottom: 1px solid #989898;">Règlement</li></a>
                 <br/>
                 <div class="titleMenuLeft">La Communauté</div>
@@ -40,11 +40,11 @@
                     <a href="{{ url("ladder", "votes") }}"><li>Ladder des votes</li></a>
                     <a href="{{ url("ladder", "guilds") }}"><li style="border-bottom: 1px solid #989898;">Ladder des guildes</li></a>
                 <br/>
-                {% if session.isLog() %}
+                {# {% if session.isLog() %}
                 <div class="titleMenuLeft">Interative</div>
                     <a href="'.$lien_perso.'"><li>Personnages</li></a>
                     <a href="'.$lien_change_name.'"><li style="border-bottom: 1px solid #989898;">Changer de nom</li></a>
-                {% endif %}
+                {% endif %} #}
             </div>
             <div id=menuRight>
                 <div id="bgRight">

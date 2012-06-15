@@ -14,11 +14,11 @@
                 <tr>
                     <td>Nom de Compte : </td>
                     <td colspan="2">{{ session.getAccount() }}</td>
-                    <td>{{ img("devtool/delete.png") }}</td>
+                    <td>{{ link(img("devtool/delete.png"), 'account', 'delete#delete') }}</td>
                 </tr>
                 <tr>
                     <td style="text-align: center;"><b>{{ session.getPseudo }}</b></td>
-                    <td colspan="2">Rang : <b>{{ session.getLevel > 0 ? config.admin.rank[session.getLevel] : 'Joueur' }}</b></td>
+                    <td colspan="2">Rang : <b>{{ account.banned == 1 ? 'Banni' : session.getLevel > 0 ? config.admin.rank[session.getLevel] : 'Joueur' }}</b></td>
                     <td>{{ link(img("devtool/help.png"), "home", "staff") }}</td>
                 </tr>
                 <tr>

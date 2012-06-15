@@ -271,3 +271,11 @@ q{
     border: 1px dotted #888888;
     padding: 3px;
 }
+
+.hiddenTools{
+    display: none;
+}
+
+tr:hover .hiddenTools{
+    display: inline;
+}

@@ -12,7 +12,7 @@ return array(
     //points reçu par votes
     'per_vote' => 15,
     //temps d'attente entre 2 votes (en minutes)
-    'vote_time' => 120,
+    'vote_time' => 2,
     //FIN config vote
     
     //active la boutique ou non.

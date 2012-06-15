@@ -26,7 +26,7 @@ function decompte(time, elem)
 	disp += sec + "sec";
     }
     document.getElementById(elem).innerHTML = disp;
-    window.setInterval(decompte, 1000, time - 1, elem);
+    window.setTimeout(decompte, 1000, time - 1, elem);
 }
 
 

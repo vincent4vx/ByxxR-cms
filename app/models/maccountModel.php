@@ -38,17 +38,18 @@ class maccount extends model
     
     public function login($account, $pass)
     {
-        $req = $this->db->prepare('SELECT guid, account, level, pseudo FROM accounts WHERE account = :account AND pass = :pass');
+        $req = $this->db->prepare('SELECT guid, account, level, pseudo, lastIP, banned FROM accounts WHERE account = :account AND pass = :pass');
         $req->execute(array(
             'account' => $account,
             'pass' => $pass
         ));
         $data = $req->fetchAll();
-        if(sizeof($data) !== 1)
+        if(count($data) !== 1)
         {
             return false;
         }else
         {
+	    $this->set($data[0]['guid'], 'lastIP', $_SERVER['REMOTE_ADDR']);
             return $data[0];
         }
     }
@@ -178,5 +179,23 @@ class maccount extends model
 	if($isVote)
 	    $end['vote'] = 1 + $data['vote'];
 	$this->set($id, $end);
+    }
+    
+    public function delete($id)
+    {
+	$req = $this->db->prepare('DELETE FROM accounts WHERE guid = :id; DELETE FROM personnages WHERE account = :id;');
+	$req->execute(array('id' => $id));
+    }
+    
+    public function addIpBlackList($ip)
+    {
+	$req = $this->db->prepare('INSERT INTO banip(ip) VALUES(?)');
+	$req->execute(array($ip));
+    }
+    
+    public function getIpBlackList()
+    {
+	$req = $this->db->query('SELECT * FROM banip');
+	return $req->fetchAll();
     }
 }

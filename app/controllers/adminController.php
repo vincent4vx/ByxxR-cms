@@ -224,4 +224,106 @@ class admin extends controller
 	   $this->output->error_403();
        }
    }
+   
+   public function accounts()
+   {
+       if($this->session->isAdmin() === true)
+       {
+	   $result = array();
+	   if(isset($_GET['search']))
+	   {
+	       $model = $this->model('maccount');
+	       $result = $model->search($_GET['search'], false);
+	   }
+	   $this->output->view('admin/accounts.html.twig', array(
+	       'accounts' => $result
+	   ));
+       }else
+       {
+	   $this->output->error_403();
+       }
+   }
+   
+   public function ban()
+   {
+       if($this->session->isAdmin())
+       {
+	   if(isset($_GET['id']) && is_numeric($_GET['id']))
+	   {
+	       $model = $this->model('maccount');
+	       $model->set($_GET['id'], 'banned', 1);
+	       $this->output->success('img_admin', 'Compte bannis', 'Le compte n°<b>'.$_GET['id'].'</b> a été bannis avec succès !<br/>Vous allez être redirigé vers la page de gestion des comptes', 'admin', 'accounts');
+	   }else
+	   {
+	       $this->output->error('img_admin', 'Ban impossible', 'Le paramètre fournis n\'est pas conforme !', 'admin', 'accounts');
+	   }
+       }else
+       {
+	   $this->output->error_403();
+       }
+   }
+   
+   public function unban()
+   {
+       if($this->session->isAdmin())
+       {
+	   if(isset($_GET['id']) && is_numeric($_GET['id']))
+	   {
+	       $model = $this->model('maccount');
+	       $model->set($_GET['id'], 'banned', 0);
+	       $this->output->success('img_admin', 'Compte bannis', 'Le compte n°<b>'.$_GET['id'].'</b> a été bannis avec succès !<br/>Vous allez être redirigé vers la page de gestion des comptes', 'admin', 'accounts');
+	   }else
+	   {
+	       $this->output->error('img_admin', 'Ban impossible', 'Le paramètre fournis n\'est pas conforme !', 'admin', 'accounts');
+	   }
+       }else
+       {
+	   $this->output->error_403();
+       }
+   }
+   
+   public function delaccount()
+   {
+       if($this->session->isAdmin())
+       {
+	   if(isset($_GET['id']) && is_numeric($_GET['id']))
+	   {
+	       $model = $this->model('maccount');
+	       $model->delete($_GET['id']);
+	       $this->output->success('img_admin', 'Compte supprimé', 'Le compte n°<b>'.$_GET['id'].'</b> a été supprimé avec succès !<br/>Vous allez être redirigé vers la page de gestion des comptes', 'admin', 'accounts');
+	   }else
+	   {
+	       $this->output->error('img_admin', 'Suppression impossible', 'Le paramètre fournis n\'est pas conforme !', 'admin', 'accounts');
+	   }
+       }else
+       {
+	   $this->output->error_403();
+       }
+   }
+   
+   public function banip()
+   {
+       if($this->session->isAdmin())
+       {
+	   if(isset($_GET['id']) && is_numeric($_GET['id']))
+	   {
+	       $model = $this->model('maccount');
+	       $ip = $model->get($_GET['id'], 'lastIp');
+	       if($ip == '')
+	       {
+		   $this->output->error('img_admin', 'Ip inexistante', 'Le compte n\'a pas d\'ip enregistré, il est donc impossible de la bannir...', 'admin', 'accounts');
+	       }else
+	       {
+		   $model->addIpBlackList($ip);
+		   $this->output->success('img_admin', 'Compte bannis', 'L\'IP <b>'.$ip.'</b> a été bannis avec succès !<br/>Vous allez être redirigé vers la page de gestion des comptes', 'admin', 'accounts');   
+	       }
+	   }else
+	   {
+	       $this->output->error('img_admin', 'Ban impossible', 'Le paramètre fournis n\'est pas conforme !', 'admin', 'accounts');
+	   }
+       }else
+       {
+	   $this->output->error_403();
+       }
+   }
 }
