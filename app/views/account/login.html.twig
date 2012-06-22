@@ -2,9 +2,7 @@
 
 {% extends "layout.html.twig" %}
 
-{% block title_img %}
-    {{ img("title/img_profil.png") }}
-{% endblock %}
+{% block title_img img("title/img_profil.png") %}
 {% block page %}        
     <div class="verifNO">
         <h3>{{ img("devtool/error.png", "devtollIcon") }}Erreur lors de la connexion</h3>

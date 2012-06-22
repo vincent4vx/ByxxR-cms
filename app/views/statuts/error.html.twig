@@ -1,9 +1,7 @@
 {# template de messages de succès #}
 {% extends "layout.html.twig" %}
 
-{% block title_img %}
-    {{ img("title/" ~ image ~ ".png") }}
-{% endblock %}
+{% block title_img img("title/" ~ image ~ ".png") %}
 {% block page %}
     <div class="verifNO">
         <h3>{{ img("devtool/error.png") }} {{ titre }}</h3>

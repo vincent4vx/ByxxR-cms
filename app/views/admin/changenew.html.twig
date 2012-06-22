@@ -1,9 +1,8 @@
 {% extends "layout.html.twig" %}
 
-{% block title_img %}{{ img("title/img_admin.png") }}{% endblock %}
+{% block title_img img("title/img_admin.png") %}
 
 {% block page %}
-{% include "editor.twig" %}
 <fieldset>
     <legend>Modifier une nouvelle (nouvelle N°<b>{{ new.id }}</b>)</legend>
     <form action="{{ url("admin","changenew?id=" ~ new.id) }}" method="post">
@@ -32,4 +31,9 @@
         </table>
     </form>
 </fieldset>
+{% endblock %}
+
+{% block footer_inc %}
+    {{ js('editor/ckeditor') }}
+    {{ js('conf_editor') }}
 {% endblock %}

@@ -2,9 +2,7 @@
 
 {% extends "layout.html.twig" %}
 
-{% block title_img %}
-    {{ img("title/img_equipe.png") }}
-{% endblock %}
+{% block title_img img("title/img_equipe.png") %}
 {% block page %}
     {% if not cacheData %}
 	{% filter save(name) %}

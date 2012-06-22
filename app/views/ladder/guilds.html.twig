@@ -1,9 +1,7 @@
 {# template du ladder de guildes #}
 {% extends "layout.html.twig" %}
 
-{% block title_img %}
-    {{ img("title/img_ladder_guilde.png") }}
-{% endblock %}
+{% block title_img img("title/img_ladder_guilde.png") %}
 {% block page %}
     {% if not cacheData %}
         {% filter save(name) %}

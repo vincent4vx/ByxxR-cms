@@ -12,7 +12,8 @@ class tools extends \Twig_Extension
     {
         return array(
             'pagination' => new \Twig_Function_Method($this, 'pagination', array('is_safe' => array('html'))),
-	    'getHead' => new \Twig_Function_Method($this, 'getHead')
+	    'getHead' => new \Twig_Function_Method($this, 'getHead'),
+	    'getRank' => new \Twig_Function_Method($this, 'getRank')
         );
     }
     
@@ -110,7 +111,7 @@ class tools extends \Twig_Extension
 	$str = preg_replace('#\[list=1\](.+)\[/list\]#isU', '<ol>$1</ol>', $str);
 	$str = preg_replace('#\[list\](.+)\[/list\]#isU', '<ul>$1</ul>', $str);
 	$str = preg_replace('#\[\*\](.+)\n#isU', '<li>$1</li>', $str);
-	$str = preg_replace('#\[quote\](.+)\[/quote\]#isU', '<q>$1</q>', $str);
+	$str = preg_replace('#\[quote\](.+)\[/quote\]#isU', '<blockquote>$1</blockquote>', $str);
 	
 	
 	//smileys
@@ -121,5 +122,16 @@ class tools extends \Twig_Extension
 	$str = str_replace(':p', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/5.png" />', $str);
 	$str = str_replace(':o', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/6.png" />', $str);
 	return $str;
+    }
+    
+    public function getRank($level)
+    {
+	if($level == 0)
+	    return 'Joueur';
+	else
+	{
+	    $ranks = $GLOBALS['config']['admin']['rank'];
+	    return $ranks[$level];
+	}
     }
 }

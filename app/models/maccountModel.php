@@ -43,7 +43,7 @@ class maccount extends model
             'account' => $account,
             'pass' => $pass
         ));
-        $data = $req->fetchAll();
+        $data = $req->fetchAll(PDO::FETCH_ASSOC);
         if(count($data) !== 1)
         {
             return false;
@@ -68,11 +68,7 @@ class maccount extends model
     
     public function changeLevel($id, $level = 0)
     {
-        $req = $this->db->prepare('UPDATE accounts SET level = :level WHERE guid = :id');
-        $req->execute(array(
-            'level' => $level,
-            'id' => $id
-        ));
+	$this->set($id, 'level', $level);
     }
     
     public function search($s, $admin = false)
@@ -94,9 +90,7 @@ class maccount extends model
     
     public function getAccount($id)
     {
-        $req = $this->db->prepare('SELECT * FROM accounts WHERE guid = ?');
-        $req->execute(array($id));
-        return $req->fetch();
+	return $this->get($id, '*', true);
     }
     
     public function set($account, $var, $value = '')
@@ -104,16 +98,13 @@ class maccount extends model
         if(is_array($var))
         {
             $query = 'UPDATE accounts SET ';
-	    $size = sizeof($var);
-	    $numRow = 1;
+	    $query_array = array();
             foreach ($var as $col => $value)
             {
-                $query .= $col.' = :'.$col.($numRow == $size ? ' ' : ', ');
-		$numRow++;
+                $query_array[] = $col.' = :'.$col;
             }
-            $query .= 'WHERE guid = :id';
+            $query .= implode(',', $query_array).' WHERE guid = :id';
             $req = $this->db->prepare($query);
-            //$req->bindValue('id', $account, PDO::PARAM_INT);
             $req->execute($var + array('id' => $account));
         }else
         {
@@ -136,19 +127,19 @@ class maccount extends model
             $req->execute(array(
                 'id' => $account
             ));
-            return $req->fetch();
+            return $req->fetch(PDO::FETCH_ASSOC);
         }else
         {
             $req = $this->db->prepare('SELECT '.$var.' FROM accounts WHERE guid = :id');
             $req->execute(array(
                 'id' => $account
             ));
+	    $data = $req->fetch(PDO::FETCH_ASSOC);
             if($as_array)
             {
-                return $req->fetch();
+                return $data;
             }else
             {
-                $data = $req->fetch();
                 return $data[$var];
             }
         }
@@ -175,10 +166,10 @@ class maccount extends model
 	if($isVote)
 	    $cols[] = 'vote';
 	$data = $this->get($id, $cols);
-	$end['points'] = $num + $data['points'];
+	$data['points'] += $num;
 	if($isVote)
-	    $end['vote'] = 1 + $data['vote'];
-	$this->set($id, $end);
+	    $data['vote']++;
+	$this->set($id, $data);
     }
     
     public function delete($id)

@@ -264,9 +264,8 @@ input:hover, .input:hover, .inputError:hover{
     border: 1px solid #989898;
 }
 
-q{
+blockquote{
     margin-left: 25px;
-    display: block;
     margin-top: 10px;
     border: 1px dotted #888888;
     padding: 3px;

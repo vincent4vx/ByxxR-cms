@@ -2,9 +2,7 @@
 
 {% extends "layout.html.twig" %}
 
-{% block title_img %}
-    {{ img("title/img_inscription.png") }}
-{% endblock %}
+{% block title_img img("title/img_inscription.png") %}
 {% block page %}
     {% if error %}
         <div class="verifNO">

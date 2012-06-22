@@ -1,6 +1,4 @@
-{{ js('editor/ckeditor') }}
-<script type="text/javascript">
-    window.onload = function(){
+   window.onload = function(){
 	CKEDITOR.replace( 'new',
 	    {
 		extraPlugins : 'bbcode',
@@ -16,4 +14,5 @@
 		]
 	    });
     };
-</script>
+
+

@@ -23,7 +23,7 @@ class output
         $loader = new Twig_Loader_Filesystem(APP.'views/');
 	
 	//définition du cache twig
-        $cache_path = CORE.'cache/twig/';
+        $cache_path = CORE.'cache/twig';
         if(DEBUG)
         {
             $cache_path = false;

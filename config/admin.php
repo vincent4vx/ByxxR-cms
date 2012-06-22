@@ -20,5 +20,5 @@ return array(
     //seul le super admin peu modifier l'équipe du serveur
     //son compte ne peu pas être bani, modifié, ou supprimé
     //mettez -1 pour désactiver
-    'super_admin' => 0
+    'super_admin' => 999979526
 );
