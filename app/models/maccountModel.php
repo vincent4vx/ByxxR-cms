@@ -6,6 +6,14 @@ class maccount extends model
         parent::__construct();
     }
     
+    public function idExist($id)
+    {
+	$req=$this->db->prepare('SELECT COUNT(*) FROM accounts WHERE guid = ?');
+	$req->execute(array($id));
+	$count=$req->fetch();
+	return $count['COUNT(*)'] > 0;
+    }
+    
     public function accountExist($account)
     {
         $req = $this->db->prepare('SELECT COUNT(*) FROM accounts WHERE account = ?');

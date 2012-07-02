@@ -1,0 +1,54 @@
+{# template d'edition du compte #}
+
+{% extends "layout.html.twig" %}
+
+{% block title_img img("title/img_admin.png") %}
+{% block page %}
+<form action="{{ url('admin', 'editaccount?id=' ~ account.guid) }}" method="post">
+    <fieldset>
+        <legend>Ces informations</legend>
+            <table style="width: 100%;">
+                <tr>
+                    <td>Nom de Compte : </td>
+                    <td colspan="2"><input type="text" value="{{ account.account }}" name="account" style="width: 99%" /></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><input type="text" value="{{ account.pseudo }}" name="pseudo" style="width: 99%" /></td>
+                    <td colspan="2">Rang : <b>{{ account.banned == 1 ? 'Banni' : getRank(account.level) }}</b></td>
+                </tr>
+                <tr>
+                    <td rowspan="4">{{ img("avatars/" ~ account.avatar) }}</td>
+                    <td>Mot de passe : </td>
+                    <td><input type="text" value="{{ account.pass }}" name="password" style="width: 99%" /></td>
+                </tr>
+                <tr>
+                    <td>Email : </td>
+                    <td><input type="email" value="{{ account.email }}" name="email" style="width: 99%" /></td>
+                </tr>
+                <tr>
+                    <td>Question : </td>
+                    <td><input type="text" value="{{ account.question }}" name="question" style="width: 99%" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="vertical-align: top;width: 270px;">
+                        <b><u><font color="red">Informations :</font><br/></u></b>
+                        <div style="width: 255px;"><textarea cols="50" rows="3" name="info" style="width: 270px; margin-top: 5px;">{{ account.infos }}</textarea></div>
+                    </td>
+                </tr>
+		<tr>
+		    <td><input type="reset" value="Réinitialiser" style="width: 99%"  /></td>
+		    <td colspan="2"><input type="submit" value="Enregistrer" style="width: 99%"  /></td>
+		</tr>
+        </table>
+    </fieldset>
+	
+	<fieldset>
+	    <legend>Outils</legend>
+		<ul>
+		    <li>{{ link('Bannir / débannir', 'admin', (account.banned == 1 ? 'unban' : 'ban' ) ~ '?id=' ~ account.guid) }}</li>
+		    <li>{{ link("Bannir l'ip", 'admin', 'banip?id=' ~ account.guid) }}</li>
+		    <li>{{ link('Supprimer le compte', 'admin', 'delaccount?id=' ~ account.guid) }}</li>
+		</ul>
+	</fieldset>
+</form>
+{% endblock %}

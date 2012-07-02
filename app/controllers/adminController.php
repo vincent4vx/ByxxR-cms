@@ -248,7 +248,7 @@ class admin extends controller
    {
        if($this->session->isAdmin())
        {
-	   if(isset($_GET['id']) && is_numeric($_GET['id']))
+	   if(isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] != $this->config['admin']['super_admin'])
 	   {
 	       $model = $this->model('maccount');
 	       $model->set($_GET['id'], 'banned', 1);
@@ -286,7 +286,7 @@ class admin extends controller
    {
        if($this->session->isAdmin())
        {
-	   if(isset($_GET['id']) && is_numeric($_GET['id']))
+	   if(isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] != $this->config['admin']['super_admin'])
 	   {
 	       $model = $this->model('maccount');
 	       $model->delete($_GET['id']);
@@ -305,7 +305,7 @@ class admin extends controller
    {
        if($this->session->isAdmin())
        {
-	   if(isset($_GET['id']) && is_numeric($_GET['id']))
+	   if(isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] != $this->config['admin']['super_admin'])
 	   {
 	       $model = $this->model('maccount');
 	       $ip = $model->get($_GET['id'], 'lastIp');
@@ -321,6 +321,60 @@ class admin extends controller
 	   {
 	       $this->output->error('img_admin', 'Ban impossible', 'Le paramètre fournis n\'est pas conforme !', 'admin', 'accounts');
 	   }
+       }else
+       {
+	   $this->output->error_403();
+       }
+   }
+   
+   public function account()
+   {
+       if($this->session->isAdmin())
+       {
+	   if(isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] != $this->config['admin']['super_admin'])
+	   {
+	       $model = $this->model('maccount');
+	       if(($data = $model->getAccount($_GET['id'])))
+		   $this->output->view('admin/edit_account.html.twig', array('account' => $data));
+	       else
+		   $this->output->error('img_admin', 'Compte inexistant', 'Le compte passé en argument n\'existe pas !', 'admin', 'accounts');
+	   }else
+	   {
+	       $this->output->error('img_admin', 'Argument invalide', 'L\'argument passé est invalide !', 'admin', 'accounts');
+	   }
+       }else
+       {
+	   $this->output->error_403();
+       }
+   }
+   
+   public function editaccount()
+   {
+       if($this->session->isAdmin())
+       {
+	   if(isset($_GET['id']) && is_numeric($_GET['id']) && $_GET['id'] != $this->config['admin']['super_admin'])
+	   {
+	       $model=$this->model('maccount');
+	       if($model->idExist($_GET['id']))
+	       {
+		   if(isset($_POST['account']) && isset($_POST['pseudo']) && isset($_POST['question']) && isset($_POST['email']) && isset($_POST['info']) && isset($_POST['password']))
+		   {
+		       $model->set($_GET['id'], array(
+			   'account'=>$_POST['account'],
+			   'pseudo'=>$_POST['pseudo'],
+			   'question'=>$_POST['question'],
+			   'pass'=>$_POST['password'],
+			   'email'=>$_POST['email'],
+			   'infos'=>$_POST['info']
+		       ));
+		       $this->output->success('img_admin', 'Compte mis à jour', 'Le compte a bien été mis à jour avec succès.<br/>Vous allez être redirigé vers la page de gestion des comptes', 'admin', 'accounts');
+		   }
+		   else
+		       $this->output->error('img_admin', 'Formulaire invalide', 'Le formulaire passé est invalide !', 'admin', 'accounts');
+	       }else
+		   $this->output->error('img_admin', 'Compte inexistant', 'L\'id passé ne correspond à aucuns comptes !', 'admin', 'accounts');
+	   }else
+	       $this->output->error('img_admin', 'Argument invalide', 'L\'id passé est invalide !', 'admin', 'accounts');
        }else
        {
 	   $this->output->error_403();

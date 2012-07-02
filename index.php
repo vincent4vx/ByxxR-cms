@@ -12,7 +12,7 @@ define('CORE', BASE.'core/');
 define('APP', BASE.'app/');
 define('EXT', '.php');
 define('VERSION', '1.0');
-define('DEBUG', false);
+define('DEBUG', true);
 define('BENCHMARK', true);
 
 if(BENCHMARK)    
