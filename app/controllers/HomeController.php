@@ -31,25 +31,24 @@ class HomeController extends Controller
         }
     }
     
-    public function news()
+    public function newsAction()
     {
         $this->index();
     }
     
-    public function cgu()
+    public function cguAction()
     {
         $this->output->view('home/cgu.html.twig');
     }
     
-    public function join()
+    public function joinAction()
     {
         $this->output->view('home/join.html.twig');
     }
     
-    public function downloadConf()
+    public function downloadConfAction()
     {
         $confPath = BASE.'public/'.$this->config['server']['config'];
-        $confData = readfile($confPath);
 	header('Content-Type: "text/xml"');
 	header('Content-Disposition: attachment; filename="config.xml"');
 	header('Expires: 0');
@@ -57,15 +56,16 @@ class HomeController extends Controller
 	header("Content-Transfer-Encoding: binary");
 	header('Pragma: public');
 	header("Content-Length: ".filesize($confPath));
-        exit($confData);
+        readfile($confPath);
+	exit;
     }
     
-    public function infos()
+    public function infosAction()
     {
         $this->output->view("home/presentation.html.twig");
     }
     
-    public function staff()
+    public function staffAction()
     {
         if($this->output->getCachedView('home/staff.html.twig', $this->config['cache']['staff']) === false)
         {

@@ -29,6 +29,12 @@ class Loader
 	return true;
     }
     
+    public static function manualLoad(&$class, $name)
+    {
+	self::$instance[$name]=&$class;
+    }
+
+
     public static function &getClass($name, $alias_name=false)
     {
 	if(!isset(self::$instance[$name]) && !isset(self::$instance[$alias_name]))
@@ -47,5 +53,10 @@ class Loader
 	    return $class;
 	}
 	return self::$instance[$alias_name];
+    }
+    
+    public static function isLoad($class)
+    {
+	return isset(self::$instance[$class]);
     }
 }

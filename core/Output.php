@@ -27,14 +27,15 @@ class Output
         {
             $cache_path = false;
         }
-        $this->twig = new Twig_Environment($loader, array(
+	Loader::manualLoad(new Twig_Environment($loader, array(
             'cache' => $cache_path,
-        ));
+        )), 'twig');
+        $this->twig =& Loader::getClass('twig');
 	
 	//chargement des globals
-        global $session;
-        $this->twig->addGlobal('config', Core::$config);
-        $this->twig->addGlobal('session', $session);
+        $this->twig->addGlobal('config', Core::$config);	
+        $this->twig->addGlobal('session', Loader::getClass('Session'));
+	
 	
 	//ajout de filtres / fonctions
 	$this->twig->addFilter('save', new Twig_Filter_Function('cache::save', array('is_safe' => array('html'))));
@@ -50,10 +51,10 @@ class Output
         include CORE.'twig/extensions/tools'.EXT;
         $this->twig->addExtension(new App\AppBundle\Twig\Extension\tools());
 	
-	/*//chargement des stats
+	//chargement des stats
 	include CORE.'stats'.EXT;
-	$stats = new statsTable($this->twig);
-	$this->stats = $stats->getStats();*/
+	$stats = new statsTable();
+	$this->stats = $stats->getStats();
     }
     
     public function getCachedView($name, $time = 60, $id = '', $vars = array())

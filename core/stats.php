@@ -5,42 +5,21 @@ class statsTable
     private $twig;
 
 
-    public function __construct($twig)
+    public function __construct()
     {
-	$this->twig =& $twig;
-	
-	global $cache;
-	$this->cache =& $cache;
+	$this->twig =& Loader::getClass('twig');
+	$this->cache=&Loader::getClass('Cache');
     }
     
     public function getStats()
     {
-	if(($data = $this->cache->get('stats.html.twig', $GLOBALS['config']['cache']['stats'], '')) === false)
+	if(($data = $this->cache->get('stats.html.twig', Core::$config['cache']['stats'], '')) === false)
 	{
 	    
-	    try{
-		$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-		$pdo = new PDO('mysql:host='.$GLOBALS['config']['database']['host'].';dbname='.$GLOBALS['config']['database']['db_other'],
-                    $GLOBALS['config']['database']['user'],
-                    $GLOBALS['config']['database']['password'],
-                    $pdo_options
-		);
-	    }catch (Exception $e)
-	    {
-		if(DEBUG)
-		{
-		    $error = 'Erreur SQL: ';
-		    $error .= $e->getMessage();
-		    $error .= '<br/>Ligne: '.$e->getLine();
-		    exit($error);
-		}else
-		{
-		    exit('Erreur SQL !');
-		}
-	    }
+	    $pdo=&Loader::getClass('Database');
 	    $vars = array('name' => 'stats.html.twig');
-	    $vars['s_online'] = @fsockopen($GLOBALS['config']['server']['ip'], $GLOBALS['config']['server']['port']);
-	    $vars['db_online'] = @fsockopen($GLOBALS['config']['database']['host'], 3306); 
+	    $vars['s_online'] = @fsockopen(Core::$config['server']['ip'], Core::$config['server']['port']);
+	    $vars['db_online'] = @fsockopen(Core::$config['database']['host'], 3306); 
 	    $req = $pdo->query('SELECT COUNT(*) AS c_c FROM accounts');
 	    $vars += $req->fetch();
 	    $req = $pdo->query('SELECT COUNT(*) AS c_p FROM personnages');

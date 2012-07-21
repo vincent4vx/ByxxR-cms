@@ -12,8 +12,6 @@ class Cache
     
     public function get($name, $time, $id)
     {
-	if($this->config['driver'] === 'file')
-	{
 	    $filename = $this->cachePath.$name.$id.'.cache';
 	    if(file_exists($filename))
 	    {
@@ -29,27 +27,6 @@ class Cache
 	    {
 		return false;
 	    }
-	}elseif($this->config['driver'] === 'apc')
-        {
-            if(apc_exists($name.$id))
-            {
-                if((apc_fetch($name.$id.'-age') + $time) >= time() and !DEBUG)
-                {
-		    return apc_fetch($name.$id);
-                }else
-                {
-                    apc_delete($name.$id);
-                    apc_delete($name.$id.'-age');
-                    return false;
-                }
-            }else
-            {
-                return false;
-            }
-        }else
-        {
-            return false;
-        }
     }
     
     public static function save($data, $name)

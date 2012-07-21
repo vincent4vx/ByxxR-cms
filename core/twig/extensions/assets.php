@@ -10,7 +10,7 @@ class assets extends \Twig_Extension
     
     public function __construct()
     {
-        $this->config =& $GLOBALS['config'];
+        $this->config =& \Core::$config;
     }
     public function getName()
     {
