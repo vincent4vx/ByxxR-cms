@@ -11,15 +11,18 @@ define('BASE', __DIR__.'/');
 define('CORE', BASE.'core/');
 define('APP', BASE.'app/');
 define('EXT', '.php');
-define('VERSION', '1.0');
-define('DEBUG', true);
+define('VERSION', '2.0a');
+define('DEBUG', false);
 define('BENCHMARK', true);
 
 if(BENCHMARK)    
     $time = microtime(true);
 
 try{
-    require_once CORE.'loader'.EXT;
+    require_once CORE.'Core'.EXT;
+    $app=new Core();
+    $app->run();
+    $app->display();
 }catch (Exception $e)
 {
     if(DEBUG)

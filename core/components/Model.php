@@ -2,7 +2,7 @@
 /*
  * class mère des modèles
  */
-class model
+class Model
 {
     protected $db;
     protected $config;

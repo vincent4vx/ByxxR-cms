@@ -22,9 +22,11 @@ return array(
     
     /*
      * gestion des sessions
-     */    
+     */
+    
+    'cookie_name'=>'ByxxR-SESSID',
     //intervale entre 2 maj de la session (n'influence que très peu sur le cms)
-    'update_session_time' => 600,
+    //'update_session_time' => 600, //obsolète !
     
     //temps d'inativité minimum pour arrêter la session (en sec)
     'destr_session_time' => 7200,

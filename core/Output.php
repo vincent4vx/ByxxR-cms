@@ -3,7 +3,7 @@
  * class d'output
  * marche grâce à twig
  */
-class output
+class Output
 {
     protected $twig;
     protected $output = '';
@@ -34,7 +34,7 @@ class output
 	
 	//chargement des globals
         global $session;
-        $this->twig->addGlobal('config', $GLOBALS['config']);
+        $this->twig->addGlobal('config', Core::$config);
         $this->twig->addGlobal('session', $session);
 	
 	//ajout de filtres / fonctions
@@ -51,10 +51,10 @@ class output
         include CORE.'twig/extensions/tools'.EXT;
         $this->twig->addExtension(new App\AppBundle\Twig\Extension\tools());
 	
-	//chargement des stats
+	/*//chargement des stats
 	include CORE.'stats'.EXT;
 	$stats = new statsTable($this->twig);
-	$this->stats = $stats->getStats();
+	$this->stats = $stats->getStats();*/
     }
     
     public function getCachedView($name, $time = 60, $id = '', $vars = array())

@@ -1,5 +1,5 @@
 <?php
-class cache
+class Cache
 {
     protected $config;
     protected $cachePath;

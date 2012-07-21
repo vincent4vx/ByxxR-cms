@@ -1,20 +1,21 @@
 <?php
-class home extends controller
+class HomeController extends Controller
 {
     public function __construct() {
-        parent::__construct();
+	parent::__construct();
     }
     
-    public function index()
+    public function indexAction()
     {
         $page = 1;
         if(isset($_GET['page']) and is_numeric($_GET['page']))
         {
             $page = $_GET['page'];
         }
+	echo 'ok';
         if($this->output->getCachedView('home/news.html.twig', $this->config['cache']['news'], $page) === false)
         {
-            $model = $this->model('news');
+            $model = $this->loadModel('news');
             $num_news = $model->num();
             
             $last = ceil($num_news / 10);
