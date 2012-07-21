@@ -30,7 +30,7 @@
                     <a href="<?php echo $this->url->genUrl('home', 'cgu')?>"><li style="border-bottom: 1px solid #989898;">Règlement</li></a>
                 <br/>
                 <div class="titleMenuLeft">La Communauté</div>
-                    <a href="{{ url("home", "join") }}"><li>Nous Rejoindre</li></a>
+                    <a href="<?php echo $this->url->genUrl('home', 'join')?>"><li>Nous Rejoindre</li></a>
                     <?php if(!$this->session->isLog()):?>
                     <a href="{{ url("account", "register") }}"><li>Inscription</li></a>
                     <?php endif?>

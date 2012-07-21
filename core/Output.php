@@ -93,7 +93,7 @@ class Output
         $this->output .= $this->twig->render($name, $vars);
     }
     
-    public function phpView($file, array &$vars=array())
+    public function phpView($file, array $vars=array())
     {
 	$view=new View($file, $vars);
 	if($this->cacheId===false)

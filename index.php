@@ -48,7 +48,7 @@ if(BENCHMARK)
 		<td>'.(Loader::isLoad('Database') ? Database::$num_req : 0).'</td>
 	    </tr>
 	    <tr>
-		<td>Nombre de class chargées</td>
+		<td>Nombre de classes chargées</td>
 		<td>'.Loader::countClass().'</td>
 	    </tr>
         </table>';

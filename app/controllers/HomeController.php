@@ -42,7 +42,8 @@ class HomeController extends Controller
     
     public function joinAction()
     {
-        $this->output->view('home/join.html.twig');
+        //$this->output->view('home/join.html.twig');
+	$this->output->phpView('home/join');
     }
     
     public function downloadConfAction()
@@ -61,7 +62,8 @@ class HomeController extends Controller
     
     public function infosAction()
     {
-        $this->output->view("home/presentation.html.twig");
+        //$this->output->view("home/presentation.html.twig");
+	$this->output->phpView('home/presentation',Core::$config['server']['rates']);
     }
     
     public function staffAction()

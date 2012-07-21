@@ -31,4 +31,15 @@ class Url
 	}
         return $url;
     }
+    
+    public function link($title, $controller = '', $method = '', $vars=array(), $class = '')
+    {
+        $link =  '<a href="'.$this->genUrl($controller, $method, $vars).'"';
+        if($class !== '')
+        {
+            $link .= ' class="'.$class.'"';
+        }
+        $link .= '>'.$title.'</a>';
+        return $link;
+    }
 }

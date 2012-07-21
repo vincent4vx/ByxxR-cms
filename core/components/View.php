@@ -5,11 +5,11 @@ class View extends BaseComponent
     protected $content;
     protected $vars;
 
-    public function __construct($file, array &$vars = array())
+    public function __construct($file, array $vars = array())
     {
 	parent::__construct();
 	$this->file=APP.'views/'.$file.'.html.php';
-	$this->vars=&$vars;
+	$this->vars=$vars;
 	$this->genView();
     }
     
