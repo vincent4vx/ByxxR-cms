@@ -62,6 +62,13 @@ class Output
 	$this->stats = $stats->getStats();
     }
     
+    public function __get($name)
+    {
+	if(isset($this->_vars[$name]))
+	    return $this->_vars[$name];
+	return Loader::getClass(ucfirst(strtolower($name)));
+    }
+    
     public function getCachedView($name, $time = 60, $id = '', $vars = array())
     {
 	if(($data = $this->cache->get($name, $time, $id)) !== false)
@@ -90,9 +97,9 @@ class Output
     {
 	$view=new View($file, $vars);
 	if($this->cacheId===false)
-	    $this->contents.=$view->content;
+	    $this->contents.=$view->getContent();
 	else
-	    $this->cached_contents.=$view->content;
+	    $this->cached_contents.=$view->getContent();
 	$this->_vars+=$view->_vars;
     }
     

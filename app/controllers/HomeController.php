@@ -36,7 +36,8 @@ class HomeController extends Controller
     
     public function cguAction()
     {
-        $this->output->view('home/cgu.html.twig');
+        //$this->output->view('home/cgu.html.twig');
+	$this->output->phpView('home/cgu');
     }
     
     public function joinAction()

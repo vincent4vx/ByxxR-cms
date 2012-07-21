@@ -44,5 +44,6 @@ class Core
     public function display()
     {
 	Loader::getClass('Output')->display();
+	Loader::getClass('Output')->phpDisplay();
     }
 }

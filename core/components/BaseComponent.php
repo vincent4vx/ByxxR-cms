@@ -2,7 +2,7 @@
 class BaseComponent
 {
     protected $config;
-    protected $_vars=array();
+    public $_vars=array();
     
     public function __construct()
     {

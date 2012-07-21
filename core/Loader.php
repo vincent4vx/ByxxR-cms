@@ -8,7 +8,7 @@ class Loader
 
     public static function load_class($class_name, $alias_name=false)
     {
-	$path=array(CORE, APP.'controllers/', APP.'models/');
+	$path=array(CORE, CORE.'helpers/', APP.'controllers/', APP.'models/');
 	$ok=false;
 	foreach($path as $dir)
 	{
