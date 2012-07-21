@@ -6,7 +6,7 @@ class Cache
     
     public function __construct()
     {
-	$this->config =& $GLOBALS['config']['cache'];
+	$this->config =& Core::$config['cache'];
 	$this->cachePath = CORE.'cache/pages/';
     }
     

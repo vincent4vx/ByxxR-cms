@@ -12,7 +12,6 @@ class HomeController extends Controller
         {
             $page = $_GET['page'];
         }
-	echo 'ok';
         if($this->output->getCachedView('home/news.html.twig', $this->config['cache']['news'], $page) === false)
         {
             $model = $this->loadModel('news');

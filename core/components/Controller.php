@@ -10,6 +10,6 @@ class Controller extends BaseComponent
     
     protected function &loadModel($name, $alias)
     {
-        return Loader::getClass($name.'Model', $alias);
+        return Loader::getClass(ucfirst($name).'Model', $alias);
     }
 }

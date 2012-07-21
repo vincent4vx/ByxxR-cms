@@ -1,5 +1,5 @@
 <?php
-class news extends model
+class NewsModel extends model
 {
     public function __construct() {
         parent::__construct();

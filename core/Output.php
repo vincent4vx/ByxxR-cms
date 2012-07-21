@@ -14,8 +14,7 @@ class Output
     public function __construct()
     {
 	//chargement de la classe cache
-	global $cache;
-	$this->cache =& $cache;
+	$this->cache =& Loader::getClass('Cache');
 	
 	//lancement de twig
         require_once CORE.'twig/lib/Twig/Autoloader'.EXT;
