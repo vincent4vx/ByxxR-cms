@@ -59,4 +59,9 @@ class Loader
     {
 	return isset(self::$instance[$class]);
     }
+    
+    public static function countClass()
+    {
+	return count(self::$instance);
+    }
 }

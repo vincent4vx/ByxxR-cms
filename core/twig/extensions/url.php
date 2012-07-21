@@ -32,7 +32,7 @@ class url extends \Twig_Extension
         return $this->config['root'];
     }
     
-    public function url($controller = '', $method = '')
+    public function url($controller = '', $method = '', $vars='')
     {
         $url = $this->base_url();
         if(!$this->config['rewrite'])
@@ -44,6 +44,13 @@ class url extends \Twig_Extension
         {
             $url .= '/'.$method;
         }
+	if(!empty($vars))
+	{
+	    if(is_array($vars))
+		$url.='/'.implode('/', $vars);
+	    else
+		$url.='/'.$vars;
+	}
         return $url;
     }
     

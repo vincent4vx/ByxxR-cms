@@ -21,6 +21,7 @@ class Core
 	require_once CORE.'components/BaseComponent'.EXT;
 	require_once CORE.'components/Controller'.EXT;
 	require_once CORE.'components/Model'.EXT;
+	require_once CORE.'components/View'.EXT;
     }
     
     public function run()

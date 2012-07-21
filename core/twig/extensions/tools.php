@@ -30,7 +30,7 @@ class tools extends \Twig_Extension
         $return = '';
         if($current > 1)
         {
-            $return = '<a href="'.$url.'?page=1">&lt;&lt;</a> <a href="'.$url.'?page='.($current - 1).'">&lt;</a> ';
+            $return = '<a href="'.$url.'/1">&lt;&lt;</a> <a href="'.$url.'/'.($current - 1).'">&lt;</a> ';
         }
         for($i = 1; $i <= $end; $i++)
         {
@@ -39,12 +39,12 @@ class tools extends \Twig_Extension
                 $return .= '<b>'.$i.'</b> ';
             }else
             {
-                $return .= '<a href="'.$url.'?page='.$i.'">'.$i.'</a> ';
+                $return .= '<a href="'.$url.'/'.$i.'">'.$i.'</a> ';
             }
         }
         if($current < $end)
         {
-            $return .= '<a href="'.$url.'?page='.($current + 1).'">&gt;</a> <a href="'.$url.'?page='.$end.'">&gt;&gt;</a>';
+            $return .= '<a href="'.$url.'/'.($current + 1).'">&gt;</a> <a href="'.$url.'/'.$end.'">&gt;&gt;</a>';
         }
         return $return;
     }

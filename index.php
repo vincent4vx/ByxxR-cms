@@ -43,5 +43,13 @@ if(BENCHMARK)
                 <td>Utilisation de mémoire : </td>
                 <td>'.(memory_get_usage() / 1000).' Kb</td>
             </tr>
+	    <tr>
+		<td>Nombre de requêtes : </td>
+		<td>'.(Loader::isLoad('Database') ? Database::$num_req : 0).'</td>
+	    </tr>
+	    <tr>
+		<td>Nombre de class chargées</td>
+		<td>'.Loader::countClass().'</td>
+	    </tr>
         </table>';
 }

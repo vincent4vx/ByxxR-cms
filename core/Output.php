@@ -9,6 +9,11 @@ class Output
     protected $output = '';
     protected $cache;
     protected $stats;
+    
+    protected $contents='';
+    protected $cached_contents='';
+    protected $_vars=array();
+    protected $cacheId=false;
 
 
     public function __construct()
@@ -81,6 +86,16 @@ class Output
         $this->output .= $this->twig->render($name, $vars);
     }
     
+    public function phpView($file, array &$vars=array())
+    {
+	$view=new View($file, $vars);
+	if($this->cacheId===false)
+	    $this->contents.=$view->content;
+	else
+	    $this->cached_contents.=$view->content;
+	$this->_vars+=$view->_vars;
+    }
+    
     public function error_404()
     {
         header('HTTP/1.1 404 Not Found');
@@ -119,5 +134,12 @@ class Output
     {
         echo $this->output;
         $this->output = '';
+    }
+    
+    public function phpDisplay()
+    {
+	if(empty($this->contents))
+	    return;
+	require_once APP.'views/layout.html.php';
     }
 }

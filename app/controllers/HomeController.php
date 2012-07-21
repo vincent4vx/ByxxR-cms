@@ -7,11 +7,14 @@ class HomeController extends Controller
     
     public function indexAction()
     {
-        $page = 1;
-        if(isset($_GET['page']) and is_numeric($_GET['page']))
-        {
-            $page = $_GET['page'];
-        }
+	$this->newsAction();
+    }
+    
+    public function newsAction($page=1)
+    {
+        $page=(int)$page;
+	if($page<1)
+	    $page=1;
         if($this->output->getCachedView('home/news.html.twig', $this->config['cache']['news'], $page) === false)
         {
             $model = $this->loadModel('news');
@@ -29,11 +32,6 @@ class HomeController extends Controller
                 'pagi_current' => $page
             ), $page);
         }
-    }
-    
-    public function newsAction()
-    {
-        $this->index();
     }
     
     public function cguAction()
