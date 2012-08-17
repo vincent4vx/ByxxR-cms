@@ -32,10 +32,8 @@ class Router
     
     public function load_page()
     {
-	if(!is_object($obj=&Loader::getClass($this->controller.'Controller')))
+	if(!is_object($obj=&Loader::getClass($this->controller.'Controller', APP.'controllers/')))
 	    return $obj;
-	if(!method_exists($obj, $this->method.'Action'))
-	    return false;
 	return @call_user_func_array(array($obj, $this->method.'Action'), $this->vars);
     }
 }

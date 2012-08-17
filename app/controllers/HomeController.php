@@ -36,14 +36,12 @@ class HomeController extends Controller
     
     public function cguAction()
     {
-        //$this->output->view('home/cgu.html.twig');
-	$this->output->phpView('home/cgu');
+	$this->output->view('home/cgu');
     }
     
     public function joinAction()
     {
-        //$this->output->view('home/join.html.twig');
-	$this->output->phpView('home/join');
+	$this->output->view('home/join');
     }
     
     public function downloadConfAction()
@@ -62,8 +60,7 @@ class HomeController extends Controller
     
     public function infosAction()
     {
-        //$this->output->view("home/presentation.html.twig");
-	$this->output->phpView('home/presentation',Core::$config['server']['rates']);
+	$this->output->view('home/presentation',Core::$config['server']['rates']);
     }
     
     public function staffAction()

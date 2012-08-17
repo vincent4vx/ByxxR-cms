@@ -1,14 +1,15 @@
 <?php
 class Loader
 {
-    public static $instance=array();
-    
+    private static $instance=array();
+    private static $count=0;
+
     const NO_FILE=45;
     const NO_CLASS=46;
 
     public static function load_class($class)
     {
-	$path=array(CORE, CORE.strtolower($class).'/');
+	$path=array(CORE, CORE.strtolower($class).'/', CORE.'helpers/');
 	foreach($path as $dir)
 	{
 	    if(self::manual_load($class, $dir)===true)
@@ -26,6 +27,7 @@ class Loader
 	if(!class_exists($class))
 	    return self::NO_CLASS;
 	self::$instance[$class]=new $class;
+	self::$count++;
 	return true;
     }
 
@@ -51,6 +53,6 @@ class Loader
     
     public static function countClass()
     {
-	return count(self::$instance);
+	return self::$count;
     }
 }

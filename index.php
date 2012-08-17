@@ -13,43 +13,17 @@ define('APP', BASE.'app/');
 define('EXT', '.php');
 define('VERSION', '2.0a');
 define('DEBUG', true);
-define('BENCHMARK', true);
-
-if(BENCHMARK)    
-    $time = microtime(true);
-
+define('START_TIME', microtime(true));
 try{
     require_once CORE.'Core'.EXT;
     $app=new Core();
     $app->run();
     $app->display();
+    $app->benchmarks();
 }catch (Exception $e)
 {
     if(DEBUG)
     {
 	exit($e->getMessage());
     }
-}
-
-if(BENCHMARK)
-{
-    $timer = number_format(microtime(true) - $time, 4);
-    echo '<table>
-            <tr>
-                <td>Temps d\'exécution : </td>
-                <td>'.$timer.' sec</td>
-            </tr>
-            <tr>
-                <td>Utilisation de mémoire : </td>
-                <td>'.(memory_get_usage() / 1000).' Kb</td>
-            </tr>
-	    <tr>
-		<td>Nombre de requêtes : </td>
-		<td>'.(Loader::isLoad('Database') ? Database::$num_req : 0).'</td>
-	    </tr>
-	    <tr>
-		<td>Nombre de classes chargées</td>
-		<td>'.Loader::countClass().'</td>
-	    </tr>
-        </table>';
 }
