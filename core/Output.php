@@ -12,6 +12,7 @@ class Output
     
     protected $contents='';
     protected $cached_contents='';
+    protected $cached_vars=array();
     protected $_vars=array();
     protected $cacheId=false;
 
@@ -97,10 +98,15 @@ class Output
     {
 	$view=new View($file, $vars);
 	if($this->cacheId===false)
+	{
 	    $this->contents.=$view->getContent();
+	    $this->_vars+=$view->_vars;
+	}
 	else
+	{
 	    $this->cached_contents.=$view->getContent();
-	$this->_vars+=$view->_vars;
+	    $this->cached_vars+=$view->_vars;
+	}
     }
     
     public function error_404()
@@ -148,5 +154,38 @@ class Output
 	if(empty($this->contents))
 	    return;
 	require_once APP.'views/layout.html.php';
+    }
+    
+    public function startCache($id, $time=60)
+    {
+	$this->cacheId=$id;
+	$filename=CORE.'cache/pages/'.$id.'.cache';
+	if(DEBUG)
+	    return true;
+	if(!is_dir(CORE.'cache/pages'))
+	{
+	    mkdir (CORE.'cache/pages', 0777, true);
+	    return true;
+	}
+	if(!file_exists($filename) or filemtime($filename) + $time < time())
+	    return true;
+	$data=unserialize(file_get_contents($filename));
+	$this->contents.=$data['contents'];
+	$this->_vars+=$data['vars'];
+	return false;
+    }
+    
+    public function endCache()
+    {
+	$data=array(
+	    'vars'=>$this->cached_vars,
+	    'contents'=>$this->cached_contents
+	);
+	file_put_contents(CORE.'cache/pages/'.$this->cacheId.'.cache', serialize($data));
+	$this->_vars+=$this->cached_vars;
+	$this->contents.=$this->cached_contents;
+	$this->cacheId=false;
+	$this->cached_vars=array();
+	$this->cached_contents='';
     }
 }

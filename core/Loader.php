@@ -6,53 +6,42 @@ class Loader
     const NO_FILE=45;
     const NO_CLASS=46;
 
-    public static function load_class($class_name, $alias_name=false)
+    public static function load_class($class)
     {
-	$path=array(CORE, CORE.'helpers/', APP.'controllers/', APP.'models/');
-	$ok=false;
+	$path=array(CORE, CORE.strtolower($class).'/');
 	foreach($path as $dir)
 	{
-	    if(file_exists($dir.$class_name.EXT))
-	    {
-	        require $dir.$class_name.EXT;
-		$ok=true;
-	        break;
-	    }
+	    if(self::manual_load($class, $dir)===true)
+		return true;    
 	}
-	if(!$ok)
-	    return self::NO_FILE;
-	if(!class_exists($class_name))
-	    return self::NO_CLASS;
-	$class=new $class_name;
-	$alias_name = $alias_name===false?$class_name:$alias_name;
-	self::$instance[$alias_name]=&$class;
-	return true;
+	return false;
     }
     
-    public static function manualLoad(&$class, $name)
+    public static function manual_load($class, $path)
     {
-	self::$instance[$name]=&$class;
+	$file=$path.$class.EXT;
+	if(!file_exists($file))
+	    return self::NO_FILE;
+	require_once $file;
+	if(!class_exists($class))
+	    return self::NO_CLASS;
+	self::$instance[$class]=new $class;
+	return true;
     }
 
 
-    public static function &getClass($name, $alias_name=false)
+    public static function &getClass($class, $path=false)
     {
-	if(!isset(self::$instance[$name]) && !isset(self::$instance[$alias_name]))
-	{
-	    $error=self::load_class($name, $alias_name);
-	    if($error!==true)
-		return $error;
-	    $alias_name=$alias_name===false?$name:$alias_name;
-	    return self::$instance[$alias_name];
-	}
-	if(isset(self::$instance[$name]))
-	{
-	    $class=&self::$instance[$name];
-	    if($alias_name!==false)
-		self::$instance[$alias_name]=&$class;
-	    return $class;
-	}
-	return self::$instance[$alias_name];
+	if(self::isLoad($class))
+	    return self::$instance[$class];
+	
+	if($path===false)
+	    $state=self::load_class($class);
+	else
+	    $state=self::manual_load ($class, $path);
+	if($state!==true)
+	    return $state;
+	return self::$instance[$class];
     }
     
     public static function isLoad($class)

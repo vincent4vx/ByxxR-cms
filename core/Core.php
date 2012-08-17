@@ -18,10 +18,10 @@ class Core
     {
 	self::$config=require_once BASE.'config/main'.EXT;
 	require_once CORE.'Loader'.EXT;
-	require_once CORE.'components/BaseComponent'.EXT;
-	require_once CORE.'components/Controller'.EXT;
-	require_once CORE.'components/Model'.EXT;
-	require_once CORE.'components/View'.EXT;
+	require_once CORE.'MVC/BaseComponent'.EXT;
+	require_once CORE.'MVC/Controller'.EXT;
+	require_once CORE.'MVC/Model'.EXT;
+	require_once CORE.'MVC/View'.EXT;
     }
     
     public function run()

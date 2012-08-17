@@ -12,4 +12,9 @@ class Controller extends BaseComponent
     {
         return Loader::getClass(ucfirst($name).'Model', $alias);
     }
+    
+    protected function helper($name)
+    {
+	Loader::manual_load(ucfirst($name), CORE.'helpers/');
+    }
 }
