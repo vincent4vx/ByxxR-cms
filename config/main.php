@@ -10,6 +10,7 @@ return array(
     'admin' => require_once 'admin.php',
     'cache' => require_once 'cache.php',
     'points' => require_once 'points.php',
+    'session' => require_once 'session.php',
     //FIN
     
     //url de base (url de racine du cms)
@@ -20,22 +21,7 @@ return array(
     'rewrite' => true,
     
     
-    /*
-     * gestion des sessions
-     */
-    
-    'cookie_name'=>'ByxxR-SESSID',
-    //intervale entre 2 maj de la session (n'influence que très peu sur le cms)
-    //'update_session_time' => 600, //obsolète !
-    
-    //temps d'inativité minimum pour arrêter la session (en sec)
-    'destr_session_time' => 7200,
-    
-    //nombre de tentatives de connexion
-    'connect_attemps' => 5,
-    
-    //temps à attendre si toutes le tentatives ont échoué (en secondes)
-    'connect_time' => 10,
+
     
     //nombre de nouvelles par page
     'news_per_page' => 10

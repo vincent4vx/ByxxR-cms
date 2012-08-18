@@ -1,10 +1,15 @@
 <?php
 class Session
 {
+    protected $cache;
+    protected $cache_param=array();
+    
     protected $config;
     protected $SESSID;
     protected $_vars=array();
-    
+    protected $update=false;
+
+
     protected $logged=false;
     protected $admin=false;
     protected $super_admin=false;
@@ -17,18 +22,26 @@ class Session
     }
     
     public function __set($name, $value) {
+	$this->update=true;
 	$this->_vars[$name]=$value;
     }
 
     public function __construct() {
 	$this->config=&Core::$config;
-	if(!isset($_COOKIE[$this->config['cookie_name']]))
+	if(!isset($_COOKIE[$this->config['session']['cookie_name']]))
 	{
-	    $this->SESSID=hash('sha256', md5(rand(-100, 100)).uniqid().'azs544µ*dfgoer+=^$§wq<');
-	    setcookie($this->config['cookie_name'], $this->SESSID, 0, '/');
+	    $this->SESSID=hash('sha256', md5(rand(-100, 100)).uniqid());
+	    setcookie($this->config['session']['cookie_name'], $this->SESSID, 0, '/');
 	}else
-	    $this->SESSID=$_COOKIE[$this->config['cookie_name']];
-	if(($data=apc_fetch('byxxr_session:'.$this->SESSID))!==false)
+	    $this->SESSID=$_COOKIE[$this->config['session']['cookie_name']];
+	
+	$this->cache=&Loader::getClass('Cache');
+	$this->cache_param=array(
+	    'driver'=>$this->config['session']['driver'],
+	    'path'=>'session',
+	);
+	
+	if(($data=$this->cache->get($this->SESSID, $this->cache_param))!==false)
 	{
 	    $this->_vars=$data;
 	    $this->logged=true;
@@ -50,9 +63,8 @@ class Session
 	$this->logged=false;
 	$this->admin=false;
 	$this->super_admin=false;
-	$key='byxxr_session:'.$this->SESSID;
-	if(apc_exists($key))
-	    apc_delete ($key);
+	$this->update=false;
+	$this->cache->delete($this->SESSID, $this->cache_param);
     }
     
     public function isLog()
@@ -71,11 +83,12 @@ class Session
     }
     
     public function __destruct() {
-	$key='byxxr_session:'.$this->SESSID;
-	if($this->_vars!==array())
+	if($this->_vars===array())
+	    return;
+	if($this->update===true or $this->_vars['last_update']+$this->config['session']['update']<time())
 	{
 	    $this->_vars['REMOTE_ADDR']=$_SERVER['REMOTE_ADDR'];
-	    apc_store($key, $this->_vars, $this->config['destr_session_time']);
+	    $this->cache->set($this->SESSID, $this->_vars, $this->config['destroy'], $this->cache_param);
 	}
     }
 }
