@@ -1,5 +1,5 @@
 <?php
-class maccount extends model
+class AccountModel extends Model
 {
     public function __construct()
     {
@@ -70,7 +70,7 @@ class maccount extends model
             $query .= ' AND guid <> '.$this->config['admin']['super_admin'];
         }
         $query .= ' ORDER BY level DESC';
-        $req = $this->db->query($query);
+        $req = $this->database->query($query);
         return $req->fetchAll();
     }
     

@@ -6,7 +6,7 @@ class FileCache
     const EXT='.cache';
     const DIR='core/cache/data/';
 
-    public function get($id, array $param=array())
+    public function get($id, array &$param=array())
     {
 	$path=$this->getPath($param);
 	
@@ -30,7 +30,7 @@ class FileCache
 	return $data['value'];
     }
     
-    public function set($id, $value=null, $time=60, array $param=array())
+    public function set($id, &$value=null, $time=60, array &$param=array())
     {
 	$data=$param;
 	$data['deletion_time']=$time+time();
@@ -43,14 +43,14 @@ class FileCache
 	return @file_put_contents($path.$id.self::EXT, serialize($data));
     }
     
-    public function delete($id, array $param=array())
+    public function delete($id, array &$param=array())
     {
 	$path=$this->getPath($param);
 	
 	return @unlink($path.$id.self::EXT);
     }
     
-    private function getPath(array $param)
+    private function getPath(array &$param)
     {
 	if(!isset($param['path']))
 	    return BASE.self::DIR.$this->default_path.'/';

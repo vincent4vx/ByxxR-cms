@@ -3,7 +3,7 @@ class ApcCache
 {
     protected $default_path='';
     
-    public function get($id, $param=array())
+    public function get($id, &$param=array())
     {
 	$data=apc_fetch($this->getPath($param).$id);
 	if($data===false)
@@ -15,18 +15,18 @@ class ApcCache
 	return $data['value'];
     }
     
-    public function set($id, $value=null, $time=60, $param=array())
+    public function set($id, &$value=null, $time=60, &$param=array())
     {
 	$var=array('param'=>$param, 'value'=>$value);
 	return apc_store($this->getPath($param).$id, $var, $time);
     }
     
-    public function delete($id, array $param)
+    public function delete($id, array &$param)
     {
 	return apc_delete($this->getPath($param).$id);
     }
     
-    protected function getPath(array $param)
+    protected function getPath(array &$param)
     {
 	if(isset($param['path']))
 	    return $param['path'].'/';

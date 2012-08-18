@@ -8,13 +8,13 @@ class Controller extends BaseComponent
 	parent::__construct();
     }
     
-    protected function &loadModel($name, $alias)
+    protected function &helper($name)
     {
-        return Loader::getClass(ucfirst($name).'Model', $alias);
+	return Loader::getClass(ucfirst($name), CORE.'helpers/');
     }
     
-    protected function helper($name)
+    protected function &model($name)
     {
-	Loader::manual_load(ucfirst($name), CORE.'helpers/');
+	return Loader::getClass(ucfirst($name).'Model', APP.'models/');
     }
 }

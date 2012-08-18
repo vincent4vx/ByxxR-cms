@@ -40,7 +40,7 @@ class Database extends PDO
     }
 
 
-    public function &execQuery($query, &$param)
+    public function &execQuery($query, $param)
     {
 	try{
 	    $req = $this->prepare($query);
@@ -66,7 +66,7 @@ class Database extends PDO
 	return $array['COUNT(*)'];
     }
     
-    public function delete($table, array &$cond)
+    public function delete($table, array $cond)
     {
 	$query='DELETE FROM `'.$table.'` WHERE ';
 	foreach($cond as $col => $value)
@@ -110,7 +110,7 @@ class Database extends PDO
 	return $data['COUNT(*)'] > 0;
     }
     
-    public function changeDb($dbname)
+    public function change_db($dbname)
     {
 	$this->query('USE '.$dbname);
     }

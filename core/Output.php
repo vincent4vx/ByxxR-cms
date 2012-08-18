@@ -9,7 +9,9 @@ class Output
     protected $contents=''; 
     protected $_vars=array();
        
-    protected $cache_data=array();
+    protected $cache_id;
+    protected $cache_vars=array();
+    protected $cache_contents='';
     protected $cache_on=false;
 
 
@@ -38,8 +40,8 @@ class Output
 	}
 	else
 	{
-	    $this->cache_data['contents'].=$view->getContent();
-	    $this->cache_data['vars']+=$view->_vars;
+	    $this->cache_contents.=$view->getContent();
+	    $this->cache_vars+=$view->getVars();
 	}
     }
     
@@ -86,22 +88,22 @@ class Output
     
     public function startCache($id)
     {
-	$data=Loader::getClass('Cache')->get($id, array('driver'=>Core::$config['cache']['driver'], 'path'=>'core/cache/data/pages/'));
+	$data=Loader::getClass('Cache')->get($id, array('driver'=>Core::$config['cache']['driver'], 'path'=>'pages'));
 	if($data===false)
 	{
 	    $this->cache_on=true;
-	    $this->cache_data['id']=$id;
+	    $this->cache_id=$id;
 	    return true;
 	}
 	$this->contents.=$data['contents'];
 	$this->_vars+=$data['vars'];
+	return false;
     }
     
     public function endCache($time=60)
     {
-	Loader::getClass('Cache')->set($this->cache_data['id'], $this->cache_data, $time, array('driver'=>Core::$config['cache']['driver'], 'path'=>'core/cache/data/pages/'));
-	$this->_vars+=$this->cache_data['vars'];
-	$this->contents.=$this->cache_data['contents'];
-	$this->cache_data=array();
+	Loader::getClass('Cache')->set($this->cache_id, array('vars'=>$this->cache_vars, 'contents'=>  $this->cache_contents), $time, array('driver'=>Core::$config['cache']['driver'], 'path'=>'pages'));
+	$this->_vars+=$this->cache_vars;
+	$this->contents.=$this->cache_contents;
     }
 }

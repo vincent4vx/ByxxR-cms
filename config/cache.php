@@ -17,7 +17,7 @@ return array(
     //Pour ceux utilisant xampp ou wamp, apc n'est pas disponible.
     //à vous de voir les performance, en mettant true à benchmark (sur index.php)
     //et en changeant les drives de cache (après plusieur réactualisations !)
-    'driver' => 'file',
+    'driver' => 'apc',
     
     //ladders
     'ladder_perso' => 3600,
@@ -29,7 +29,7 @@ return array(
     'news' => 24 * 3600,
     
     //idem (mais un temps plus bas, en cas de modification des infos, ou de l'avatar)
-    'staff' => 12 * 3600,
+    'staff' => 10,
     
     //idem
     'profil' => 24 * 3600,

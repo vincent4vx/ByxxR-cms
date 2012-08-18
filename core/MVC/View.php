@@ -31,6 +31,6 @@ class View extends BaseComponent
     
     public function getVars()
     {
-	return $this->_vars;
+	return $this->vars;
     }
 }

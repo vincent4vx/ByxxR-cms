@@ -65,12 +65,13 @@ class HomeController extends Controller
     
     public function staffAction()
     {
-        if($this->output->getCachedView('home/staff.html.twig', $this->config['cache']['staff']) === false)
+        if($this->output->startCache('staff'))
         {
-            $model = $this->model('maccount');
-            $this->output->view('home/staff.html.twig', array(
-                'staff' => $model->getStaff()
+            $this->model('account');
+            $this->output->view('home/staff', array(
+                'staff' => $this->AccountModel->getStaff()
             ));
+	    $this->output->endCache($this->config['cache']['staff']);
         }
     }
 }

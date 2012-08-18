@@ -13,7 +13,7 @@ class BaseComponent
     {
 	if(isset($this->_vars[$name]))
 	    return $this->_vars[$name];
-	return Loader::getClass(ucfirst(strtolower($name)));
+	return Loader::getClass(ucfirst($name));
     }
     
     public function __set($name, $value)

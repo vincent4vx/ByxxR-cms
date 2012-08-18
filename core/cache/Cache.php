@@ -7,7 +7,7 @@ class Cache
 
     public static function drivers()
     {
-	return array('apc', 'file', 'none');
+	return array('apc', 'file', 'database');
     }
     
     private function getDriver(array $param)
