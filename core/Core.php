@@ -33,17 +33,12 @@ class Core
     {
 	$time=microtime(true);
 	$error=Loader::getClass('Router')->load_page();
-	if($error===false or is_int($error))
+	if($error!==null)
 	{
-	    switch ($error)
-	    {
-		case 45: echo 'NO_FILE';
-		    break;
-		case 46: echo 'NO_CLASS';
-		    break;
-		case false: echo 'NO_METHOD';
-		    break;
-	    }
+	    if($error===404 or $error===Loader::NO_CLASS or $error===Loader::NO_FILE)
+		Loader::getClass('Output')->error_404();
+	    elseif($error===403)
+		Loader::getClass('Output')->error_403();
 	}
 	self::$benchmarks['Loading controller']=number_format(microtime(true)-$time,4).'sec';
     }

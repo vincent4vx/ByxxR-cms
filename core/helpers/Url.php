@@ -34,12 +34,18 @@ class Url
     
     public function link($title, $controller = '', $method = '', $vars=array(), $class = '')
     {
-        $link =  '<a href="'.$this->genUrl($controller, $method, $vars).'"';
+        $url=$this->genUrl($controller, $method, $vars);
+	return $this->linkByUrl($title, $url, $class);
+    }
+    
+    public function linkByUrl($title, $url, $class='')
+    {
+        $link =  '<a href="'.$url.'"';
         if($class !== '')
         {
             $link .= ' class="'.$class.'"';
         }
         $link .= '>'.$title.'</a>';
-        return $link;
+        return $link;	
     }
 }

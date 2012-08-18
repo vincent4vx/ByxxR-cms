@@ -46,7 +46,7 @@ class Output
     public function error_404()
     {
         header('HTTP/1.1 404 Not Found');
-        $this->view('statuts/error_404.html.twig');
+        $this->view('statuts/error_404');
     }
     
     public function error_403()
