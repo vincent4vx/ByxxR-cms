@@ -4,6 +4,7 @@
         <title><?php echo Core::$config['server']['name'].' - '.$this->title?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <?php echo $this->assets->css('style')?>
+	<?php echo is_string($this->headerInc)?$this->headerInc:''?>
     </head> 
     <body>
         <span style="position:absolute;margin-top:161px;margin-left:190px;color:#ffffff;text-shadow:0em 0em 0.2em #000000;font-family:Vivaldi;font-size:35px;"><?php echo Core::$config['server']['name']?></span>

@@ -17,6 +17,7 @@ abstract class AbstractInput
 	$this->validate_functions=&$functions;
 	$this->setLabel($label);
 	$this->setPattern();
+	$this->setId();
     }
 
     protected function setAttributes(array &$attributes)
@@ -49,5 +50,35 @@ abstract class AbstractInput
     public function label()
     {
 	return '<label for="'.$this->id.'">'.$this->label.'</label>';
+    }
+    
+    public function error()
+    {
+	return '<div id="'.$this->id.'Error"></div>';
+    }
+    
+    public function getScript()
+    {
+	$script='
+	    function validate'.$this->name.'()
+	    {
+		var id = "'.$this->id.'";
+		var elem = document.getElementById(id);
+	    '.(!isset($this->attributes['required'])?'':'
+		if(elem.value == "")
+		{
+		    display_form_error(id, "Ce champ est obligatoire !");
+		    return;
+		}').'
+	    '.($this->pattern===''?'':'
+		var regex = new RegExp("'.$this->pattern.'");
+		if(!regex.test(elem.value))
+		{
+		    display_form_error(id, "Champ invalide !");
+		    return;
+		}').'
+	    }'.PHP_EOL;
+	
+	return $script;
     }
 }

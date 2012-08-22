@@ -4,6 +4,11 @@ class TestForm extends Form
     public $text;
     public $email;
     
+    public function url()
+    {
+	return Loader::getClass('Url')->genUrl('test');
+    }
+
     public function rows()
     {
 	return array(

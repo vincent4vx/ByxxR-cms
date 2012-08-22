@@ -3,7 +3,8 @@ class FormManager
 {
     protected $empty=true;
     protected $_form;
-    
+
+
     public function __get($name) {
 	if($this->empty)
 	    return false;
@@ -51,12 +52,33 @@ class FormManager
     }
     
     public function open()
-    {
+    {	
 	return '<form action="javascript:validateForm()">';
     }
     
     public function close()
     {
 	return '</form>';
+    }
+    
+    public function getScript()
+    {
+	$script='
+	<script type="text/javascript">
+	    function display_form_error(elemId, error)
+	    {
+		document.getElementById(elemId).style.border="1px solid red";
+		document.getElementById(elemId + "Error").innerHTML="<img src=\"public/images/devtool/error.png\" title=\"" + error + "\" />";
+	    }
+	    
+	    function validateForm()
+	    {
+		var errors = parseJsonPage("'.$this->_form->url().'");		
+	    }'.PHP_EOL.PHP_EOL;
+	foreach($this->_form as $row)
+	    $script.=$row->getScript().PHP_EOL;
+	$script.='</script>';
+	
+	return $script;
     }
 }
