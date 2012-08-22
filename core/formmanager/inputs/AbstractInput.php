@@ -77,6 +77,7 @@ abstract class AbstractInput
 		    display_form_error(id, "Champ invalide !");
 		    return;
 		}').'
+		form_valid(id);
 	    }'.PHP_EOL;
 	
 	return $script;

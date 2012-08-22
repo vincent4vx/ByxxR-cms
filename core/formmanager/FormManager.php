@@ -71,6 +71,12 @@ class FormManager
 		document.getElementById(elemId + "Error").innerHTML="<img src=\"public/images/devtool/error.png\" title=\"" + error + "\" />";
 	    }
 	    
+	    function form_valid(elemId)
+	    {
+		document.getElementById(elemId).style.border="1px solid #55FF55";
+		document.getElementById(elemId + "Error").innerHTML="<img src=\"public/images/devtool/ok.png\" />";
+	    }
+	    
 	    function validateForm()
 	    {
 		var errors = parseJsonPage("'.$this->_form->url().'");		
