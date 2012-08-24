@@ -17,7 +17,7 @@ class InputInput extends AbstractInput
 	    {
 		case 'text': break;
 		case 'email': 
-		    $pattern = '^[a-zA-Z0-9\._-]+@[a-zA-Z0-9/\._-]+\.[a-zA-Z]{2,4}$';
+		    $pattern = '^[a-zA-Z0-9._-]+@[a-zA-Z0-9/._-]+\.[a-zA-Z]{2,4}$';
 		    break;
 		case 'number':
 		    $pattern = '^[0-9]+(\.[0-9]+)?$';
@@ -32,7 +32,7 @@ class InputInput extends AbstractInput
 		    $pattern = '^[0-9]{4}-[0-1][0-9]$';
 		    break;
 		case 'url':
-		    $pattern = '^(http://|https://)[a-zA-Z0-9/%\.+_-]+\.[a-zA-Z]{2,4}(/[a-zA-Z0-9/%\.+_-]*)?$';
+		    $pattern = '^(http://|https://)[a-zA-Z0-9%.+_-]+\.[a-zA-Z]{2,4}(/[a-zA-Z0-9/%.+_-]*)?$';
 		    break;
 		case 'week':
 		    $pattern = '^[0-9]{4}-W[0-9]{2}$';

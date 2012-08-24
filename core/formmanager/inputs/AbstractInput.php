@@ -23,7 +23,7 @@ abstract class AbstractInput
     protected function setAttributes(array &$attributes)
     {	    
 	if(isset($attributes['pattern']))
-	    $this->pattern='#'.$value.'#';
+	    $this->pattern=$value;
 	if(in_array('required', $attributes))
 	    $attributes['required']='required';
 	$this->attributes=&$attributes;
@@ -44,17 +44,40 @@ abstract class AbstractInput
 	else
 	    $this->id=$this->name;
     }
+    
+    public function value()
+    {
+	if(!empty($_POST[$this->name]))
+	    return $_POST[$this->name];
+	return '';
+    }
 
     protected abstract function setPattern();
     
-    public function label()
+    public final function label()
     {
 	return '<label for="'.$this->id.'">'.$this->label.'</label>';
     }
     
-    public function error()
+    public final function error()
     {
-	return '<div id="'.$this->id.'Error"></div>';
+	return '<div id="'.$this->id.'Error" style="display: inline-block"></div>';
+    }
+    
+    public function validate()
+    {
+	if(isset($this->attributes['required']) and $this->value()==='')
+	    return array($this->name=>'Ce champ est obligatoire !');
+	
+	if($this->value() !== '' and $this->pattern !== '' and !preg_match($this->pattern, $this->value()))
+	    return array($this->name=>'Champ invalide !');
+	
+	foreach($this->validate_functions as $function)
+	{
+	    $error=$this->_parent->$function($this);
+	    if($error!==true)
+		return $error;
+	}    
     }
     
     public function getScript()

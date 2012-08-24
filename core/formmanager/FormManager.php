@@ -48,12 +48,12 @@ class FormManager
     
     public function submit($value='Ok')
     {
-	return '<input type="submit" value="'.$value.'" />';
+	return '<input type="submit" name="submit" id="submit" value="'.$value.'" />';
     }
     
-    public function open()
+    public function open($url='')
     {	
-	return '<form action="javascript:validateForm()">';
+	return '<form action="'.$url.'" onsubmit="return validateForm(\''.$this->_form->url().'\', this)">';
     }
     
     public function close()
@@ -63,28 +63,26 @@ class FormManager
     
     public function getScript()
     {
-	$script='
-	<script type="text/javascript">
-	    function display_form_error(elemId, error)
-	    {
-		document.getElementById(elemId).style.border="1px solid red";
-		document.getElementById(elemId + "Error").innerHTML="<img src=\"public/images/devtool/error.png\" title=\"" + error + "\" />";
-	    }
-	    
-	    function form_valid(elemId)
-	    {
-		document.getElementById(elemId).style.border="1px solid #55FF55";
-		document.getElementById(elemId + "Error").innerHTML="<img src=\"public/images/devtool/ok.png\" />";
-	    }
-	    
-	    function validateForm()
-	    {
-		var errors = parseJsonPage("'.$this->_form->url().'");		
-	    }'.PHP_EOL.PHP_EOL;
+	$script='<script type="text/javascript">'.PHP_EOL;
 	foreach($this->_form as $row)
 	    $script.=$row->getScript().PHP_EOL;
 	$script.='</script>';
 	
 	return $script;
+    }
+    
+    public function validate()
+    {
+	$errors=array();
+	foreach($this->_form as $row)
+	{
+	    $error=$row->validate();
+	    if($error!==true)
+		$errors+=$error;
+	}
+	
+	if($errors===array())
+	    return true;
+	return $errors;
     }
 }
