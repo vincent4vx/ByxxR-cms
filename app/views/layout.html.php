@@ -23,22 +23,22 @@
         </div>
         <div id="bg">
             <div id=menuLeft>
-                <div class="titleMenuLeft">Le Serveur</div>
-                    <a href="<?php echo $this->url->genUrl()?>"><li>Accueil</li></a>
-                    <a href="<?php echo $this->url->genUrl('home', 'infos')?>"><li>Présentation</li></a>
-                    <a href="<?php echo $this->url->genUrl('home', 'staff')?>"><li>L'équipe</li></a>
-                    <a href="<?php echo $this->url->genUrl('points', 'vote')?>" target="_blank"><li><b>Vote & Gagne</b></li></a>
-                    <a href="<?php echo $this->url->genUrl('home', 'cgu')?>"><li style="border-bottom: 1px solid #989898;">Règlement</li></a>
+                <div class="titleMenuLeft"><?php echo Core::tr('layout', 'server')?></div>
+		<a href="<?php echo $this->url->genUrl()?>"><li><?php echo Core::tr('layout', 'home')?></li></a>
+		<a href="<?php echo $this->url->genUrl('home', 'infos')?>"><li><?php echo Core::tr('layout', 'presentation')?></li></a>
+                    <a href="<?php echo $this->url->genUrl('home', 'staff')?>"><li><?php echo Core::tr('layout', 'staff')?></li></a>
+                    <a href="<?php echo $this->url->genUrl('points', 'vote')?>" target="_blank"><li><b><?php echo Core::tr('layout', 'vote')?></b></li></a>
+                    <a href="<?php echo $this->url->genUrl('home', 'cgu')?>"><li style="border-bottom: 1px solid #989898;"><?php echo Core::tr('layout', 'rules')?></li></a>
                 <br/>
-                <div class="titleMenuLeft">La Communauté</div>
-                    <a href="<?php echo $this->url->genUrl('home', 'join')?>"><li>Nous Rejoindre</li></a>
+                <div class="titleMenuLeft"><?php echo Core::tr('layout', 'community')?></div>
+                    <a href="<?php echo $this->url->genUrl('home', 'join')?>"><li><?php echo Core::tr('layout', 'join')?></li></a>
                     <?php if(!$this->session->isLog()):?>
-                    <a href="{{ url("account", "register") }}"><li>Inscription</li></a>
+                    <a href="{{ url("account", "register") }}"><li><?php echo Core::tr('layout', 'register')?></li></a>
                     <?php endif?>
-                    <a target="_blank" href="{{ config.server.forum }}"><li>Forum</li></a>
-                    <a href="{{ url("ladder") }}"><li>Ladder</li></a>
-                    <a href="{{ url("ladder", "votes") }}"><li>Ladder des votes</li></a>
-                    <a href="{{ url("ladder", "guilds") }}"><li style="border-bottom: 1px solid #989898;">Ladder des guildes</li></a>
+                    <a target="_blank" href="{{ config.server.forum }}"><li><?php echo Core::tr('layout', 'forum')?></li></a>
+                    <a href="{{ url("ladder") }}"><li><?php echo Core::tr('layout', 'ladder')?></li></a>
+                    <a href="{{ url("ladder", "votes") }}"><li><?php echo Core::tr('layout', 'votes-ladder')?></li></a>
+                    <a href="{{ url("ladder", "guilds") }}"><li style="border-bottom: 1px solid #989898;"><?php echo Core::tr('layout', 'guilds-ladder')?></li></a>
                 <br/>
                 <!--{# {% if session.isLog() %}
                 <div class="titleMenuLeft">Interative</div>

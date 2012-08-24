@@ -7,12 +7,12 @@
 	    <strong><?php echo $account['pseudo']?></strong><br/>
 	    <?php echo $this->assets->img('avatars/'.$account['avatar'])?>
 	</td>
-	<td>Rang : <b><?php echo Core::$config['admin']['rank'][$account['level']]?></b></td>	
+	<td><?php echo Core::tr('home/staff', 'rank')?> : <b><?php echo Core::$config['admin']['rank'][$account['level']]?></b></td>	
     </tr>
     <tr>
         <td style="vertical-align: top;">
-	    <b><u><font color="red">Informations :</font></u></b><br/>
-	    <?php echo $account['infos']!='' ? $account['infos'] : "Aucunes informations disponibles..."?>
+	    <b><u><font color="red"><?php echo Core::tr('home/staff', 'info')?> :</font></u></b><br/>
+	    <?php echo $account['infos']!='' ? $account['infos'] : Core::tr('home/staff', 'no-info')?>
 	</td>
     </tr>
     <?php endforeach?>

@@ -20,6 +20,9 @@ return array(
     //mode rewrite activé (avec un .htaccess qui permet de ne pas écrire le index.php dans l'url)
     'rewrite' => true,
     
+    //Langage
+    'lang'=>'en',
+    
     
 
     

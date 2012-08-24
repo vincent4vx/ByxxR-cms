@@ -8,6 +8,8 @@ class Core
     public static $config;
     
     public static $benchmarks;
+    
+    public static $lang=array();
 
 
     public function __construct()
@@ -60,5 +62,20 @@ class Core
 	    echo '<tr><td>'.$title.'</td><td>'.$value.'</td></tr>';
 	}
 	echo '</table>';
+    }
+    
+    public static function tr($file, $index)
+    {
+	if(isset(self::$lang[$file]))
+	{
+	    return isset(self::$lang[$file][$index]) ? self::$lang[$file][$index] : $index;
+	}
+	$filename=BASE.'lang/'.self::$config['lang'].'/'.$file.EXT;
+	if(!file_exists($filename))
+	    return $index;
+	
+	self::$lang[$file]=require_once $filename;
+	
+	return self::tr($file, $index);
     }
 }
