@@ -2,19 +2,21 @@
 abstract class AbstractInput
 { 
     protected $_parent;
-    protected $label='';
+    public $label='';
     protected $name='';
-    protected $id='';
+    public $id='';
     protected $validate_functions=array();
     protected $pattern='';
+    protected $inter_rows;
     protected $attributes;
 
-    public function __construct($name, &$parent, &$attributes, &$functions, &$label)
+    public function __construct($name, &$parent, &$attributes, &$functions, &$label, $inter_rows)
     {
 	$this->name=$name;
 	$this->_parent=&$parent;
 	$this->setAttributes($attributes);
 	$this->validate_functions=&$functions;
+	$this->inter_rows = $inter_rows;
 	$this->setLabel($label);
 	$this->setPattern();
 	$this->setId();
@@ -80,6 +82,41 @@ abstract class AbstractInput
 	}    
     }
     
+    private function validate_inter_rows($script=false)
+    {
+	if(!$this->inter_rows)
+	    return true;
+	
+	$param=array();
+	if(!preg_match('#(equal|diff)\(([a-z0-9]+)\)#i', $this->inter_rows, $param))
+	    exit('Syntaxe error in inter_rows function declaration for '.$this->name);
+	if($param[1]==='equal')
+	{
+	    if(!$script)
+		return $this->value() === $this->_parent->$param[2]->value();
+	    
+	    return '
+		if(elem.value != document.getElementById("'.$this->_parent->$param[2]->id.'").value)
+		{
+		    display_form_error(id, "Ce champ doit être de la même valeur que '.$this->_parent->$param[2]->label.'");
+		    return;
+		}'.PHP_EOL;
+	}elseif($param[1]==='diff')
+	{
+	   if(!$script)
+		return $this->value() !== $this->_parent->$param[2]->value();
+	    
+	    return '
+		if(elem.value == document.getElementById("'.$this->_parent->$param[2]->id.'").value)
+		{
+		    display_form_error(id, "Ce champ doit être différent de '.$this->_parent->$param[2]->label.'");
+		    return;
+		}'.PHP_EOL; 
+	}else
+	    return true;
+    }
+
+
     public function getScript()
     {
 	$script='
@@ -87,6 +124,7 @@ abstract class AbstractInput
 	    {
 		var id = "'.$this->id.'";
 		var elem = document.getElementById(id);
+	    '.($this->inter_rows===false?'':$this->validate_inter_rows(true)).'
 	    '.(!isset($this->attributes['required'])?'':'
 		if(elem.value == "")
 		{
@@ -94,8 +132,8 @@ abstract class AbstractInput
 		    return;
 		}').'
 	    '.($this->pattern===''?'':'
-		var regex = new RegExp("'.$this->pattern.'");
-		if(!regex.test(elem.value))
+		var regex = new RegExp("'.str_replace('\\', '\\\\', $this->pattern).'");
+		if(!regex.test(elem.value) && elem.value!="")
 		{
 		    display_form_error(id, "Champ invalide !");
 		    return;

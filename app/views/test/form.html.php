@@ -10,6 +10,10 @@
 	<td><?php echo $form->text?><?php echo $form->text->error()?></td>
     </tr>
     <tr>
+	<td><?php echo $form->txt2->label()?></td>
+	<td><?php echo $form->txt2?><?php echo $form->txt2->error()?></td>
+    </tr>
+    <tr>
 	<td><?php echo $form->email->label()?></td>
 	<td><?php echo $form->email?><?php echo $form->email->error()?></td>
     </tr>

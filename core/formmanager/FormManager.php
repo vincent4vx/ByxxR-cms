@@ -40,9 +40,10 @@ class FormManager
 	    $attributes=isset($data[1])?$data[1]:array();
 	    $functions=isset($data[2])?$data[2]:array();
 	    $label=isset($labels[$row])?$labels[$row]:false;
+	    $inter_rows=isset($data[3])?$data[3]:false;
 	    
 	    require_once 'inputs/'.$class_name.EXT;
-	    $this->_form->$row=new $class_name($row, $this->_form, $attributes, $functions, $label);
+	    $this->_form->$row=new $class_name($row, $this->_form, $attributes, $functions, $label, $inter_rows);
 	}
     }
     
@@ -51,9 +52,9 @@ class FormManager
 	return '<input type="submit" name="submit" id="submit" value="'.$value.'" />';
     }
     
-    public function open($url='')
+    public function open()
     {	
-	return '<form action="'.$url.'" onsubmit="return validateForm(\''.$this->_form->url().'\', this)">';
+	return '<form action="'.$this->_form->url().'" onsubmit="return validateForm(\''.$this->_form->url().'\', this)">';
     }
     
     public function close()

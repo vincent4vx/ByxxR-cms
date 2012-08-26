@@ -1,13 +1,18 @@
 <?php
 class InputInput extends AbstractInput
 {
-    public function __construct($name, &$parent, $attributes, $functions, $label)
+    public function __construct($name, &$parent, $attributes, $functions, $label, $inter_rows)
     {
-	parent::__construct($name, $parent, $attributes, $functions, $label);
+	parent::__construct($name, $parent, $attributes, $functions, $label, $inter_rows);
     }
     
     protected function setPattern()
     {
+	if(isset($this->attributes['pattern']))
+	{
+	    $this->pattern=$this->attributes['pattern'];
+	    return;
+	}
 	if($this->pattern==='')
 	{
 	    $pattern='';
@@ -23,7 +28,7 @@ class InputInput extends AbstractInput
 		    $pattern = '^[0-9]+(\.[0-9]+)?$';
 		    break;
 		case 'tel':
-		    $pattern = '^(\+[0-9]{3}|0)[1-9](.| )?([0-9]{2}){4}$';
+		    $pattern = '^(\+[0-9]{3}|0)[1-9](\.| )?([0-9]{2}(\.| )?){4}$';
 		    break;
 		case 'date':
 		    $pattern = '^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$';
