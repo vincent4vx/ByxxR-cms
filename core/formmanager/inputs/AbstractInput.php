@@ -26,8 +26,16 @@ abstract class AbstractInput
     {	    
 	if(isset($attributes['pattern']))
 	    $this->pattern=$value;
-	if(in_array('required', $attributes))
-	    $attributes['required']='required';
+	foreach($attributes as $attribute=>$value)
+	{
+	    if(is_numeric($attribute))
+	    {
+		$attributes[$value]=$value;
+		unset($attributes[$attribute]);
+	    }
+	}
+	/*if(in_array('required', $attributes))
+	    $attributes['required']='required';*/
 	$this->attributes=&$attributes;
     }
     
@@ -63,7 +71,7 @@ abstract class AbstractInput
     
     public final function error()
     {
-	return '<div id="'.$this->id.'Error" style="display: inline-block"></div>';
+	return '<div id="'.$this->id.'Error" class="formError" style="display: inline-block"></div>';
     }
     
     public function validate()

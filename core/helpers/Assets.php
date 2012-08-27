@@ -15,7 +15,7 @@ class Assets
     
     public function img($file, $class = '')
     {
-        $img = '<img src="'.$this->base_url.'public/images/'.$file.'"';
+        $img = '<img src="'.$this->base_url.'public/images/'.$file.'" alt="image"';
         if($class !== '')
         {
             $img .= ' class="'.$class.'"';
@@ -26,7 +26,7 @@ class Assets
     
     public function js($file)
     {
-        return '<script src="'.$this->base_url.'public/js/'.$file.'.js"></script>';
+        return '<script src="'.$this->base_url.'public/js/'.$file.'.js" type="text/javascript"></script>';
     }
     
     public function link($title, $controller = '', $method = '', $vars=array(), $class = '')

@@ -64,10 +64,10 @@ class FormManager
     
     public function getScript()
     {
-	$script='<script type="text/javascript">'.PHP_EOL;
+	$script='<script type="text/javascript">'.PHP_EOL.'//<![CDATA[';
 	foreach($this->_form as $row)
 	    $script.=$row->getScript().PHP_EOL;
-	$script.='</script>';
+	$script.='//]]>'.PHP_EOL.'</script>';
 	
 	return $script;
     }

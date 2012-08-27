@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" >
     <head>
         <title><?php echo Core::$config['server']['name'].' - '.$this->title?></title>
@@ -8,7 +8,7 @@
     </head> 
     <body>
         <span style="position:absolute;margin-top:161px;margin-left:190px;color:#ffffff;text-shadow:0em 0em 0.2em #000000;font-family:Vivaldi;font-size:35px;"><?php echo Core::$config['server']['name']?></span>
-        <div id=header style="background-image: url('<?php echo Core::$config['root']?>public/images/header/bgHead_1.png');">
+        <div id="header" style="background-image: url('<?php echo Core::$config['root']?>public/images/header/bgHead_1.png');">
             <div id="memberSpaceH">
                 <?php if(!$this->session->isLog()):?>
                     <form action="<?php echo $this->url->genUrl('account', 'login')?>" method="post">
@@ -22,23 +22,27 @@
             </div>
         </div>
         <div id="bg">
-            <div id=menuLeft>
+            <div id="menuLeft">
                 <div class="titleMenuLeft"><?php echo Core::tr('layout', 'server')?></div>
-		<a href="<?php echo $this->url->genUrl()?>"><li><?php echo Core::tr('layout', 'home')?></li></a>
-		<a href="<?php echo $this->url->genUrl('home', 'infos')?>"><li><?php echo Core::tr('layout', 'presentation')?></li></a>
-                    <a href="<?php echo $this->url->genUrl('home', 'staff')?>"><li><?php echo Core::tr('layout', 'staff')?></li></a>
-                    <a href="<?php echo $this->url->genUrl('points', 'vote')?>" target="_blank"><li><b><?php echo Core::tr('layout', 'vote')?></b></li></a>
-                    <a href="<?php echo $this->url->genUrl('home', 'cgu')?>"><li style="border-bottom: 1px solid #989898;"><?php echo Core::tr('layout', 'rules')?></li></a>
+		<ul>
+		    <li><a href="<?php echo $this->url->genUrl()?>"><?php echo Core::tr('layout', 'home')?></a></li>
+		    <li><a href="<?php echo $this->url->genUrl('home', 'infos')?>"><?php echo Core::tr('layout', 'presentation')?></a></li>
+		    <li><a href="<?php echo $this->url->genUrl('home', 'staff')?>"><?php echo Core::tr('layout', 'staff')?></a></li>
+		    <li><a href="<?php echo $this->url->genUrl('points', 'vote')?>" target="_blank"><b><?php echo Core::tr('layout', 'vote')?></b></a></li>
+		    <li style="border-bottom: 1px solid #989898;"><a href="<?php echo $this->url->genUrl('home', 'cgu')?>"><?php echo Core::tr('layout', 'rules')?></a></li>
+		</ul>
                 <br/>
                 <div class="titleMenuLeft"><?php echo Core::tr('layout', 'community')?></div>
-                    <a href="<?php echo $this->url->genUrl('home', 'join')?>"><li><?php echo Core::tr('layout', 'join')?></li></a>
+		<ul>
+                    <li><a href="<?php echo $this->url->genUrl('home', 'join')?>"><?php echo Core::tr('layout', 'join')?></a></li>
                     <?php if(!$this->session->isLog()):?>
-                    <a href="{{ url("account", "register") }}"><li><?php echo Core::tr('layout', 'register')?></li></a>
+                    <li><a href="<?php echo $this->url->genUrl("account", "register")?>"><?php echo Core::tr('layout', 'register')?></a></li>
                     <?php endif?>
-                    <a target="_blank" href="{{ config.server.forum }}"><li><?php echo Core::tr('layout', 'forum')?></li></a>
-                    <a href="{{ url("ladder") }}"><li><?php echo Core::tr('layout', 'ladder')?></li></a>
-                    <a href="{{ url("ladder", "votes") }}"><li><?php echo Core::tr('layout', 'votes-ladder')?></li></a>
-                    <a href="{{ url("ladder", "guilds") }}"><li style="border-bottom: 1px solid #989898;"><?php echo Core::tr('layout', 'guilds-ladder')?></li></a>
+                    <li><a target="_blank" href="<?php echo Core::$config['server']['forum']?>"><?php echo Core::tr('layout', 'forum')?></a></li>
+                    <li><a href="<?php echo $this->url->genUrl("ladder")?>"><?php echo Core::tr('layout', 'ladder')?></a></li>
+                    <li><a href="<?php echo $this->url->genUrl("ladder", "votes")?>"><?php echo Core::tr('layout', 'votes-ladder')?></a></li>
+                    <li style="border-bottom: 1px solid #989898;"><a href="<?php echo $this->url->genUrl("ladder", "guilds")?>"><?php echo Core::tr('layout', 'guilds-ladder')?></a></li>
+		</ul>
                 <br/>
                 <!--{# {% if session.isLog() %}
                 <div class="titleMenuLeft">Interative</div>
@@ -46,7 +50,7 @@
                     <a href="'.$lien_change_name.'"><li style="border-bottom: 1px solid #989898;">Changer de nom</li></a>
                 {% endif %} #}-->
             </div>
-            <div id=menuRight>
+            <div id="menuRight">
                 <div id="bgRight">
                     <div id="menuRightLien">
                         <?php if($this->session->isLog()):?>
@@ -70,26 +74,21 @@
                         <?php endif?>
                         <?php if(!$this->session->isLog()):?>
 			<div class="titleMenuRight">Pas encore inscris ?</div>
-                            <center><a href="{{ url("account", "register") }}"><?php echo $this->assets->img("imgInscription.png")?></a></center>
+                            <center><a href="<?php echo $this->url->genUrl("account", "register")?>"><?php echo $this->assets->img("imgInscription.png")?></a></center>
                         <?php endif?>
-                    </div>
-                    <?php echo $this->assets->img("bottomRight.png", "bgRight")?>
-                </div>
+                    </div>  
+                </div><?php echo $this->assets->img("bottomRight.png", "bgRight")?>
             </div>
                 <div id="Content">
-                    <?php echo $this->assets->img("topContent.png")?>
-                    <div id="bgContent">
+                    <div class="bgContent">
 			<?php echo $this->stats?>
                     </div>
-                    <?php echo $this->assets->img("bottomContent.png")?>
-                    <center><?php echo $this->assets->img('title/img_'.$this->titleImg.'.png')?></center>
-                    <?php echo $this->assets->img("topContent.png")?>
-                    <div id="bgContent">
+                    <center><?php echo $this->assets->img('title/img_'.$this->titleImg.'.png', 'titleImg')?></center>
+                    <div class="bgContent">
 			<div id="textContent">
                             <?php echo $this->contents?>
 			</div>
                     </div>
-                    <?php echo $this->assets->img("bottomContent.png")?>
                 </div>
                 <div id="footer">
                     <div class="rightFooter">
@@ -101,6 +100,7 @@
                         <b>Dofus</b> est un jeu et une marque déposé par <b>Ankamas Games</b>.
                     </div>
                 </div>
+	</div>
     </body>
 	<?php echo is_string($this->footerInc)?$this->footerInc:''?>
 </html>
