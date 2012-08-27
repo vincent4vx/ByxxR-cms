@@ -11,9 +11,11 @@ class DatabaseCache
     
     public function get($id,array &$param=array())
     {
-	$data=$this->db->execQuery('SELECT * FROM '.$this->getPath($param).' WHERE id = :id', array('id'=>$id))->fetch();
+	//$data=$this->db->execQuery('SELECT * FROM '.$this->getPath($param).' WHERE id = :id', array('id'=>$id))->fetch();
+	$data=$this->db->selectFirst($this->getPath($param), '*', array('id'=>$id));
 	if($data===false)
 	    return false;
+	
 	if($data['deletion_time']<time())
 	{
 	    $this->delete($id, $param);
@@ -21,7 +23,7 @@ class DatabaseCache
 	}
 	
 	if($data['delete_after']==true)
-	    $this->delete ($id, $param);
+	    $this->delete($id, $param);
 	return @unserialize($data['data']);
     }
     

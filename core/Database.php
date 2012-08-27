@@ -2,6 +2,7 @@
 class Database extends PDO
 {
     protected $_config;
+    public $lastQuery='';
     public static $num_req=0;
 
 
@@ -25,6 +26,7 @@ class Database extends PDO
     {
 	try{
 	    self::$num_req++;
+	    $this->lastQuery=$statement;
 	    return parent::query($statement);
 	}catch(Exception $e)
 	{
@@ -36,6 +38,7 @@ class Database extends PDO
     {
 	try{
 	    self::$num_req++;
+	    $this->lastQuery=$statement;
 	    return parent::prepare($statement, $driver_options);
 	}catch(Exception $e)
 	{
@@ -46,6 +49,7 @@ class Database extends PDO
     public function exec($statement) {
 	try{
 	    self::$num_req++;
+	    $this->lastQuery=$statement;
 	    parent::exec($statement);
 	}catch(Exception $e)
 	{
@@ -197,6 +201,21 @@ class Database extends PDO
 	return intval($data['COUNT(*)']);
     }
     
+    public function delete($table, array $requirements=array())
+    {
+	$where='';
+	if($requirements!==array())
+	    $where=$this->whereBuilder($requirements);
+	return $this->execute('DELETE FROM '.$table.$where, $requirements);
+    }
+    
+    public function create($table, array $value=array())
+    {
+	$col=array_keys($value);
+	$query='INSERT INTO '.$table.'('.implode(', ', $col).') VALUES (:'.implode(', :', $col).')';
+	$this->execute($query, $value);
+    }
+    
     /**
      * Change the database
      * 
@@ -219,8 +238,10 @@ class Database extends PDO
     protected function whereBuilder(array &$requirements)
     {
 	$query=' WHERE ';
+	$rows=array();
 	foreach(array_keys($requirements) as $col)
-	    $query.=' AND '.$col.' = :'.$col;
+	    $rows[]=$col.' = :'.$col;
+	$query.=implode(' AND ', $rows);
 	return $query;
     }
 }

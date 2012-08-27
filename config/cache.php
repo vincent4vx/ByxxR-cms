@@ -17,7 +17,7 @@ return array(
     //Pour ceux utilisant xampp ou wamp, apc n'est pas disponible.
     //à vous de voir les performance, en mettant true à benchmark (sur index.php)
     //et en changeant les drives de cache (après plusieur réactualisations !)
-    'driver' => 'file',
+    'driver' => 'database',
     
     //ladders
     'ladder_perso' => 3600,
