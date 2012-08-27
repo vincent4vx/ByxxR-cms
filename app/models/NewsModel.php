@@ -1,8 +1,13 @@
 <?php
-class NewsModel extends model
+class NewsModel extends Model
 {
     public function __construct() {
         parent::__construct();
+    }
+    
+    public function get()
+    {
+	return $this->db->selectAll('news');
     }
     
     public function selectAll()

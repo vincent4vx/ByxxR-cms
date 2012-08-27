@@ -15,23 +15,15 @@ class HomeController extends Controller
         $page=(int)$page;
 	if($page<1)
 	    $page=1;
-        if($this->output->getCachedView('home/news.html.twig', $this->config['cache']['news'], $page) === false)
-        {
-            $model = $this->loadModel('news');
-            $num_news = $model->num();
-            
-            $last = ceil($num_news / 10);
-            $page = $last >= $page ? $page : 1;
-            $start = ($page - 1) * $this->config['news_per_page'];
-            $num = $this->config['news_per_page'];
-            
-            $news = $model->selectLimit($start, $num);
-            $this->output->view('home/news.html.twig', array(
-                'news' => $news,
-                'pagi_end' => ceil($num_news / 10),
-                'pagi_current' => $page
-            ), $page);
-        }
+	
+	if($this->output->startCache('news'))
+	{
+	    $this->output->view('home/news', 
+		array(
+		    'news'=>$this->model('news')->get()
+	    ));
+	    $this->output->endCache();
+	}
     }
     
     public function cguAction()

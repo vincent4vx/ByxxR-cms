@@ -40,7 +40,7 @@ class FileCache
 	
 	@mkdir($path, 0777, true);
 	
-	return @file_put_contents($path.$id.self::EXT, serialize($data));
+	return file_put_contents($path.$id.self::EXT, serialize($data));
     }
     
     public function delete($id, array &$param=array())

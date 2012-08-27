@@ -305,4 +305,10 @@ tr:hover .hiddenTools{
     -o-transition-property: all;
     -o-transition-duration: 0.2s;
     -o-transition-timing-function: linear;
+    -moz-transition-property: all;
+    -moz-transition-duration: 0.2s;
+    -moz-transition-timing-function: linear;
+    -webkit-transition-property: all;
+    -webkit-transition-duration: 0.2s;
+    -webkit-transition-timing-function: linear;
 }
