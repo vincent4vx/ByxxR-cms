@@ -17,6 +17,10 @@ class Database extends PDO
 	}
     }
     
+    /*
+     * Fonctions PDO
+     */
+    
     public function query($statement)
     {
 	try{
@@ -38,80 +42,185 @@ class Database extends PDO
 	    exit('PDO error :<br/>'.$e->getFile().' ligne : '.$e->getLine().'<br/>'.$e->getMessage());
 	}
     }
+    
+    public function exec($statement) {
+	try{
+	    self::$num_req++;
+	    parent::exec($statement);
+	}catch(Exception $e)
+	{
+	    exit($e);
+	}
+    }
 
 
-    public function &execQuery($query, $param)
+    /*
+     * fonctions raccourcies
+     * all-in-one pour query / prepare
+     */
+    
+    /**
+     * Execute and return all value of a query
+     * 
+     * Use PDO::query for exectute the query and
+     * PDOStatement::fetchAll() to return and array
+     * with all result
+     * 
+     * @param string $query the query that we want to execute
+     * 
+     * @return array the result of the query
+     */
+    public function queryAll($query)
+    {
+	return $this->query($query)->fetchAll();
+    }
+        
+    /**
+     * Execute and return the first value of a query
+     * 
+     * Use PDO::query for exectute the query and
+     * PDOStatement::fetch() to return and array
+     * with the first result
+     * 
+     * @param string $query the query that we want to execute
+     * 
+     * @return array the result of the query
+     */
+    public function queryFirst($query)
+    {
+	return $this->query($query)->fetch();
+    }
+    
+    /**
+     * Prepare and execute a query
+     * 
+     * Use PDO::prepare to prepare the query and
+     * PDOStatement::execute to execute query with the 
+     * params
+     * 
+     * @param string $query The query that we want to execute
+     * @param array $param The parameters
+     * 
+     * @return PDOStatement
+     */
+    public function &execute($query, array &$param=array())
     {
 	try{
-	    $req = $this->prepare($query);
-	    $req->execute($param);
-	    return $req;
+	    $statement=$this->prepare($query);
+	    $statement->execute($param);
+	    return $statement;
 	}catch(Exception $e)
 	{
 	    exit('PDO error :<br/>'.$e->getFile().' ligne : '.$e->getLine().'<br/>'.$e->getMessage());
 	}
     }
-
-
-    public function selectAll($table)
+    
+    /**
+     * Use Database::execute and return all result to array
+     * 
+     * @param string $query The query that we want to execute
+     * @param array $param The parameters
+     * @return array The list of affected rows
+     */
+    public function executeAll($query, array $param=array())
     {
-	$data = $this->query('SELECT * FROM `'.$table.'`');
-	return $data->fetchAll();
+	return $this->execute($query, $param)->fetchAll();
     }
     
-    public function countAll($table)
+    /**
+     * Use Database::execute and return the first affected row
+     * 
+     * @param string $query The query that we want to execute
+     * @param array $param The parameters
+     * @return array The first affected row
+     */
+    public function executeFirst($query, array $param=array())
     {
-	$data = $this->query('SELECT COUNT(*) FROM `'.$table.'`');
-	$array=$data->fetch();
-	return $array['COUNT(*)'];
+	return $this->execute($query, $param)->fetch();
     }
     
-    public function delete($table, array $cond)
+    /*
+     * Fonctions de générations de requêtes
+     */
+    
+    /**
+     * Select generator
+     * 
+     * Select All the affected rows
+     * 
+     * @param string $table table name
+     * @param string $vars the list of column
+     * @param array $requirement An array of requirements form column => value
+     * @param string $other The other sql operations (LIMIT, ORDER...)
+     * @return array The array with all affected rows
+     */
+    public function selectAll($table, $vars='*', array $requirement=array(), $other='')
     {
-	$query='DELETE FROM `'.$table.'` WHERE ';
-	foreach($cond as $col => $value)
-	    $query.=$col.' = :'.$col.' ';
-	return $this->execQuery($query, $cond);
+	$query='SELECT '.$vars.' FROM '.$table;
+	if($requirement!==array())
+	    $query.=$this->whereBuilder($requirement);
+	$query.=' '.$other;
+	return $this->executeAll($query, $requirement);
     }
     
-    public function create($table, array $values)
+    /**
+     * Select generator
+     * 
+     * Select the first affected row
+     * 
+     * @param string $table table name
+     * @param string $vars the list of column
+     * @param array $requirement An array of requirements form column => value
+     * @param string $other The other sql operations (LIMIT, ORDER...)
+     * @return array The first affected row
+     */
+    public function selectFirst($table, $vars='*', array $requirement=array(), $other='')
     {
-	$query='INSERT INTO '.$table.'(';
-	$cols=array_keys($values);
-	$query.=implode(',', $cols).') VALUES (:';
-	$query.=implode(', :', $cols).')';
-	return $this->execQuery($query, $values);
+	$query='SELECT '.$vars.' FROM '.$table;
+	if($requirement!==array())
+	    $query.=$this->whereBuilder($requirement);
+	$query.=' '.$other;
+	
+	return $this->executeFirst($query, $requirement);
     }
     
-    public function select($table, array $selected, array $cond, $all=false)
+    /**
+     * Return the number of rows
+     * 
+     * @param string $table the table name
+     * @param array $requirements An array of requirements form column => value
+     * @return int The num of rows
+     */
+    public function count($table, array $requirements=array())
     {
-	$query='SELECT '.implode(',', $selected).' FROM `'.$table.'` WHERE ';
-	foreach(array_keys($cond) as $col)
-	    $query.=$col.' = :'.$col.' ';
-	if($all)
-	    return $this->execQuery($query, $cond)->fetchAll();	
-	return $this->execQuery($query, $cond)->fetch();
+	$data=$this->selectFirst($table, 'COUNT(*)', $requirements);
+	return intval($data['COUNT(*)']);
     }
     
-    public function findAll($table, array $cond)
-    {
-	return $this->select($table, array('*'), $cond, true);
-    }
-    
-    public function find($table, array $cond)
-    {
-	return $this->select($table, array('*'), $cond);
-    }
-
-
-    public function exist($table, array $cond)
-    {
-	$data=$this->select($table, 'COUNT(*)', $cond);
-	return $data['COUNT(*)'] > 0;
-    }
-    
+    /**
+     * Change the database
+     * 
+     * @param string $dbname 
+     */
     public function change_db($dbname)
     {
-	$this->query('USE '.$dbname);
+	$this->exec('USE '.$dbname);
+    }
+
+
+
+    
+    /**
+     * Create the query requirement for PDO::prepare
+     * 
+     * @param array $requirements
+     * @return string 
+     */
+    protected function whereBuilder(array &$requirements)
+    {
+	$query=' WHERE ';
+	foreach(array_keys($requirements) as $col)
+	    $query.=' AND '.$col.' = :'.$col;
+	return $query;
     }
 }
