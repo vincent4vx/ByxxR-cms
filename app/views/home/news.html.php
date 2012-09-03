@@ -1,4 +1,4 @@
-<?php $this->pageTitle='Accueil'?>
+<?php $this->title='Accueil'?>
 <?php $this->titleImg='accueil'?>
 
 <?php if($news===array()):?>
@@ -18,8 +18,12 @@
             Posté par <strong><?php echo $new['author']?></strong> le <em><?php echo date('d / m / Y', $new['date'])?></em>
         </small>
     </div>
-    <?php echo $new['msg']?><br/>
+    <?php echo $this->others->bbcode($new['msg'])?><br/>
 </fieldset><br/>
 <?php endforeach?>
+<br/>
+<div id="pagination">
+    <?php echo $this->others->pagination($page, $end, $this->url->genUrl('home', 'news'), 3)?>
+</div>
 <?php endif?>
 

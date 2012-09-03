@@ -6,7 +6,7 @@
         <?php echo $this->assets->css('style')?>
 	<?php echo is_string($this->headerInc)?$this->headerInc:''?>
     </head> 
-    <body>
+    <body onload="margin()">
         <span style="position:absolute;margin-top:161px;margin-left:190px;color:#ffffff;text-shadow:0em 0em 0.2em #000000;font-family:Vivaldi;font-size:35px;"><?php echo Core::$config['server']['name']?></span>
         <div id="header" style="background-image: url('<?php echo Core::$config['root']?>public/images/header/bgHead_1.png');">
             <div id="memberSpaceH">
@@ -102,6 +102,21 @@
                 </div>
 	</div>
     </body>
+    <script type="text/javascript">
+	//<![CDATA[
+	    function margin()
+	    {
+		document.getElementById('menuRight').style.marginRight='56px';
+		document.getElementById('header').style.marginTop='0';
+		document.getElementById('menuLeft').style.marginLeft='26px';
+		document.getElementById('memberSpaceH').style.marginTop='211px';
+		document.getElementById('memberSpaceH').style.marginLeft='180px';
+		document.getElementById('Content').style.marginTop='-12px';
+		document.getElementById('Content').style.marginLeft='178px';
+		document.getElementById('footer').style.marginTop='2px';
+	    }
+	//]]>
+    </script>
 	<?php echo is_string($this->footerInc)?$this->footerInc:''?>
 </html>
 

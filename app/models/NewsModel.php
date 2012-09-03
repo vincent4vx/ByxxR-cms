@@ -5,9 +5,9 @@ class NewsModel extends Model
         parent::__construct();
     }
     
-    public function get()
+    public function get($page)
     {
-	return $this->db->selectAll('news');
+	return $this->db->selectAll('news', '*', array(), 'ORDER BY id DESC LIMIT '.(($page-1)*10).', 10');
     }
     
     public function selectAll()
@@ -62,8 +62,6 @@ class NewsModel extends Model
     
     public function num()
     {
-        $req = $this->db->query('SELECT COUNT(*) FROM news');
-        $num = $req->fetch();
-        return $num['COUNT(*)'];
+        return $this->db->count('news');
     }
 }

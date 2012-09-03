@@ -35,6 +35,8 @@ class Cache
      */
     public function get($id, array $param=array())
     {
+	if(DEBUG)
+	    return false;
 	return $this->{$this->getDriver($param)}->get($id, $param);
     }
     

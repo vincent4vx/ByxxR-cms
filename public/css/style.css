@@ -5,6 +5,19 @@ par v4vx
 
 **********************************/
 
+
+*{
+    -o-transition-property: all;
+    -o-transition-duration: 0.2s;
+    -o-transition-timing-function: linear;
+    -moz-transition-property: all;
+    -moz-transition-duration: 0.2s;
+    -moz-transition-timing-function: linear;
+    -webkit-transition-property: all;
+    -webkit-transition-duration: 0.2s;
+    -webkit-transition-timing-function: linear;
+}
+
 body{
     margin: auto;
     width: 900px;
@@ -74,15 +87,15 @@ fieldset{
     background-repeat: no-repeat;
     width: 900px;
     height: 250px;
-    margin-top:0;
+    margin-top:-50px;;
 }
 
 #memberSpaceH{
     float: left;
     width: 389px;
     height: 23px;
-    margin-top: 211px;
-    margin-left: 180px;
+    /*margin-top: 211px;
+    margin-left: 180px;*/
     color: #8a8a8a;
     font-size: 10px;
 }
@@ -118,7 +131,8 @@ input:hover, .input:hover, .inputError:hover{
 #menuRight{
     width: 175px;
     float: right;
-    margin-right: 56px;
+    /*margin-right: 56px;*/
+    margin-right: -50px;
 }
 
 #menuRightLien{
@@ -143,7 +157,12 @@ input:hover, .input:hover, .inputError:hover{
     margin-bottom: -5px;
 }
 .titleMenuRight{background-image: url('../images/bgTitle_2.png');background-repeat: no-repeat;width: 158px;height: 23px;padding-top: 7px;font-family: Verdana;font-size: 13px;color: #bcbcbc;text-decoration: none;text-align: center;margin-bottom: -2px;margin-top: -2px;}
-.titleMenuRight_ad{background-image: url('../images/bgTitle_ad.png');background-repeat: no-repeat;width: 158px;height: 23px;padding-top: 7px;font-family: Verdana;font-size: 13px;color: #f2b8b8;text-decoration: none;text-align: center;margin-bottom: -2px;margin-top: -2px;}#menuLeft{width: 148px;float: left;margin-left: 26px;}
+.titleMenuRight_ad{background-image: url('../images/bgTitle_ad.png');background-repeat: no-repeat;width: 158px;height: 23px;padding-top: 7px;font-family: Verdana;font-size: 13px;color: #f2b8b8;text-decoration: none;text-align: center;margin-bottom: -2px;margin-top: -2px;}
+
+#menuLeft{
+    width: 148px;float: left;
+    margin-left: -50px;
+}
 
 #menuLeft a, #menuRight a{
     font-family: Verdana;
@@ -181,7 +200,14 @@ input:hover, .input:hover, .inputError:hover{
 }
 
 
-#Content{width: 490px;color: #b6b6b6;margin-left: 178px;margin-top: -12px;}
+#Content{
+    width: 490px;
+    color: #b6b6b6;
+    /*margin-left: 178px;
+    margin-top: -12px;*/
+    margin-left: 190px;
+    margin-top: 100px;
+}
 .bgContent{
     width: 470px;
     border: 1px solid #AAA;
@@ -205,7 +231,13 @@ input:hover, .input:hover, .inputError:hover{
 .bgRight{background-color: #2f2f2f;}
 .devtoolIcon{vertical-align: -20%;border: 0px solid red;}
 
-#footer{clear: both;width: 900px;height: 150px;background-image: url('../images/bgFooter.png');margin-top: 2px;}
+#footer{
+    clear: both;
+    width: 900px;
+    height: 150px;
+    background-image: url('../images/bgFooter.png');
+    margin-top: 250px;
+}
 .rightFooter{float: right;text-align: right;margin-top: 16px;margin-right: 16px;color: #888888;font-family: Verdana;font-size: 11px;text-shadow: 0em 0em 0.2em #000;}
 
 #modulePerso{margin: auto;width: 437px;height: 224px;background-image: url('../images/bgPerso.png');}
@@ -248,25 +280,31 @@ input:hover, .input:hover, .inputError:hover{
     color: green;
 }
 
-.pagination{
+#pagination{
     text-align: center;
 }
 
-.pagination *{
+#pagination *{
     border: 1px solid #000;
     padding-bottom: 3px;
     padding-top: 3px;
     padding-left: 5px;
     padding-right: 5px;
+    margin: 3px;
 }
 
-.pagination a{
+#pagination a{
     text-decoration: none;
 }
 
-.pagination a:hover, .pagination b{
+#pagination a:hover{
     background-color: #525252;
     border: 1px solid #989898;
+}
+
+#pagination .current{    
+    border: 1px solid #989898;
+    font-weight: bold;
 }
 
 blockquote{
@@ -299,16 +337,4 @@ tr:hover .hiddenTools{
     margin: 0;
     height: 100%;
     margin-left: 2px;
-}
-
-*{
-    -o-transition-property: all;
-    -o-transition-duration: 0.2s;
-    -o-transition-timing-function: linear;
-    -moz-transition-property: all;
-    -moz-transition-duration: 0.2s;
-    -moz-transition-timing-function: linear;
-    -webkit-transition-property: all;
-    -webkit-transition-duration: 0.2s;
-    -webkit-transition-timing-function: linear;
 }
