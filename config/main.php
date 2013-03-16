@@ -15,13 +15,13 @@ return array(
     
     //url de base (url de racine du cms)
     //ne pas oublier le http:// et le / final !
-    'root' => 'http://127.0.0.1/ByxxR/',
+    'root' => 'http://127.0.0.1/byxxr/',
     
     //mode rewrite activé (avec un .htaccess qui permet de ne pas écrire le index.php dans l'url)
     'rewrite' => true,
     
     //Langage
-    'lang'=>'en',
+    'lang'=>'fr',
     
     
 
