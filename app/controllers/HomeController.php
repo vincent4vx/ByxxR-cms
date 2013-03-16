@@ -25,6 +25,7 @@ class HomeController extends Controller
 	    }
 	    if($page>$count/10)
 		$page=ceil($count/10);
+            
 	    $this->output->view('home/news', 
 		array(
 		    'news'=>$this->model('news')->get($page),

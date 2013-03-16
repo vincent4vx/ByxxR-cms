@@ -7,6 +7,8 @@ class NewsModel extends Model
     
     public function get($page)
     {
+        if($page<1)
+            $page=1;
 	return $this->db->selectAll('news', '*', array(), 'ORDER BY id DESC LIMIT '.(($page-1)*10).', 10');
     }
     
