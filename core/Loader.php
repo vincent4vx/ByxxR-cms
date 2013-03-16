@@ -1,58 +1,66 @@
 <?php
-class Loader
-{
-    private static $instance=array();
-    private static $count=0;
+class Loader{
+    /**
+     * All the loaded classes
+     * @var array
+     */
+    private $classes = array();
 
-    const NO_FILE=45;
-    const NO_CLASS=46;
+    public function __construct() {
+        $this->preload();
+        
+        spl_autoload_register(function($class_name){
+            $paths = array(CORE, CORE.strtolower($class_name).'/', CORE.'helpers/');
 
-    public static function load_class($class)
-    {
-	$path=array(CORE, CORE.strtolower($class).'/', CORE.'helpers/');
-	foreach($path as $dir)
-	{
-	    if(self::manual_load($class, $dir)===true)
-		return true;    
-	}
-	return false;
-    }
-    
-    public static function manual_load($class, $path)
-    {
-	$file=$path.$class.EXT;
-	if(!file_exists($file))
-	    return self::NO_FILE;
-	require_once $file;
-	if(!class_exists($class))
-	    return self::NO_CLASS;
-	self::$instance[$class]=new $class;
-	self::$count++;
-	return true;
+            foreach($paths as $path){
+                $file = $path.ucfirst($class_name).EXT;
+
+                if(!file_exists($file))
+                    continue;
+
+                require_once $file;
+                break;
+            }
+        });
     }
 
+    private function preload(){
+        require_once CORE.'errors/ErrorHandler'.EXT;
+        ErrorHandler::init();
+    }
 
-    public static function &getClass($class, $path=false)
-    {
-	if(self::isLoad($class))
-	    return self::$instance[$class];
-	
-	if($path===false)
-	    $state=self::load_class($class);
-	else
-	    $state=self::manual_load ($class, $path);
-	if($state!==true)
-	    return $state;
-	return self::$instance[$class];
+    /**
+     * Add a new class in the loader
+     * @param object $obj
+     * @param string $name
+     */
+    public function add($obj, $name){
+        $name = strtolower($name);
+        if(isset($this->classes[$name]))
+            exit();
+
+        $this->classes[$name] =& $obj;
     }
-    
-    public static function isLoad($class)
-    {
-	return isset(self::$instance[$class]);
+
+    /**
+     * load a class
+     * @param string $name
+     */
+    public function load_class($name){
+        $obj = new $name();
+        $this->add($obj, strtolower($name));
     }
-    
-    public static function countClass()
-    {
-	return self::$count;
+
+    /**
+     * get an instance of $class
+     * @param string $class
+     * @return object
+     */
+    public function get($class){
+        if(!isset($this->classes[strtolower($class)])){
+            $this->load_class(ucfirst($class));
+        }
+
+        return $this->classes[strtolower($class)];
     }
 }

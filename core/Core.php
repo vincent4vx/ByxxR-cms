@@ -5,18 +5,37 @@
  */
 class Core
 {
-    public static $config;
-    
-    public static $benchmarks;
-    
-    public static $lang=array();
+    /**
+     * The instance
+     * @var Core
+     */
+    private static $instance;
+
+    /**
+     * the config data
+     * @var array
+     */
+    public $config;
+    public $benchmarks;   
+    public $lang=array();
+    /**
+     * get the loader instance
+     * @var Loader
+     */
+    public $loader;
 
 
     public function __construct()
     {
-	$this->includes();
-	Loader::load_class('Output');
-	Loader::load_class('Router');
+        self::$instance =& $this;
+	//$this->includes();
+	/*Loader::load_class('Output');
+	Loader::load_class('Router');*/
+        $this->config = require_once BASE.'config/main.php';
+        require_once CORE.'Loader'.EXT;
+        $this->loader = new Loader();
+
+        trigger_error('oops !');
 	self::$benchmarks['Loading Core']=number_format(microtime(true)-START_TIME, 4).'sec';
 	self::$benchmarks['Core memory use']=memory_get_usage().' Bytes';
     }
@@ -77,5 +96,13 @@ class Core
 	self::$lang[$file]=require_once $filename;
 	
 	return self::tr($file, $index);
+    }
+
+    /**
+     * get the current instance
+     * @return Core
+     */
+    public static function get_instance(){
+        return self::$instance;
     }
 }
