@@ -87,15 +87,14 @@ fieldset{
     background-repeat: no-repeat;
     width: 900px;
     height: 250px;
-    margin-top:-50px;;
 }
 
 #memberSpaceH{
     float: left;
     width: 389px;
     height: 23px;
-    /*margin-top: 211px;
-    margin-left: 180px;*/
+    margin-top: 211px;
+    margin-left: 180px;
     color: #8a8a8a;
     font-size: 10px;
 }
@@ -131,8 +130,7 @@ input:hover, .input:hover, .inputError:hover{
 #menuRight{
     width: 175px;
     float: right;
-    /*margin-right: 56px;*/
-    margin-right: -50px;
+    margin-right: 56px;
 }
 
 #menuRightLien{
@@ -161,7 +159,7 @@ input:hover, .input:hover, .inputError:hover{
 
 #menuLeft{
     width: 148px;float: left;
-    margin-left: -50px;
+    margin-left: 26px;
 }
 
 #menuLeft a, #menuRight a{
@@ -203,10 +201,8 @@ input:hover, .input:hover, .inputError:hover{
 #Content{
     width: 490px;
     color: #b6b6b6;
-    /*margin-left: 178px;
-    margin-top: -12px;*/
-    margin-left: 190px;
-    margin-top: 100px;
+    margin-left: 178px;
+    margin-top: -12px;
 }
 .bgContent{
     width: 470px;
@@ -236,7 +232,7 @@ input:hover, .input:hover, .inputError:hover{
     width: 900px;
     height: 150px;
     background-image: url('../images/bgFooter.png');
-    margin-top: 250px;
+    margin-top: 2px;
 }
 .rightFooter{float: right;text-align: right;margin-top: 16px;margin-right: 16px;color: #888888;font-family: Verdana;font-size: 11px;text-shadow: 0em 0em 0.2em #000;}
 
