@@ -1,7 +1,7 @@
 <?php
 class ErrorHandler{
     /**
-     * initialize the errors handler
+     * initialize the error handler
      */
     public static function init(){
         require_once __DIR__.'/BException'.EXT;
@@ -9,7 +9,36 @@ class ErrorHandler{
         require_once __DIR__.'/LoaderException'.EXT;
 
         set_error_handler(function($errno, $errstr, $errfile = '', $errline = 0){
-            echo self::error500($errfile, $errline);
+            if($errno === E_USER_ERROR || $errno === E_ERROR){
+                if(DEBUG)
+                    exit(self::error($errstr, $errfile, $errline, 500, 'Internal server error'));
+                else
+                    exit(self::error500 ($errfile, $errline));
+            }elseif(DEBUG){
+                switch($errno){
+                    case E_NOTICE:
+                    case E_USER_NOTICE:
+                        $name = 'Notice';
+                        break;
+                    case E_WARNING:
+                    case E_USER_WARNING:
+                        $name = 'Warning';
+                        break;
+                    case E_STRICT:
+                        $name = 'Strict standard';
+                        break;
+                    default:
+                        $name = 'Error';
+                }
+                Core::get_instance()->loader->get('Output')->add(self::error($errstr, $errfile, $errline, $errno, $name));
+            }
+        });
+
+        set_exception_handler(function(Exception $e){
+            if(DEBUG)
+                exit($e);
+
+            exit(self::error500($e->getFile(), $e->getLine()));
         });
     }
 
