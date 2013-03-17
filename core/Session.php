@@ -27,7 +27,7 @@ class Session
     }
 
     public function __construct() {
-	$this->config=&Core::$config;
+	$this->config=&Core::get_instance()->config;
 	if(!isset($_COOKIE[$this->config['session']['cookie_name']]))
 	{
 	    $this->SESSID=hash('sha256', md5(rand(-100, 100)).uniqid());
@@ -35,7 +35,7 @@ class Session
 	}else
 	    $this->SESSID=$_COOKIE[$this->config['session']['cookie_name']];
 	
-	$this->cache=&Loader::getClass('Cache');
+	$this->cache=&Core::get_instance()->loader->get('Cache');
 	$this->cache_param=array(
 	    'driver'=>$this->config['session']['driver'],
 	    'path'=>'session',

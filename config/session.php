@@ -6,7 +6,7 @@
 return array(
     //driver par les sessions
     //utilisez de préférence apc, si non disponible, utilisez soit database ou file
-    'driver'=>'apc',
+    'driver'=>'file',
     
     //nom du cookie enregistrant le SESSID. Modification non obligatoire !
     'cookie_name'=>'ByxxR-SESSID',

@@ -1,6 +1,7 @@
 <?php
-/*
- * class mère des controllers
+/**
+ * classe mère des controllers
+ * @property-read Output $output The output class
  */
 class Controller extends BaseComponent
 {
@@ -15,6 +16,6 @@ class Controller extends BaseComponent
     
     protected function &model($name)
     {
-	return Loader::getClass(ucfirst($name).'Model', APP.'models/');
+	return $this->loader->loadModel($name);
     }
 }

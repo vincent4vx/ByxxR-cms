@@ -14,20 +14,37 @@ class Output
     protected $cache_contents='';
     protected $cache_on=false;
 
+    /**
+     * The current session
+     * @var Session
+     */
+    protected $session;
+
+    /**
+     * the current instance
+     * @var Core
+     */
+    protected $_instance;
+
 
     public function __construct()
-    {	
-	//chargement des stats
-	/*include CORE.'stats'.EXT;
-	$stats = new statsTable();
-	$this->stats = $stats->getStats();*/
+    {
+        $this->_instance =& Core::get_instance();
+        $this->session =& $this->_instance->loader->get('Session');
+    }
+
+    /**
+     * Add string into contents
+     * @param string $contents
+     */
+    public function add($contents){
+        $this->contents.=$contents;
     }
     
     public function __get($name)
     {
 	if(isset($this->_vars[$name]))
 	    return $this->_vars[$name];
-	return Loader::getClass(ucfirst(strtolower($name)));
     }
     
     public function view($file, array $vars=array())
@@ -36,7 +53,7 @@ class Output
 	if($this->cache_on===false)
 	{
 	    $this->contents.=$view->getContent();
-	    $this->_vars+=$view->_vars;
+	    $this->_vars+=$view->getVars();
 	}
 	else
 	{
@@ -83,12 +100,19 @@ class Output
     {
 	if(empty($this->contents))
 	    return;
-	require_once APP.'views/layout.html.php';
+	require_once APP.'views/layouts/layout.html.php';
     }
     
     public function startCache($id)
     {
-	$data=Loader::getClass('Cache')->get($id, array('driver'=>Core::$config['cache']['driver'], 'path'=>'pages'));
+	$data=$this->_instance->loader->get('Cache')
+                ->get(
+                        $id,
+                        array(
+                            'driver'=>$this->_instance->config['cache']['driver'],
+                            'path'=>'pages'
+                        )
+                );
 	if($data===false)
 	{
 	    $this->cache_on=true;
@@ -102,7 +126,7 @@ class Output
     
     public function endCache($time=60)
     {
-	Loader::getClass('Cache')->set($this->cache_id, array('vars'=>$this->cache_vars, 'contents'=>  $this->cache_contents), $time, array('driver'=>Core::$config['cache']['driver'], 'path'=>'pages'));
+	Core::get_instance()->loader->get('Cache')->set($this->cache_id, array('vars'=>$this->cache_vars, 'contents'=>  $this->cache_contents), $time, array('driver'=>Core::conf('cache.driver'), 'path'=>'pages'));
 	$this->_vars+=$this->cache_vars;
 	$this->contents.=$this->cache_contents;
     }

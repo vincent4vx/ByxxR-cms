@@ -29,6 +29,20 @@ class Router
 	if(count($this->array_uri)>2)
 	    $this->vars=array_slice($this->array_uri, 2);
     }
+
+    public function run(){
+        $ctrl = Core::get_instance()->loader->loadController($this->controller);
+
+        if(!$ctrl)
+            exit('erreur 404');
+
+        $method = strtolower($this->method).'Action';
+
+        if(!method_exists($ctrl, $method))
+            exit('erreur 404');
+
+        call_user_func_array(array($ctrl, $method), $this->vars);
+    }
     
     public function load_page()
     {

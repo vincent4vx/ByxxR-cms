@@ -1,19 +1,10 @@
 <?php
 class Url
-{
-    protected $base_url;
-    protected $rewrite;
-    
-    public function __construct()
+{    
+    public static function genUrl($controller='', $method='', $vars=array())
     {
-	$this->base_url=Core::$config['root'];
-	$this->rewrite=Core::$config['rewrite'];
-    }
-    
-    public function genUrl($controller='', $method='', $vars=array())
-    {
-	$url = $this->base_url;
-        if(!$this->rewrite)
+	$url = Core::conf('root');
+        if(!Core::conf('rewrite'))
         {
             $url .= 'index.php/';
         }
@@ -32,13 +23,13 @@ class Url
         return $url;
     }
     
-    public function link($title, $controller = '', $method = '', $vars=array(), $class = '')
+    public static function link($title, $controller = '', $method = '', $vars=array(), $class = '')
     {
-        $url=$this->genUrl($controller, $method, $vars);
-	return $this->linkByUrl($title, $url, $class);
+        $url=self::genUrl($controller, $method, $vars);
+	return self::linkByUrl($title, $url, $class);
     }
     
-    public function linkByUrl($title, $url, $class='')
+    public static function linkByUrl($title, $url, $class='')
     {
         $link =  '<a href="'.$url.'"';
         if($class !== '')

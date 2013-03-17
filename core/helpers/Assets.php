@@ -1,21 +1,14 @@
 <?php
 class Assets
-{
-    protected $base_url;
-    
-    public function __construct()
+{    
+    public static function css($file)
     {
-	$this->base_url=Core::$config['root'];
+	return '<link href="'.Core::conf('root').'public/css/'.$file.'.css" rel="stylesheet" type="text/css" />';
     }
     
-    public function css($file)
+    public static function img($file, $class = '')
     {
-	return '<link href="'.$this->base_url.'public/css/'.$file.'.css" rel="stylesheet" type="text/css" />';
-    }
-    
-    public function img($file, $class = '')
-    {
-        $img = '<img src="'.$this->base_url.'public/images/'.$file.'" alt="image"';
+        $img = '<img src="'.Core::conf('root').'public/images/'.$file.'" alt="image"';
         if($class !== '')
         {
             $img .= ' class="'.$class.'"';
@@ -24,12 +17,12 @@ class Assets
         return $img;
     }
     
-    public function js($file)
+    public static function js($file)
     {
-        return '<script src="'.$this->base_url.'public/js/'.$file.'.js" type="text/javascript"></script>';
+        return '<script src="'.Core::conf('root').'public/js/'.$file.'.js" type="text/javascript"></script>';
     }
     
-    public function link($title, $controller = '', $method = '', $vars=array(), $class = '')
+    public static function link($title, $controller = '', $method = '', $vars=array(), $class = '')
     {
         $link =  '<a href="'.$this->url($controller, $method, $vars).'"';
         if($class !== '')

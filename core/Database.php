@@ -10,7 +10,7 @@ class Database extends PDO
     {
 	try{
 	    $pdo_options=array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION);
-	    $this->_config=&Core::$config['database'];
+	    $this->_config=&Core::get_instance()->config['database'];
 	    parent::__construct('mysql:host='.$this->_config['host'].';dbname='.$this->_config['db_other'], $this->_config['user'], $this->_config['password'], $pdo_options);
 	}catch(Exception $e)
 	{
@@ -115,7 +115,7 @@ class Database extends PDO
 	    return $statement;
 	}catch(Exception $e)
 	{
-	    exit('PDO error :<br/>'.$e->getFile().' ligne : '.$e->getLine().'<br/>'.$e->getMessage());
+	    exit('PDO error :<br/>'.$e->getFile().' ligne : '.$e->getLine().'<br/>'.$e->getMessage().'<br/>query : '.$query);
 	}
     }
     

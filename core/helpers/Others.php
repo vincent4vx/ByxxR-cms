@@ -1,7 +1,7 @@
 <?php
 class Others
 {
-    public function pagination($current, $end, $url, $num_inter_link=3)
+    public static function pagination($current, $end, $url, $num_inter_link=3)
     {
 	$end=(int)$end;
 	$output='';
@@ -39,7 +39,7 @@ class Others
 	return $output;
     }
     
-    public function getHead($class, $sexe, $big = false)
+    public static function getHead($class, $sexe, $big = false)
     {
 	switch ($class)
 	{
@@ -88,7 +88,7 @@ class Others
 	return $path.$str_class.'.png';
     }
     
-    public function bbcode($str)
+    public static function bbcode($str)
     {
 	$str = htmlspecialchars($str);
 	$str = str_replace('&amp;', '&', $str);
@@ -105,12 +105,12 @@ class Others
 
 
 	//smileys
-	$str = str_replace(':)', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/1.png" />', $str);
-	$str = str_replace(':D', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/2.png" />', $str);
-	$str = str_replace(':(', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/3.png" />', $str);
-	$str = str_replace(';)', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/4.png" />', $str);
-	$str = str_replace(':p', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/5.png" />', $str);
-	$str = str_replace(':o', '<img src="'.$GLOBALS['config']['root'].'public/images/devtool/emots/6.png" />', $str);
+	$str = str_replace(':)', '<img src="'.Core::conf('root').'public/images/devtool/emots/1.png" />', $str);
+	$str = str_replace(':D', '<img src="'.Core::conf('root').'public/images/devtool/emots/2.png" />', $str);
+	$str = str_replace(':(', '<img src="'.Core::conf('root').'public/images/devtool/emots/3.png" />', $str);
+	$str = str_replace(';)', '<img src="'.Core::conf('root').'public/images/devtool/emots/4.png" />', $str);
+	$str = str_replace(':p', '<img src="'.Core::conf('root').'public/images/devtool/emots/5.png" />', $str);
+	$str = str_replace(':o', '<img src="'.Core::conf('root').'public/images/devtool/emots/6.png" />', $str);
 	return $str;
     }
 }
