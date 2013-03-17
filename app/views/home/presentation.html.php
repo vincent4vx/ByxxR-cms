@@ -11,4 +11,4 @@
 </ul>
 <br/>
 <b><u><font color="red">Histoire :</font></u></b><br/><br/>
-<?php echo Core::$config['server']['histoire']?>
+<?php echo Core::conf('server.histoire')?>

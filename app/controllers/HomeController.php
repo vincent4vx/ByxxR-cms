@@ -62,16 +62,15 @@ class HomeController extends Controller
     
     public function infosAction()
     {
-	$this->output->view('home/presentation',Core::$config['server']['rates']);
+	$this->output->view('home/presentation', $this->config['server']['rates']);
     }
     
     public function staffAction()
     {
         if($this->output->startCache('staff'))
         {
-            $this->model('account');
             $this->output->view('home/staff', array(
-                'staff' => $this->AccountModel->getStaff()
+                'staff' => $this->model('user')->getStaff()
             ));
 	    $this->output->endCache($this->config['cache']['staff']);
         }

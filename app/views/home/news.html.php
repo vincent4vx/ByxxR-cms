@@ -10,7 +10,7 @@
     <?php $type=$types[$new['type']-1]?>
     <div class="titleNews_<?php echo $type?>">
 	<span class="title_<?php echo $type?>">
-	    <?php echo $this->assets->img('devtool/money.png').$type?> : 
+	    <?php echo Assets::img('devtool/money.png').$type?> :
 	</span>
 	<?php echo $new['title']?>
         <br />
@@ -18,12 +18,12 @@
             Posté par <strong><?php echo $new['author']?></strong> le <em><?php echo date('d / m / Y', $new['date'])?></em>
         </small>
     </div>
-    <?php echo $this->others->bbcode($new['msg'])?><br/>
+    <?php echo Others::bbcode($new['msg'])?><br/>
 </fieldset><br/>
 <?php endforeach?>
 <br/>
 <div id="pagination">
-    <?php echo $this->others->pagination($page, $end, $this->url->genUrl('home', 'news'), 3)?>
+    <?php echo Others::pagination($page, $end, Url::genUrl('home', 'news'), 3)?>
 </div>
 <?php endif?>
 
