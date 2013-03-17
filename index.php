@@ -14,16 +14,9 @@ define('EXT', '.php');
 define('VERSION', '2.0a');
 define('DEBUG', true);
 define('START_TIME', microtime(true));
-try{
-    require_once CORE.'Core'.EXT;
-    $app=new Core();
-    $app->run();
-    $app->display();
-    $app->benchmarks();
-}catch (Exception $e)
-{
-    if(DEBUG)
-    {
-	exit($e->getMessage());
-    }
-}
+
+require_once CORE.'Core'.EXT;
+$app=new Core();
+$app->run();
+$app->display();
+$app->benchmarks();
