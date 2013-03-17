@@ -37,8 +37,9 @@ class FileCache
 	$data['value']=$value;
 	
 	$path=$this->getPath($param);
-	
-	@mkdir($path, 0777, true);
+
+        if(!is_dir($path))
+            mkdir($path, 0777, true);
 	
 	return file_put_contents($path.$id.self::EXT, serialize($data));
     }
