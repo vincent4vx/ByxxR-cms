@@ -1,15 +1,22 @@
 <?php
 abstract class AbstractInput
-{ 
-    protected $_parent;
+{
     public $label='';
+    /**
+     * the row name and id
+     * @var string
+     */
     protected $name='';
-    public $id='';
-    protected $validate_functions=array();
+    /**
+     * the validation pattern
+     * @var string
+     */
     protected $pattern='';
-    protected $inter_rows;
+    /**
+     * The html attributes
+     * @var array
+     */
     protected $attributes = array();
-
     /**
      * The parrent form
      * @var Form
@@ -26,152 +33,115 @@ abstract class AbstractInput
      */
     protected $required = false;
 
-    /*public function __construct($name, &$parent, &$attributes, &$functions, &$label, $inter_rows)
-    {
-	$this->name=$name;
-	$this->_parent=&$parent;
-	$this->setAttributes($attributes);
-	$this->validate_functions=&$functions;
-	$this->inter_rows = $inter_rows;
-	$this->setLabel($label);
-	$this->setPattern();
-	$this->setId();
-    }*/
-
     public function __construct(Form &$form, $name, array $attributes = array(), $function = '') {
         $this->_form =& $form;
         $this->name = $name;
-        $this->setAttributes($attributes);
+        $this->attributes = $attributes;
         $this->function = $function;
-        $this->setPattern();
+        $this->loadAttributes();
     }
 
     public abstract function __toString();
 
-    protected function setAttributes(array &$attributes)
-    {	    
-	if(isset($attributes['pattern']))
-	    $this->pattern=$attributes['pattern'];
-        if(in_array('required', $attributes))
-            $this->required=true;
-	foreach($attributes as $attribute=>$value)
-	{
-	    if(is_numeric($attribute))
-	    {
-		$attributes[$value]=$value;
-		unset($attributes[$attribute]);
-	    }
-	}
-	$this->attributes=&$attributes;
+    private final function loadAttributes(){
+        if(in_array('required', $this->attributes))
+            $this->required = true;
+
+        if(isset($this->attributes['pattern']))
+            $this->pattern = $this->attributes['pattern'];
+        else
+            $this->pattern = $this->defaultPattern();
     }
-    
-    protected final function setLabel(&$label)
-    {
+
+    protected final function setLabel(&$label){
 	if($label===false)
 	    $this->label='';
 	else
 	    $this->label=&$label;
     }
     
-    public function value()
-    {
+    public function value(){
 	if(!empty($_POST[$this->name]))
 	    return $_POST[$this->name];
 	return '';
     }
 
-    protected final function setPattern(){
-        if($this->pattern === ''){
-            $this->pattern = $this->defaultPattern();
-        }
-    }
     protected abstract function defaultPattern();
     
-    public final function label()
-    {
+    public final function label(){
 	return HForm::label($this);
     }
     
-    public final function error()
-    {
-	return '<div id="'.$this->id.'Error" class="formError" style="display: inline-block"></div>';
+    public final function error(){
+	return HForm::error($this);
     }
     
-    public function validate()
-    {
+    public function validate(){
 	if(isset($this->attributes['required']) and $this->value()==='')
 	    return array($this->name=>'Ce champ est obligatoire !');
 	
 	if($this->value() !== '' and $this->pattern !== '' and !preg_match($this->pattern, $this->value()))
 	    return array($this->name=>'Champ invalide !');
-	
-	foreach($this->validate_functions as $function)
-	{
-	    $error=$this->_parent->$function($this);
-	    if($error!==true)
-		return $error;
-	}    
-    }
-    
-    private function validate_inter_rows($script=false)
-    {
-	if(!$this->inter_rows)
-	    return true;
-	
-	$param=array();
-	if(!preg_match('#(equal|diff)\(([a-z0-9]+)\)#i', $this->inter_rows, $param))
-	    exit('Syntaxe error in inter_rows function declaration for '.$this->name);
-	if($param[1]==='equal')
-	{
-	    if(!$script)
-		return $this->value() === $this->_parent->$param[2]->value();
-	    
-	    return '
-		if(elem.value != document.getElementById("'.$this->_parent->$param[2]->id.'").value)
-		{
-		    display_form_error(id, "Ce champ doit être de la même valeur que '.$this->_parent->$param[2]->label.'");
-		    return;
-		}'.PHP_EOL;
-	}elseif($param[1]==='diff')
-	{
-	   if(!$script)
-		return $this->value() !== $this->_parent->$param[2]->value();
-	    
-	    return '
-		if(elem.value == document.getElementById("'.$this->_parent->$param[2]->id.'").value)
-		{
-		    display_form_error(id, "Ce champ doit être différent de '.$this->_parent->$param[2]->label.'");
-		    return;
-		}'.PHP_EOL; 
-	}else
-	    return true;
+
+        if($this->function!==''){
+            $matches = array();
+            if(!preg_match('#(equal|diff)\(([a-z0-9_])\)#i', $this->function, $matches)){
+                throw new BException('Une erreur est survenue lors de l\'analyse de la fonction de comparaison de l\'input <b>%s</b>', array($this->name));
+            }
+
+            $obj =& $this->_form->{$matches[2]};
+
+            if($matches[1]==='equal'){
+                if($obj->value()!==$this->value())
+                    return array($this->name=>'La valeur de ce champ doit être la même que pour <b>'.$obj->getName().'</b> !');
+            }else{
+                if($obj->value()===$this->value())
+                    return array($this->name=>'La valeur de ce champ doit être différente de <b>'.$obj->getName().'</b> !');
+            }
+        }
     }
 
 
     public function getScript()
     {
-	$script='
-	    function validate'.$this->name.'()
-	    {
-		var id = "'.$this->id.'";
-		var elem = document.getElementById(id);
-	    '.($this->inter_rows===false?'':$this->validate_inter_rows(true)).'
-	    '.(!isset($this->attributes['required'])?'':'
-		if(elem.value == "")
-		{
-		    display_form_error(id, "Ce champ est obligatoire !");
-		    return;
-		}').'
-	    '.($this->pattern===''?'':'
-		var regex = new RegExp("'.str_replace('\\', '\\\\', $this->pattern).'");
-		if(!regex.test(elem.value) && elem.value!="")
-		{
-		    display_form_error(id, "Champ invalide !");
-		    return;
-		}').'
-		form_valid(id);
-	    }'.PHP_EOL;
+        $script = 'function validate'.$this->name.'(){';
+        $script.= 'var id = "'.$this->name.'";var elem = document.getElementById(id);';
+
+        if($this->required){
+            $script.='if(elem.value==""){formManager.displayError(id, "Ce champ est obligatoire !");return;}';
+        }
+
+        if($this->pattern!==''){
+            $script.='var regex = new RegExp("'.str_replace('\\', '\\\\', $this->pattern).'");';
+            $script.='if(!regex.test(elem.value) && elem.value!=""){';
+            $script.='formManager.displayError(id, "Champ invalide !");';
+            $script.='return;}';
+        }
+
+        if($this->function!==''){
+            $matches = array();
+            if(preg_match('#(equal|diff)\(([a-z0-9_]+)\)#i', $this->function, $matches)){
+                $name = $matches[2];
+                $script.='if(document.getElementById("'.$name.'").value';
+
+                if($matches[1]==='equal'){
+                    $script.='!=elem.value){';
+                    $script.='formManager.displayError(id, "Le champ doit être égual au champ '.$name.' !");return}';
+                }else{
+                    $script.='==elem.value){';
+                    $script.='formManager.displayError(id, "Le champ doit être différent du champ '.$name.' !");return}';
+                }
+            }else{
+                trigger_error('La fonction de comparaison de l\'input <b>'.$this->name.'</b> n\'est pas valide !', E_USER_WARNING);
+            }
+        }
+
+        $script.='formManager.rowValid(id);}'.PHP_EOL;
 	
 	return $script;
+    }
+
+    public function getName(){
+        return $this->name;
     }
 }

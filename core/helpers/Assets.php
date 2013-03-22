@@ -17,9 +17,14 @@ class Assets
         return $img;
     }
     
-    public static function js($file)
+    public static function js($files)
     {
-        return '<script src="'.Core::conf('root').'public/js/'.$file.'.js" type="text/javascript"></script>';
+        $return = '';
+        $files = (array)$files;
+        foreach($files as $file)
+            $return .= '<script src="'.Core::conf('root').'public/js/'.$file.'.js" type="text/javascript"></script>';
+
+        return $return;
     }
     
     public static function link($title, $controller = '', $method = '', $vars=array(), $class = '')

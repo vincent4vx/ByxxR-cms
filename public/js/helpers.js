@@ -8,8 +8,8 @@ var url = {
 };
 
 var assets = {
-    img: function(name){
-        return '<img src="' + url.baseUrl() + 'public/images/' + name + '" />';
+    img: function(name, title){
+        return '<img src="' + url.baseUrl() + 'public/images/' + name + '" title="' + title + '" />';
     }
 };
 

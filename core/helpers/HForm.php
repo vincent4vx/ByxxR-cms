@@ -8,6 +8,9 @@ class HForm{
     public static function open(Form $form){
         $name = get_class($form);
         $name = str_replace('Form', '', $name);
+        $output =& Core::get_instance()->loader->get('Output');
+        $output->addHeaderInc(Assets::js(array('form', 'ajax')));
+        $output->addHeaderInc('<script type="text/javascript">'.PHP_EOL.$form->getScript().PHP_EOL.'</script>');
         return '<form action="'.$form->url().'"  onsubmit="return formManager.validateForm(\''.$name.'\', this);">';
     }
 
@@ -37,17 +40,18 @@ class HForm{
      * @param array $others
      * @return string
      */
-    public static function input($type, $name, $pattern = '', $required = false, array $others = array()){
+    public static function input($type, $name, array $attributes = array(), $ajax_validation = false){
         $tag = '<input type="'.$type.'" name="'.$name.'" id="'.$name.'" ';
-        if($pattern!==''){
-            $tag.='pattern="'.$pattern.'"';
-        }
-        if($required){
-            $tag.=' required';
-        }
-        foreach($others as $attr=>$value){
+        foreach($attributes as $attr=>$value){
+            if(is_numeric($attr)){
+                $tag.=' '.$value;
+                continue;
+            }
             $tag.=' '.$attr.'="'.$value.'"';
         }
+
+        if($ajax_validation)
+            $tag.=' onblur="validate'.$name.'();"';
 
         return $tag.' />';
     }
@@ -69,5 +73,13 @@ class HForm{
         $label.=$text.'</label>';
 
         return $label;
+    }
+
+    /**
+     * Error tag
+     * @param AbstractInput $obj
+     */
+    public static function error(AbstractInput $obj){
+        return '<div id="'.$obj->getName().'Error" class="formError" style="display: inline-block"></div>';
     }
 }
