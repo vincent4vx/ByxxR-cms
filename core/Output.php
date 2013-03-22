@@ -40,6 +40,19 @@ class Output
     public function add($contents){
         $this->contents.=$contents;
     }
+
+    /**
+     * Add a content in the header inclusion
+     * @param mixed $var
+     */
+    public function addHeaderInc($var){
+        if(!is_array($var))
+            $this->headerInc.=$var;
+        else{
+            foreach ($var as $inc)
+                $this->headerInc.=$inc;
+        }
+    }
     
     public function __get($name)
     {
