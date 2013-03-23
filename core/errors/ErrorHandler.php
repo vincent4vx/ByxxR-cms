@@ -43,7 +43,8 @@ class ErrorHandler{
     }
 
     public static function error($msg, $file, $line, $code = 200, $name = 'User error'){
-        header('HTTP/1.0 '.$code);
+        if(!headers_sent())
+            header('HTTP/1.0 '.$code);
 
         ob_start();
         require_once __DIR__.'/views/error.php';
