@@ -77,15 +77,15 @@ abstract class AbstractInput
     }
     
     public function validate(){
-	if(isset($this->attributes['required']) and $this->value()==='')
+	if($this->required and $this->value()==='')
 	    return array($this->name=>'Ce champ est obligatoire !');
 	
-	if($this->value() !== '' and $this->pattern !== '' and !preg_match($this->pattern, $this->value()))
+	if($this->value() !== '' and $this->pattern !== '' and !preg_match('#'.$this->pattern.'#', $this->value()))
 	    return array($this->name=>'Champ invalide !');
 
         if($this->function!==''){
             $matches = array();
-            if(!preg_match('#(equal|diff)\(([a-z0-9_])\)#i', $this->function, $matches)){
+            if(!preg_match('#(equal|diff)\(([a-z0-9_]+)\)#i', $this->function, $matches)){
                 throw new BException('Une erreur est survenue lors de l\'analyse de la fonction de comparaison de l\'input <b>%s</b>', array($this->name));
             }
 
@@ -93,12 +93,14 @@ abstract class AbstractInput
 
             if($matches[1]==='equal'){
                 if($obj->value()!==$this->value())
-                    return array($this->name=>'La valeur de ce champ doit être la même que pour <b>'.$obj->getName().'</b> !');
+                    return array($this->name=>'La valeur de ce champ doit etre la meme que pour '.$obj->getName().' !');
             }else{
                 if($obj->value()===$this->value())
-                    return array($this->name=>'La valeur de ce champ doit être différente de <b>'.$obj->getName().'</b> !');
+                    return array($this->name=>'La valeur de ce champ doit etre differente de '.$obj->getName().' !');
             }
         }
+
+        return true;
     }
 
 
@@ -143,5 +145,9 @@ abstract class AbstractInput
 
     public function getName(){
         return $this->name;
+    }
+
+    public final function toHTML(){
+        return $this->__toString().$this->error();
     }
 }

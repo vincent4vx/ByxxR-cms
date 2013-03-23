@@ -5,11 +5,10 @@ abstract class Form
     public abstract function url();
 
     public function __construct() {
-        require_once __DIR__.'/inputs/AbstractInput'.EXT;
+        Core::get_instance()->loader->addIncludePath(__DIR__.'/inputs/');
+        
         foreach($this->rows() as $row_name=>$row_data){
             $class = ucfirst($row_data[0]).'Input';
-            
-            require_once __DIR__.'/inputs/'.$class.EXT;
 
             $this->$row_name = new $class(
                         $this,
@@ -26,6 +25,17 @@ abstract class Form
     }
 
     public function validate(){
+        $errors = array();
+        foreach($this->rows() as $row=>$x){
+            $err = $this->{$row}->validate();
+            if($err!==true){
+                $errors+=$err;
+            }
+        }
+
+        if($errors!==array())
+            return $errors;
+        
         return $this->onFormValid();
     }
 
@@ -35,7 +45,7 @@ abstract class Form
      */
     public function getScript(){
         $script = '';
-        foreach(array_keys($this->rows()) as $row){
+        foreach($this->rows() as $row=>$x){
             $script.=$this->{$row}->getScript().PHP_EOL;
         }
 

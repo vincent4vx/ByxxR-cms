@@ -21,6 +21,6 @@ class RegisterForm extends Form{
     }
 
     protected function onFormValid() {
-        return true;
+        return array('alert_msg'=>'Ok');
     }
 }

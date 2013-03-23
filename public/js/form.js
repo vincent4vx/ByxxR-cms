@@ -44,7 +44,7 @@ var formManager = {
         document.getElementById(elemId + "Error").innerHTML=assets.img("devtool/ok.png", "Champ valide !");
     },
     validateForm: function(name, form){
-        var url = url.generate('ajax/validateform/' + name);
+        var uri = url.generate('ajax/validateform/' + name);
         var vars = '';
         for(var elem in form.elements){
             if(isNaN(elem))
@@ -54,14 +54,26 @@ var formManager = {
         }
 
         var ajax = new Ajax();
-        var errors = ajax.parseJsonPage(url, vars);
+        var errors = ajax.parseJsonPage(uri, vars);
 
         if(errors == true){
             return true;
         }
 
+        if(errors == false){
+            alert('Erreur indéfinie !');
+            return false;
+        }
+
         for(var id in errors){
-            formManager.displayError(id, errors[id]);
+            if(id != 'alert_msg')
+                formManager.displayError(id, errors[id]);
+        }
+
+        if(errors['alert_msg']){
+            alert(errors['alert_msg']);
+        }else{
+            alert('Les champs sont invalides !');
         }
         
         return false;
