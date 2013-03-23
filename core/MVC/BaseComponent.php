@@ -1,6 +1,7 @@
 <?php
 /**
  * @property-read Ouput $output The output class
+ * @property-read Session $session Session class
  */
 class BaseComponent
 {

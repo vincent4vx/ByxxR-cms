@@ -1,8 +1,4 @@
 <?php
-/*
- * class d'output
- * marche grâce à twig
- */
 class Output
 {
     protected $stats;
@@ -113,7 +109,7 @@ class Output
     {
 	if(empty($this->contents))
 	    return;
-	require_once APP.'views/layouts/layout.html.php';
+	require APP.'views/layouts/layout.html.php';
     }
     
     public function startCache($id)

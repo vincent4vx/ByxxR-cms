@@ -2,51 +2,58 @@
 class Cache
 {
     private $_drivers=array();
-    private $default_driver='file';
+    private static $default_driver='file';
 
-
-    public static function drivers()
-    {
-	return array('apc', 'file', 'database');
-    }
-    
-    private function getDriver(array $param)
-    {
-	if(isset($param['driver']))
-	    return $param['driver'];
-	return $this->default_driver;
-    }
-    
-    public function __get($name) {
-	if(isset($this->_drivers[$name]))
-	    return $this->_drivers[$name];
-	$class=ucfirst($name).'Cache';
-	$filename=CORE.'cache/drivers/'.$class.EXT;
-	if(!file_exists($filename))
-	    exit('Cache Driver '.$name.' not found !');
-	require_once $filename;
-	$this->_drivers[$name]=new $class;
-	return $this->_drivers[$name];
+    public function __construct() {
+        Core::get_instance()->loader->addIncludePath(__DIR__.'/drivers/');
     }
 
-
-    /*
-     * fonctions sur le cache
+    /**
+     * load the driver
+     * @param string $key
+     * @return CacheDriver
      */
-    public function get($id, array $param=array())
-    {
-	if(DEBUG)
-	    return false;
-	return $this->{$this->getDriver($param)}->get($id, $param);
+    private function getDriver($key){
+	$data = explode(':', $key);
+
+        if(count($data)<2)
+            $class = ucfirst(self::$default_driver).'Cache';
+        else
+            $class = ucfirst($data[0]).'Cache';
+
+        if(isset($this->_drivers[$class]))
+            return $this->_drivers[$class];
+
+        return $this->_drivers[$class] = new $class();
     }
-    
-    public function set($id, $value=null, $time=60, array $param=array())
-    {
-	return $this->{$this->getDriver($param)}->set($id, $value, $time, $param);
+
+    /**
+     * Get a data in cache
+     * @param string $key
+     * @param bool $remove remove after read
+     * @return mixed
+     */
+    public function get($key, $remove = false){
+        return $this->getDriver($key)->get($key, $remove);
     }
-    
-    public function delete($id, array $param=array())
-    {
-	return $this->{$this->getDriver($param)}->delete($id, $param);
+
+    /**
+     * Store some data in the cache
+     * @param string $key
+     * @param mixed $data
+     * @param int $time the store time
+     * @return bool
+     */
+    public function set($key, $data=null, $time=60){
+	return $this->getDriver($key)->set($key, $data, $time);
+    }
+
+    /**
+     * Delete a cache data
+     * @param string $key
+     * @return bool
+     */
+    public function delete($key){
+	return $this->getDriver($key)->delete($key);
     }
 }

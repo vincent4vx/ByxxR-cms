@@ -28,7 +28,7 @@ class Loader{
                 break;
             }
 
-            if(!class_exists($class_name))
+            if(!class_exists($class_name, false) && !interface_exists($class_name, false))
                 exit('no class file : '.$class_name);
         });
     }
@@ -69,6 +69,10 @@ class Loader{
      */
     public function load_class($name){
         $name = ucfirst($name);
+
+        if(isset($this->classes[$name]))
+            exit();
+        
         $obj = new $name();
         $this->add($obj, $name);
     }
@@ -80,7 +84,7 @@ class Loader{
      */
     public function &get($class){
         if(!isset($this->classes[ucfirst($class)])){
-            $this->load_class(ucfirst($class));
+            $this->load_class($class);
         }
 
         return $this->classes[ucfirst($class)];
