@@ -1,11 +1,14 @@
 <?php
-abstract class Form
+abstract class Form extends BaseComponent
 {
     public abstract function rows();
     public abstract function url();
 
     public function __construct() {
-        Core::get_instance()->loader->addIncludePath(__DIR__.'/inputs/');
+        parent::__construct();
+        $this->loader->addIncludePath(__DIR__.'/inputs/');
+
+        $labels = $this->labels();
         
         foreach($this->rows() as $row_name=>$row_data){
             $class = ucfirst($row_data[0]).'Input';
@@ -14,7 +17,8 @@ abstract class Form
                         $this,
                         $row_name,
                         isset($row_data[1]) ? $row_data[1] : array(),
-                        isset($row_data[2]) ? $row_data[2] : ''
+                        isset($row_data[2]) ? $row_data[2] : '',
+                        isset($labels[$row_name]) ? $labels[$row_name] : $row_name
             );
         }
     }

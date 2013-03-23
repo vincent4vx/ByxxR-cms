@@ -65,7 +65,7 @@ class HForm{
         $label = '<label for="';
         if(class_exists('AbstractInput') && $obj instanceof AbstractInput){
             $label.=$obj->getName().'">';
-            $text = $obj->getLabel();
+            $text = $obj->label;
         }else{
             $label.=$obj.'">';
         }

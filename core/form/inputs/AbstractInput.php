@@ -1,7 +1,6 @@
 <?php
 abstract class AbstractInput
 {
-    public $label='';
     /**
      * the row name and id
      * @var string
@@ -32,13 +31,19 @@ abstract class AbstractInput
      * @var bool
      */
     protected $required = false;
+    /**
+     * the label text
+     * @var string
+     */
+    public $label;
 
-    public function __construct(Form &$form, $name, array $attributes = array(), $function = '') {
+    public function __construct(Form &$form, $name, array $attributes = array(), $function = '', $label = '') {
         $this->_form =& $form;
         $this->name = $name;
         $this->attributes = $attributes;
         $this->function = $function;
         $this->loadAttributes();
+        $this->label = $label;
     }
 
     public abstract function __toString();
@@ -51,13 +56,6 @@ abstract class AbstractInput
             $this->pattern = $this->attributes['pattern'];
         else
             $this->pattern = $this->defaultPattern();
-    }
-
-    protected final function setLabel(&$label){
-	if($label===false)
-	    $this->label='';
-	else
-	    $this->label=&$label;
     }
     
     public function value(){
@@ -93,10 +91,10 @@ abstract class AbstractInput
 
             if($matches[1]==='equal'){
                 if($obj->value()!==$this->value())
-                    return array($this->name=>'La valeur de ce champ doit etre la meme que pour '.$obj->getName().' !');
+                    return array($this->name=>'La valeur de ce champ doit être la même que pour '.$obj->label.' !');
             }else{
                 if($obj->value()===$this->value())
-                    return array($this->name=>'La valeur de ce champ doit etre differente de '.$obj->getName().' !');
+                    return array($this->name=>'La valeur de ce champ doit être différente de '.$obj->label.' !');
             }
         }
 
