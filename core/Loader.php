@@ -5,10 +5,18 @@ class Loader{
      * @var array
      */
     private $classes = array();
+    /**
+     * The include path
+     * @var array
+     */
+    private $include_path;
 
-    public function __construct() {       
+    public function __construct() {
+        $this->include_path = array(CORE, CORE.'helpers/', APP.'models/');
+        
         spl_autoload_register(function($class_name){
-            $paths = array(CORE, CORE.strtolower($class_name).'/', CORE.'helpers/', APP.'models/');
+            $paths = $this->include_path;
+            $paths[] = CORE.strtolower($class_name).'/';
 
             foreach($paths as $path){
                 $file = $path.ucfirst($class_name).EXT;
@@ -16,7 +24,7 @@ class Loader{
                 if(!file_exists($file))
                     continue;
 
-                require_once $file;
+                require $file;
                 break;
             }
 
@@ -26,19 +34,19 @@ class Loader{
     }
 
     public function preload(){
-        require_once CORE.'errors/ErrorHandler'.EXT;
+        require CORE.'errors/ErrorHandler'.EXT;
         ErrorHandler::init();
 
-	require_once CORE.'MVC/BaseComponent'.EXT;
-	require_once CORE.'MVC/Controller'.EXT;
-	require_once CORE.'MVC/Model'.EXT;
-	require_once CORE.'MVC/View'.EXT;
-        require_once CORE.'helpers/I18n'.EXT;
+	require CORE.'MVC/BaseComponent'.EXT;
+	require CORE.'MVC/Controller'.EXT;
+	require CORE.'MVC/Model'.EXT;
+	require CORE.'MVC/View'.EXT;
+        require CORE.'helpers/I18n'.EXT;
 
-        require_once CORE.'Output'.EXT;
+        require CORE.'Output'.EXT;
         $this->load_class('Output');
 
-        require_once CORE.'Router'.EXT;
+        require CORE.'Router'.EXT;
         $this->load_class('Router');
     }
 
@@ -90,7 +98,7 @@ class Loader{
         if(!file_exists($file))
             return false;
 
-        require_once $file;
+        require $file;
 
         return $this->classes['controller'] = new $class();
     }
@@ -109,7 +117,7 @@ class Loader{
             if(!file_exists($file))
                 exit('no model');
 
-            require_once $file;
+            require $file;
 
             $this->add(new $name(), $name);
         }
@@ -127,10 +135,18 @@ class Loader{
             if(!file_exists($file))
                 exit('false');
 
-            require_once $file;
+            require $file;
             $this->add(new $name(), $name);
         }
 
         return $this->classes[$name];
+    }
+
+    /**
+     * add a path in the include path for lazyloading
+     * @param string $path
+     */
+    public function addIncludePath($path){
+        $this->include_path[] = $path;
     }
 }
