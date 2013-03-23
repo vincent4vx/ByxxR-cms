@@ -5,15 +5,25 @@ class UserModel extends Model{
     }
 
     public function accountExists($account){
-        return $this->db->count('accounts', array('account'=>$account));
+        return $this->db->count('accounts', array('account'=>$account)) > 0;
+    }
+
+    public function pseudoExists($pseudo){
+        return $this->db->count('accounts', array('pseudo'=>$pseudo));
     }
 
     public function loadUser($id){
         
     }
 
-    public function login($user, $pass){
-        $this->db->executeFirst('SELECT * FROM accounts WHERE account = :account AND pass = :pass JOIN byxxr_accounts_data ON account_id = guid JOIN byxxr_rigths ON user_id = guid');
+    /**
+     * load an user with pass and account name
+     * @param string $user
+     * @param string $pass
+     * @return mixed
+     */
+    public function loadForLogin($user, $pass){
+        return $this->db->executeFirst('SELECT a.guid, a.level, a.pseudo, d.*, r.* FROM accounts a LEFT JOIN byxxr_accounts_data d ON d.account_id = a.guid LEFT JOIN byxxr_rigths r ON r.user_id = a.guid WHERE account = :account AND pass = :pass ', array('account'=>trim($user), 'pass'=>trim($pass)));
     }
 
     public function getStaff($with_sa = true)

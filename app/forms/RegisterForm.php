@@ -21,6 +21,30 @@ class RegisterForm extends Form{
     }
 
     protected function onFormValid() {
-        return array('alert_msg'=>'Ok');
+        $model =& $this->loader->loadModel('user');
+
+        if($model->accountExists($this->account->value())){
+            return array(
+                'alert_msg'=>'Le nom de compte est déjà pris !',
+                'account'=>'Nom de compte indisponible !'
+            );
+        }
+
+        if($model->pseudoExists($this->pseudo->value())){
+            return array(
+                'alert_msg'=>'Le pseudo est déjà utilisé !',
+                'pseudo'=>'Pseudo indisponible !'
+            );
+        }
+    }
+
+    public function labels(){
+        return array(
+            'account'=>'Nom de compte',
+            'pseudo'=>'Pseudo',
+            'pass1'=>'Mot de passe',
+            'pass2'=>'Confirmation',
+            'email'=>'E-mail'
+        );
     }
 }
