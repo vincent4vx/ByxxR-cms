@@ -34,7 +34,10 @@ class Output
      * @param string $contents
      */
     public function add($contents){
-        $this->contents.=$contents;
+        if($this->cache_on)
+            $this->cache_contents.=$contents;
+        else
+            $this->contents.=$contents;
     }
 
     /**
@@ -42,6 +45,15 @@ class Output
      * @param mixed $var
      */
     public function addHeaderInc($var){
+        if($this->cache_on){
+            if(!is_array($var))
+                $this->cache_vars['headerInc'].=$var;
+            else{
+                foreach ($var as $inc)
+                    $this->cache_vars['headerInc'].=$inc;
+            }
+            return;
+        }
         if(!is_array($var))
             $this->headerInc.=$var;
         else{
@@ -115,17 +127,11 @@ class Output
     public function startCache($id)
     {
 	$data=$this->_instance->loader->get('Cache')
-                ->get(
-                        $id,
-                        array(
-                            'driver'=>$this->_instance->config['cache']['driver'],
-                            'path'=>'pages'
-                        )
-                );
-	if($data===false)
+                ->get($this->_instance->config['cache']['driver'].':pages.'.$id);
+	if($data===null || DEBUG)
 	{
 	    $this->cache_on=true;
-	    $this->cache_id=$id;
+	    $this->cache_id=$this->_instance->config['cache']['driver'].':pages.'.$id;
 	    return true;
 	}
 	$this->contents.=$data['contents'];
@@ -135,7 +141,7 @@ class Output
     
     public function endCache($time=60)
     {
-	Core::get_instance()->loader->get('Cache')->set($this->cache_id, array('vars'=>$this->cache_vars, 'contents'=>  $this->cache_contents), $time, array('driver'=>Core::conf('cache.driver'), 'path'=>'pages'));
+	Core::get_instance()->loader->get('Cache')->set($this->cache_id, array('vars'=>$this->cache_vars, 'contents'=>  $this->cache_contents), $time);
 	$this->_vars+=$this->cache_vars;
 	$this->contents.=$this->cache_contents;
     }
