@@ -18,19 +18,15 @@ class HomeController extends Controller
 	
 	if($this->output->startCache('news'))
 	{
-	    if(($count=$this->cache->get('count-news'))===false)
-	    {
-		$count=$this->model('news')->num();
-		$this->cache->set('count-news', $count);
-	    }
-	    if($page>$count/10)
-		$page=ceil($count/10);
+            $count=$this->model('news')->num();
+	    if($page>$count/$this->config['news_per_page'])
+		$page=ceil($count/$this->config['news_per_page']);
             
 	    $this->output->view('home/news', 
 		array(
 		    'news'=>$this->model('news')->get($page),
 		    'page'=>$page,
-		    'end'=>ceil($count/10)
+		    'end'=>ceil($count/$this->config['news_per_page'])
 	    ));
 	    $this->output->endCache();
 	}

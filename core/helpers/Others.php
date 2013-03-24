@@ -6,9 +6,9 @@ class Others
 	$end=(int)$end;
 	$output='';
 	if($current > 2)
-	    $output.='<a href="'.$url.'/1#pagination">&lt;&lt;</a>';
+	    $output.='<a href="'.$url.'/1#textContent">&lt;&lt;</a>';
 	if($current > 1)
-	    $output.='<a href="'.$url.'/'.($current-1).'#pagination">&lt;</a>';
+	    $output.='<a href="'.$url.'/'.($current-1).'#textContent">&lt;</a>';
 	
 	$page=$current-$num_inter_link;
 	if($page<=1)
@@ -23,7 +23,7 @@ class Others
 	for(;$page<=$page_max;$page++)
 	{
 	    if($page!=$current)
-		$output.='<a href="'.$url.'/'.$page.'#pagination">'.$page.'</a>';
+		$output.='<a href="'.$url.'/'.$page.'#textContent">'.$page.'</a>';
 	    else
 		$output.='<span class="current">'.$page.'</span>';
 	}
@@ -32,10 +32,9 @@ class Others
 	    $output.='...';
 	
 	if($current < $end)
-	    $output.='<a href="'.$url.'/'.($current+1).'#pagination">&gt;</a>';
+	    $output.='<a href="'.$url.'/'.($current+1).'#textContent">&gt;</a>';
 	if($current < $end-1)
-	    $output.='<a href="'.$url.'/'.$end.'#pagination">&gt;&gt;</a>';
-	
+	    $output.='<a href="'.$url.'/'.$end.'#textContent">&gt;&gt;</a>';
 	return $output;
     }
     

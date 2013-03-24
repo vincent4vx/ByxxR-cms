@@ -27,5 +27,5 @@ return array(
 
     
     //nombre de nouvelles par page
-    'news_per_page' => 10
+    'news_per_page' => 5
 );
