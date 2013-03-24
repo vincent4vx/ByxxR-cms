@@ -142,7 +142,7 @@ input:hover, .input:hover, .inputError:hover{
     margin: auto;
     list-style: none;
     background-color: #212121;
-    width: 120px;border-left: 1px solid #989898;
+    width: 130px;border-left: 1px solid #989898;
     border-right: 1px solid #989898;
 }
 
@@ -152,6 +152,7 @@ input:hover, .input:hover, .inputError:hover{
 #bgRight{
     background-image: url('../images/midRight.png');
     background-repeat: repeat-y;
+    padding-bottom: 10px;
     margin-bottom: -5px;
 }
 .titleMenuRight{background-image: url('../images/bgTitle_2.png');background-repeat: no-repeat;width: 158px;height: 23px;padding-top: 7px;font-family: Verdana;font-size: 13px;color: #bcbcbc;text-decoration: none;text-align: center;margin-bottom: -2px;margin-top: -2px;}
@@ -174,7 +175,7 @@ input:hover, .input:hover, .inputError:hover{
     margin: auto;
     list-style: none;
     background-color: #2b2b2b;
-    width: 110px;
+    width: 120px;
     border-left: 1px solid #989898;
     border-right: 1px solid #989898;
 }

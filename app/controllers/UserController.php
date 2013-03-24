@@ -10,5 +10,15 @@ class UserController extends Controller{
             $data = $this->model('user')->loadForLogin($_POST['login'], $_POST['passlog']);
             $this->session->login($data);
         }
+
+        if(isset($_GET['url']))
+            Url::redirect(urldecode($_GET['url']), 0, true);
+        else
+            Url::redirect();
+    }
+
+    public function logoutAction(){
+        $this->session->destroy();
+        Url::redirect();
     }
 }

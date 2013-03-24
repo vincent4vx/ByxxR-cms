@@ -39,4 +39,18 @@ class Url
         $link .= '>'.$title.'</a>';
         return $link;	
     }
+
+    public static function redirect($route = '', $time = 0, $external = false){
+        if($external)
+            $url = $route;
+        else
+            $url = self::genUrl($route);
+
+        if(!headers_sent() && $time===0){
+            header('location: '.$url);
+            return;
+        }
+
+        echo '<meta http-equiv="refresh" content="'.$time.';url: '.$url.'"/>';
+    }
 }

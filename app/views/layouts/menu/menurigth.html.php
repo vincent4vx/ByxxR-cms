@@ -7,7 +7,7 @@
             else{
                 include __DIR__.'/menurigth_member.html.php';
                 if($this->session->isAdmin())
-                    include __DIR__.'/menurigth_admin.html.php';
+                    include __DIR__.'/menuright_admin.html.php';
             }
             ?>
         </div>
