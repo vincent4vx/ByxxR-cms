@@ -110,6 +110,17 @@ class Others
 	$str = str_replace(';)', '<img src="'.Core::conf('root').'public/images/devtool/emots/4.png" />', $str);
 	$str = str_replace(':p', '<img src="'.Core::conf('root').'public/images/devtool/emots/5.png" />', $str);
 	$str = str_replace(':o', '<img src="'.Core::conf('root').'public/images/devtool/emots/6.png" />', $str);
-	return $str;
+	return nl2br($str);
+    }
+
+    public static function ladderTr(&$p){
+        $p++;
+        if($p <= 3){
+            $out = '<tr class="pos'.$p.'"><td>';
+            $out.=Assets::img('trophy/trophy_'.$p.'.png').'</td>';
+        }else
+            $out = '<tr><td style="text-align: center;">'.$p.'</td>';
+
+        return $out;
     }
 }
