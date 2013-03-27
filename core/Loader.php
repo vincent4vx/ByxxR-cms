@@ -12,7 +12,7 @@ class Loader{
     private $include_path;
 
     public function __construct() {
-        $this->include_path = array(CORE, CORE.'helpers/', APP.'models/');
+        $this->include_path = array(CORE, CORE.'helpers/', APP.'models/', BASE.'lib/');
         
         spl_autoload_register(function($class_name){
             $paths = $this->include_path;
