@@ -9,9 +9,17 @@ class Database extends PDO
     public function __construct()
     {
 	try{
-	    $pdo_options=array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION);
 	    $this->_config=&Core::get_instance()->config['database'];
-	    parent::__construct('mysql:host='.$this->_config['host'].';dbname='.$this->_config['db_other'], $this->_config['user'], $this->_config['password'], $pdo_options);
+	    parent::__construct(
+                    'mysql:host='.$this->_config['host'].';
+                     dbname='.$this->_config['db_other'],
+                    $this->_config['user'],
+                    $this->_config['password'],
+                    array(
+                        PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,
+                        PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION
+                    )
+            );
 	}catch(Exception $e)
 	{
 	    exit($e->getMessage());
