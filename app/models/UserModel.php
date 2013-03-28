@@ -23,11 +23,17 @@ class UserModel extends Model{
      * @return mixed
      */
     public function loadForLogin($user, $pass){
-        return $this->db->executeFirst('SELECT a.guid, a.level, a.pseudo, d.*, r.* FROM accounts a LEFT JOIN byxxr_accounts_data d ON d.account_id = a.guid LEFT JOIN byxxr_rigths r ON r.user_id = a.guid WHERE account = :account AND pass = :pass ', array('account'=>trim($user), 'pass'=>trim($pass)));
+        $data = $this->db->executeFirst('SELECT a.guid, a.level, a.pseudo, d.*, r.* FROM accounts a LEFT JOIN byxxr_accounts_data d ON d.account_id = a.guid LEFT JOIN byxxr_rigths r ON r.user_id = a.guid WHERE account = :account AND pass = :pass ', array('account'=>trim($user), 'pass'=>trim($pass)));
+
+        if($data['ip']==''){
+            $this->createAccountData($data['guid']);
+            $data['ip']=$_SERVER['REMOTE_ADDR'];
+        }
+
+        return $data;
     }
 
-    public function getStaff($with_sa = true)
-    {
+    public function getStaff($with_sa = true){
         $query = 'SELECT a.guid, a.level, a.pseudo, d.avatar, d.info FROM accounts a LEFT JOIN byxxr_accounts_data d ON d.account_id = a.guid WHERE a.level >= 1';
         if(!$with_sa)
         {
@@ -36,5 +42,42 @@ class UserModel extends Model{
         $query .= ' ORDER BY a.level DESC';
         $req = $this->database->query($query);
         return $req->fetchAll();
+    }
+
+    /**
+     * Test if the user can vote
+     * @return boolean
+     */
+    public function canVote(){
+        $last_vote = (int)$this->session->vote_time;
+
+        return $last_vote + $this->config['points']['vote_time']*60 < time();
+    }
+
+    public function canVoteByIp($ip){
+        $t = time() - $this->config['points']['vote_time']*60;
+        $data = $this->db->executeFirst('SELECT COUNT(*) FROM byxxr_accounts_data WHERE ip = :ip AND vote_time > :t', array(
+            'ip'=>$ip,
+            't'=>$t
+        ));
+
+        return $data['COUNT(*)'] == 0;
+    }
+
+    private function createAccountData($id){
+        $id=(int)$id;
+        $this->db->create('byxxr_accounts_data', array('account_id'=>$id));
+    }
+
+    /**
+     * Set an ip in the database
+     * @param int $id
+     * @param string $ip
+     */
+    public function setIp($id, $ip){
+        $stmt = $this->db->prepare('UPDATE byxxr_accounts_data SET ip = :ip WHERE account_id = :id');
+        $stmt->bindParam('ip', $ip);
+        $stmt->bindParam('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }
