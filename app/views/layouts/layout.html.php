@@ -17,6 +17,11 @@
                     <div class="bgContent">
 			<?php echo $this->stats?>
                     </div>
+                    <?php foreach($this->session->getFlashMsg() as $msg):?>
+                    <div class="verif<?php echo $msg[1]?>">
+                        <?php echo $msg[0]?>
+                    </div>
+                    <?php endforeach?>
                     <center><?php echo Assets::img('title/img_'.$this->titleImg.'.png', 'titleImg')?></center>
                     <div class="bgContent">
 			<div id="textContent">

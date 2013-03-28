@@ -22,6 +22,17 @@ class Session
     protected $admin=false;
     protected $super_admin=false;
 
+    /**
+     * List of flash vars
+     * @var array
+     */
+    protected $flashes = array();
+    /**
+     * New flashes to save
+     * @var array
+     */
+    protected $new_flashes = array();
+
 
     public function __get($name) {
 	if(isset($this->_vars[$name]))
@@ -49,6 +60,10 @@ class Session
 	
 	if(($data=$this->cache->get($this->cache_key))!==null)
             $this->login($data, false);
+
+        if(($flash=$this->cache->get($this->cache_key.'_flash', true))!==null){
+            $this->flashes=$flash;
+        }
     }
 
     /**
@@ -96,8 +111,56 @@ class Session
     {
 	return $this->super_admin;
     }
+
+    /**
+     * Store a new flash var
+     * @param string $name
+     * @param mixed $value
+     * @version 2.0a
+     */
+    public function addFlash($name, $value){
+        $this->new_flashes[$name]=$value;
+    }
+
+    /**
+     * get a flash var
+     * @param string $name
+     * @return mixed
+     * @version 2.0a
+     */
+    public function getFlash($name){
+        if(isset($this->flashes[$name]))
+            return $this->flashes[$name];
+        return null;
+    }
+
+    /**
+     * Set a new flash message
+     * @param string $msg
+     * @param string $state
+     */
+    public function setFlashMsg($msg, $state = 'OK'){
+        if(!isset($this->new_flashes['msg']))
+            $this->new_flashes['msg']=array();
+
+        $this->new_flashes['msg'][] = array($msg, $state);
+    }
+
+    /**
+     * Get all flash messages
+     * @return array
+     */
+    public function getFlashMsg(){
+        if(!isset($this->flashes['msg']))
+            return array();
+
+        return $this->flashes['msg'];
+    }
     
     public function __destruct() {
+        if($this->new_flashes!==array()){
+            $this->cache->set($this->cache_key.'_flash', $this->new_flashes);
+        }
 	if($this->_vars===array())
 	    return;
 	if($this->update===true){

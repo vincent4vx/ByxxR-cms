@@ -246,6 +246,8 @@ input:hover, .input:hover, .inputError:hover{
     border: 2px dotted #1e8a00;
     color: #1e8a00;
     padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .verifNO{
@@ -255,6 +257,8 @@ input:hover, .input:hover, .inputError:hover{
     border: 2px dotted #d30003;
     color: #d30003;
     padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .verifNO a, .verifOK a{
