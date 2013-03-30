@@ -4,7 +4,7 @@
         <li><a href="<?php echo Url::genUrl()?>"><?php echo I18n::tr('home', 'layout')?></a></li>
         <li><a href="<?php echo Url::genUrl('home', 'infos')?>"><?php echo I18n::tr('presentation', 'layout')?></a></li>
         <li><a href="<?php echo Url::genUrl('home', 'staff')?>"><?php echo I18n::tr('staff', 'layout')?></a></li>
-        <li><a href="<?php echo Url::genUrl('points', 'vote')?>" target="_blank"><b><?php echo I18n::tr('vote', 'layout')?></b></a></li>
+        <li><a href="<?php echo Url::genUrl('points', 'vote')?>"><b><?php echo I18n::tr('vote', 'layout')?></b></a></li>
         <li style="border-bottom: 1px solid #989898;"><a href="<?php echo Url::genUrl('home', 'cgu')?>"><?php echo I18n::tr('rules', 'layout')?></a></li>
     </ul>
     <br/>
