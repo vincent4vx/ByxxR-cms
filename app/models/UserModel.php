@@ -64,6 +64,18 @@ class UserModel extends Model{
         return $data['COUNT(*)'] == 0;
     }
 
+    /**
+     * Add points, increment votes columns and set at actual time vote_time
+     * @param int $id
+     */
+    public function validateVote($id){
+        $stmt = $this->db->prepare('UPDATE byxxr_accounts_data SET points = points + ?, votes = votes + 1, vote_time = ? WHERE account_id = ?');
+        $stmt->bindParam(1, $this->config['points']['per_vote'], PDO::PARAM_INT);
+        $stmt->bindValue(2, time(), PDO::PARAM_INT);
+        $stmt->bindParam(3, $id);
+        $stmt->execute();
+    }
+
     private function createAccountData($id){
         $id=(int)$id;
         $this->db->create('byxxr_accounts_data', array('account_id'=>$id));

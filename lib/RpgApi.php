@@ -198,4 +198,24 @@ class RpgApi{
 
         return $this->out = $matches[1];
     }
+
+    /**
+     * Redirige vers la page de vote RPG Paradize
+     */
+    public function redirectVote(){
+        if(!headers_sent())
+            header('location: http://www.rpg-paradize.com/?page=vote&vote='.$this->id);
+        else
+            echo '<meta http-equiv="refresh" content="0;url=http://www.rpg-paradize.com/?page=vote&vote='.$this->id.'"/>';
+    }
+
+    /**
+     * Redirige vers la page de description de RPG Paradize
+     */
+    public function redirectDescription(){
+        if(!headers_sent())
+            header('location: http://www.rpg-paradize.com/site--'.$this->id);
+        else
+            echo '<meta http-equiv="refresh" content="0;url=http://www.rpg-paradize.com/site--'.$this->id.'"/>';
+    }
 }

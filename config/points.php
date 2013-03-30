@@ -22,7 +22,7 @@ return array(
     //ainsi que pouvoir suivre depuis le site la postion dans Rpg Paradize
     //NB: Utiliser cette API viole la charte de RPG Paradize. Si vous ne voulez pas
     //que votre serveur se fasse supprimé de RPG, mettez à false.
-    'rpgapi'=>true,
+    'rpgapi'=>false,
 
     //un vote par IP dans l'intervalle vote_time
     'filter_ip'=>true,
