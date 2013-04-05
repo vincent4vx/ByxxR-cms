@@ -93,7 +93,8 @@ class RpgApi{
         curl_setopt($curl, CURLOPT_POSTFIELDS, array(
             'adscaptcha_response_field'=>$in['adscaptcha_response_field'],
             'adscaptcha_challenge_field'=>$in['adscaptcha_challenge_field'],
-            'submitvote'=>$this->id
+            'submitvote'=>$this->id,
+            'submit'=>'Voter'
         ));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
@@ -106,7 +107,28 @@ class RpgApi{
             return false;
         }
 
-        if(strpos($data, '<span style="font-size:20px;color:red;">Captcha incorrect</span>')!==false)
+        $err_page = <<<EOD
+<!-- ***************************************************************** -->
+<!-- PAGE MIDDLE -->
+</td><td valign="top">
+
+OK
+
+
+
+
+
+
+
+
+
+<br />
+
+<!-- ***************************************************************** -->
+<!-- END PAGE -->
+EOD;
+
+        if(strpos($data, '<span style="font-size:20px;color:red;">Captcha incorrect</span>')!==false || strpos($data, $err_page)!==false)
                 return false;
 
         return true;
@@ -217,5 +239,13 @@ class RpgApi{
             header('location: http://www.rpg-paradize.com/site--'.$this->id);
         else
             echo '<meta http-equiv="refresh" content="0;url=http://www.rpg-paradize.com/site--'.$this->id.'"/>';
+    }
+
+    /**
+     * Permet de linéariser la classe (pour le cache)
+     * @return array
+     */
+    public function __sleep() {
+        return array('id', 'page_code', 'position', 'votes', 'out');
     }
 }
