@@ -98,6 +98,7 @@ class RpgApi{
         ));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_REFERER, 'http://www.rpg-paradize.com/?page=vote&vote='.$this->id);
 
         $data = curl_exec($curl);
         curl_close($curl);
