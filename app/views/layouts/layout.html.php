@@ -15,7 +15,7 @@
             <?php include APP.'views/layouts/menu/menurigth.html.php'?>
                 <div id="Content">
                     <div class="bgContent">
-			<?php echo $this->stats?>
+			<?php include __DIR__.'/stats.html.php'?>
                     </div>
                     <?php foreach($this->session->getFlashMsg() as $msg):?>
                     <div class="verif<?php echo $msg[1]?>">
@@ -24,7 +24,7 @@
                     <?php endforeach?>
                     <center><?php echo Assets::img('title/img_'.$this->titleImg.'.png', 'titleImg')?></center>
                     <div class="bgContent">
-			<div id="textContent">
+			<div class="textContent">
                             <?php echo $this->contents?>
 			</div>
                     </div>
