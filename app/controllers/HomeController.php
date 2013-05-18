@@ -16,7 +16,7 @@ class HomeController extends Controller
 	if($page<1)
 	    $page=1;
 	
-	if($this->output->startCache('news'))
+	if($this->output->startCache('news.page'.$page))
 	{
             $count=$this->model('news')->num();
 	    if($page>$count/$this->config['news_per_page'])
@@ -28,7 +28,7 @@ class HomeController extends Controller
 		    'page'=>$page,
 		    'end'=>ceil($count/$this->config['news_per_page'])
 	    ));
-	    $this->output->endCache();
+	    $this->output->endCache($this->config['cache']['news']);
 	}
     }
     
