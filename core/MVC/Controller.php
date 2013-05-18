@@ -2,6 +2,7 @@
 /**
  * classe mère des controllers
  * @property-read Output $output The output class
+ * @property-read Cache $cache Classe de cache
  */
 class Controller extends BaseComponent
 {

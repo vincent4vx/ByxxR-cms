@@ -123,4 +123,15 @@ class Others
 
         return $out;
     }
+
+    public static function random_string($size = 12){
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $str = '';
+
+        for($i = 0; $i < $size; $i++){
+            $str.=substr($chars, rand(0, 62), 1);
+        }
+
+        return $str;
+    }
 }

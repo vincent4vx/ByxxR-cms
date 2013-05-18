@@ -12,7 +12,7 @@
     <ul>
         <li><a href="<?php echo Url::genUrl('home', 'join')?>"><?php echo I18n::tr('join', 'layout')?></a></li>
         <?php if(!$this->session->isLog()):?>
-        <li><a href="<?php echo Url::genUrl("account", "register")?>"><?php echo I18n::tr('register', 'layout')?></a></li>
+        <li><a href="<?php echo Url::genUrl("user", "register")?>"><?php echo I18n::tr('register', 'layout')?></a></li>
         <?php endif?>
         <li><a target="_blank" href="<?php echo Core::conf('server.forum')?>"><?php echo I18n::tr('forum', 'layout')?></a></li>
         <li><a href="<?php echo Url::genUrl("ladder")?>"><?php echo I18n::tr('ladder', 'layout')?></a></li>

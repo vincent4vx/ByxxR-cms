@@ -5,12 +5,13 @@
 return array(
     //inclusion des fichiers de configurations
     //ne pas toucher !
-    'database' => require_once 'database.php',
-    'server' => require_once 'server.php',
-    'admin' => require_once 'admin.php',
-    'cache' => require_once 'cache.php',
-    'points' => require_once 'points.php',
-    'session' => require_once 'session.php',
+    'database' => require 'database.php',
+    'server' => require 'server.php',
+    'admin' => require 'admin.php',
+    'cache' => require 'cache.php',
+    'points' => require 'points.php',
+    'session' => require 'session.php',
+    'user' => require 'user.php',
     //FIN
     
     //url de base (url de racine du cms)

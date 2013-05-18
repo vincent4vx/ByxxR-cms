@@ -100,4 +100,20 @@ class UserModel extends Model{
     public function getVotesLadder(){
         return $this->db->queryAll('SELECT d.votes, pseudo, guid FROM byxxr_accounts_data d JOIN accounts ON d.account_id = guid ORDER BY votes DESC LIMIT 20');
     }
+
+    public function canRegister($ip){
+        $count = $this->db->count('accounts', array('lastIP'=>$ip));
+
+        if($count >= $this->config['user']['per_ip'])
+            return false;
+
+        $stmt = $this->db->prepare('SELECT COUNT(*) FROM byxxr_accounts_data WHERE ip = :ip AND register_time > :time');
+        $stmt->bindValue('ip', $ip);
+        $stmt->bindValue('time', time() - ($this->config['user']['inter_register_attemps'] * 3600), PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch();
+
+        return $result['COUNT(*)'] == 0;
+    }
 }

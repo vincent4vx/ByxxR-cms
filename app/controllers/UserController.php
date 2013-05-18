@@ -1,6 +1,25 @@
 <?php
 class UserController extends Controller{
-    public function registerAction(){     
+    public function registerAction(){
+        $ip = $_SERVER['REMOTE_ADDR'];
+
+        if($this->cache->get(str_replace('.', '_', $ip).'.cannot_register') === true){
+            $this->session->setFlashMsg("Vous vous êtes déjà inscript il y a moins de {$this->config['user']['inter_register_attemps']} heures, ou vous avez dépassé la limite maximale autorisé autorisé de compte ({$this->config['user']['per_ip']}).<br/>Vous ne pouvez donc pas vous inscrire pour le moment !", 'NO');
+            Url::redirect();
+            return;
+        }
+
+        if(!$this->model('user')->canRegister($ip)){
+            $this->cache->set(str_replace('.', '_', $ip).'.cannot_register', true);
+            $this->session->setFlashMsg("Vous vous êtes déjà inscript il y a moins de {$this->config['user']['inter_register_attemps']} heures, ou vous avez dépassé la limite maximale autorisé autorisé de compte ({$this->config['user']['per_ip']}).<br/>Vous ne pouvez donc pas vous inscrire pour le moment !", 'NO');
+            Url::redirect();
+            return;
+        }
+
+        $token = Others::random_string();
+        setcookie('byxxr_register_token', $token);
+        $this->session->register_token = $token;
+
         $form =& $this->loader->loadForm('register');
         $this->output->view('user/register', array('form'=>$form));
     }
