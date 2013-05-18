@@ -18,7 +18,6 @@ class Session
     protected $update=false;
 
 
-    protected $logged=false;
     protected $admin=false;
     protected $super_admin=false;
 
@@ -58,11 +57,30 @@ class Session
 
         $this->cache_key = $this->config['session']['driver'].':sessions.'.$this->SESSID;
 	
-	if(($data=$this->cache->get($this->cache_key))!==null)
-            $this->login($data, false);
+	if(($data=$this->cache->get($this->cache_key))!==null){
+            $this->_vars = $data;
+            $this->testSession();
+        }
 
         if(($flash=$this->cache->get($this->cache_key.'_flash', true))!==null){
             $this->flashes=$flash;
+        }
+    }
+
+    private function testSession(){
+        if(!$this->logged)
+            return;
+
+        if($this->_vars['REMOTE_ADDR']!==$_SERVER['REMOTE_ADDR']){
+            $this->destroy();
+            return;
+        }
+        
+	if($this->_vars['level']>=$this->config['admin']['level'])
+            $this->admin=true;
+	if($this->_vars['guid']==$this->config['admin']['super_admin']){
+            $this->admin=true;
+            $this->super_admin=true;
         }
     }
 
@@ -70,21 +88,12 @@ class Session
      * Set the data in the session and logon
      * @param array $data
      */
-    public function login(array &$data, $new = true){
+    public function login(array &$data){
 	$this->_vars=&$data;
-	$this->logged=true;
-	if($this->_vars['level']>=$this->config['admin']['level'])
-            $this->admin=true;
-	if($this->_vars['guid']==$this->config['admin']['super_admin']){
-            $this->admin=true;
-            $this->super_admin=true;
-	}
-
-        if($new){
-            $this->update = true;
-            $this->_vars['REMOTE_ADDR']=$_SERVER['REMOTE_ADDR'];
-        }elseif($this->_vars['REMOTE_ADDR']!==$_SERVER['REMOTE_ADDR'])
-            $this->destroy();
+        $this->logged = true;
+        $this->_vars['REMOTE_ADDR']=$_SERVER['REMOTE_ADDR'];
+        $this->update = true;
+        $this->testSession();
     }
     
     public function destroy()
