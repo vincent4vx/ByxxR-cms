@@ -20,6 +20,14 @@
         <td><?php echo $form->pass2->toHTML()?></td>
     </tr>
     <tr>
+        <td><?php echo HForm::label($form->answer)?></td>
+        <td><?php echo $form->answer->toHTML()?></td>
+    </tr>
+    <tr>
+        <td><?php echo HForm::label($form->response)?></td>
+        <td><?php echo $form->response->toHTML()?></td>
+    </tr>
+    <tr>
         <td><?php echo HForm::label($form->email)?></td>
         <td><?php echo $form->email->toHTML()?></td>
     </tr>
@@ -30,5 +38,5 @@
 </table>
 <script>
 <?php echo $form->account->getScript()?>
-        </script>
+</script>
 <?php echo HForm::close()?>

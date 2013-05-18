@@ -1,10 +1,9 @@
 <?php
 class RegisterForm extends Form{
-    public $account;
-    public $pseudo;
-    public $pass1;
-    public $pass2;
-    public $email;
+    /**
+     * @var AbstractInput
+     */
+    public $account, $pseudo, $pass1, $pass2, $email, $answer, $response;
 
     public function url(){
         return Url::genUrl();
@@ -17,10 +16,22 @@ class RegisterForm extends Form{
             'pass1'=>array('password', array('required', 'pattern'=>'.{4,32}')),
             'pass2'=>array('password', array('required'), 'equal(pass1)'),
             'email'=>array('email'),
+            'answer'=>array('text', array('required')),
+            'response'=>array('text', array('required'))
         );
     }
 
     protected function onFormValid() {
+        if(!isset($_COOKIE['byxxr_register_token'])){
+            $this->session->setFlashMsg('Protection anti-bot : Veuillez accepter le cookies pour pouvoir vous inscrire !', 'NO');
+            return;
+        }
+
+        if($_COOKIE['byxxr_register_token'] !== $this->session->register_token){
+            $this->session->setFlashMsg('Protection anti-bot : le token est invalide !', 'NO');
+            return;
+        }
+
         $model =& $this->loader->loadModel('user');
 
         if($model->accountExists($this->account->value())){
@@ -36,6 +47,17 @@ class RegisterForm extends Form{
                 'pseudo'=>'Pseudo indisponible !'
             );
         }
+
+        $model->createAccount(
+            $this->account->value(),
+            $this->pseudo->value(),
+            $this->pass1->value(),
+            $this->email->value(),
+            $this->answer->value(),
+            $this->response->value()
+        );
+
+        $this->session->setFlashMsg('Compte créé avec succès.<br/>Vous pouvez maintenant vous connecter !', 'OK');
     }
 
     public function labels(){
@@ -44,7 +66,9 @@ class RegisterForm extends Form{
             'pseudo'=>'Pseudo',
             'pass1'=>'Mot de passe',
             'pass2'=>'Confirmation',
-            'email'=>'E-mail'
+            'email'=>'E-mail',
+            'answer'=>'Question secrète',
+            'response'=>'Réponse'
         );
     }
 }

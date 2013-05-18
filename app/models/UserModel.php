@@ -26,7 +26,7 @@ class UserModel extends Model{
         $data = $this->db->executeFirst('SELECT a.guid, a.level, a.pseudo, d.*, r.* FROM accounts a LEFT JOIN byxxr_accounts_data d ON d.account_id = a.guid LEFT JOIN byxxr_rigths r ON r.user_id = a.guid WHERE account = :account AND pass = :pass ', array('account'=>trim($user), 'pass'=>trim($pass)));
 
         if($data['ip']==''){
-            $this->createAccountData($data['guid']);
+            $this->createAccountData($data['guid'], $_SERVER['REMOTE_ADDR']);
             $data['ip']=$_SERVER['REMOTE_ADDR'];
         }
 
@@ -76,9 +76,14 @@ class UserModel extends Model{
         $stmt->execute();
     }
 
-    private function createAccountData($id){
+    private function createAccountData($id, $ip = 0){
         $id=(int)$id;
-        $this->db->create('byxxr_accounts_data', array('account_id'=>$id));
+        $this->db->create('byxxr_accounts_data',
+                array(
+                    'account_id'=>$id,
+                    'ip'=>$ip,
+                    'register_time' => time()
+                ));
     }
 
     /**
@@ -115,5 +120,21 @@ class UserModel extends Model{
         $result = $stmt->fetch();
 
         return $result['COUNT(*)'] == 0;
+    }
+
+    public function createAccount($username, $pseudo, $pass, $email, $answer, $response){
+        $this->db->create('accounts', array(
+            'account'=>$username,
+            'pseudo'=>$pseudo,
+            'pass'=>$pass,
+            'email'=>$email,
+            'question'=>$answer,
+            'reponse'=>$response,
+            'lastIP'=>$_SERVER['REMOTE_ADDR']
+        ));
+
+        $id = $this->db->lastInsertId();
+
+        $this->createAccountData($id, $_SERVER['REMOTE_ADDR']);
     }
 }

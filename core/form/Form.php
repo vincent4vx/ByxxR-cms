@@ -1,12 +1,12 @@
 <?php
-abstract class Form extends BaseComponent
-{
+abstract class Form extends BaseComponent{
+
     public abstract function rows();
     public abstract function url();
 
     public function __construct() {
         parent::__construct();
-        $this->loader->addIncludePath(__DIR__.'/inputs/');
+        Core::get_instance()->loader->addIncludePath(__DIR__.'/inputs/');
 
         $labels = $this->labels();
         

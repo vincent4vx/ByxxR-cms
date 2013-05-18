@@ -17,11 +17,14 @@ class UserController extends Controller{
         }
 
         $token = Others::random_string();
-        setcookie('byxxr_register_token', $token);
+        setcookie('byxxr_register_token', $token, time() + 600, '/');
         $this->session->register_token = $token;
 
-        $form =& $this->loader->loadForm('register');
-        $this->output->view('user/register', array('form'=>$form));
+        if($this->output->startCache('form.register_form')){
+            $form =& $this->loader->loadForm('register');
+            $this->output->view('user/register', array('form'=>$form));
+            $this->output->endCache(24 * 3600);
+        }
     }
 
     public function loginAction(){
