@@ -46,12 +46,13 @@ class Output
      */
     public function addHeaderInc($var){
         if($this->cache_on){
+            if(!isset($this->cache_vars['headerInc']))
+                $this->cache_vars['headerInc'] = '';
             if(!is_array($var))
                 $this->cache_vars['headerInc'].=$var;
-            else{
-                foreach ($var as $inc)
-                    $this->cache_vars['headerInc'].=$inc;
-            }
+            else
+                    $this->cache_vars['headerInc'].=implode($var);
+            
             return;
         }
         if(!is_array($var))
