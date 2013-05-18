@@ -92,4 +92,12 @@ class UserModel extends Model{
         $stmt->bindParam('id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }
+
+    /**
+     * Get the 20th firsts accounts sort by votes
+     * @return array
+     */
+    public function getVotesLadder(){
+        return $this->db->queryAll('SELECT d.votes, pseudo, guid FROM byxxr_accounts_data d JOIN accounts ON d.account_id = guid ORDER BY votes DESC LIMIT 20');
+    }
 }

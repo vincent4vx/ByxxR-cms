@@ -11,7 +11,25 @@ class LadderController extends Controller{
         if($this->output->startCache('ladder.perso.'.$order)){
             $chars = $this->model('character')->ladder(0, 20, $order);
             $this->output->view('ladder/perso', array('chars'=>$chars));
-            $this->output->endCache(900);
+            $this->output->endCache($this->config['cache']['ladder_perso']);
+        }
+    }
+
+    public function votesAction(){
+        if($this->output->startCache('ladder.votes')){
+            $this->output->view('ladder/votes', array(
+                'accounts'=>$this->model('user')->getVotesLadder()
+            ));
+            $this->output->endCache($this->config['cache']['ladder_votes']);
+        }
+    }
+
+    public function guildsAction(){
+        if($this->output->startCache('ladder.guild')){
+            $this->output->view('ladder/guilds', array(
+                'guilds' => $this->model('guild')->ladder()
+            ));
+            $this->output->endCache($this->config['cache']['ladder_guilds']);
         }
     }
 }
