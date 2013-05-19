@@ -51,7 +51,7 @@ class Session
 	if(!isset($_COOKIE[$this->config['session']['cookie_name']]))
 	{
 	    $this->SESSID=hash('sha256', md5(rand(-100, 100)).uniqid());
-	    setcookie($this->config['session']['cookie_name'], $this->SESSID, 0, '/');
+	    setcookie($this->config['session']['cookie_name'], $this->SESSID, time() + 60 * 24 * 3600, '/');
 	}else
 	    $this->SESSID=$_COOKIE[$this->config['session']['cookie_name']];
 
