@@ -55,7 +55,7 @@ class Session
 	}else
 	    $this->SESSID=$_COOKIE[$this->config['session']['cookie_name']];
 
-        $this->cache_key = $this->config['session']['driver'].':sessions.'.$this->SESSID;
+        $this->cache_key = 'sessions.'.$this->SESSID;
 	
 	if(($data=$this->cache->get($this->cache_key))!==null){
             $this->_vars = $data;

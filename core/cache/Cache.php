@@ -1,59 +1,53 @@
 <?php
 class Cache
 {
-    private $_drivers=array();
-    private static $default_driver='file';
-
-    public function __construct() {
-        Core::get_instance()->loader->addIncludePath(__DIR__.'/drivers/');
-    }
-
-    /**
-     * load the driver
-     * @param string $key
-     * @return CacheDriver
-     */
-    private function getDriver($key){
-	$data = explode(':', $key);
-
-        if(count($data)<2)
-            $class = ucfirst(self::$default_driver).'Cache';
-        else
-            $class = ucfirst($data[0]).'Cache';
-
-        if(isset($this->_drivers[$class]))
-            return $this->_drivers[$class];
-
-        return $this->_drivers[$class] = new $class();
-    }
-
-    /**
-     * Get a data in cache
-     * @param string $key
-     * @param bool $remove remove after read
-     * @return mixed
-     */
     public function get($key, $remove = false){
-        return $this->getDriver($key)->get($key, $remove);
+        $file = $this->getFileName($key);
+
+        if(!file_exists($file))
+            return null;
+
+        $file_data = unserialize(file_get_contents($file));
+
+        if(!is_array($file_data))
+            throw new BException('Fichier de cache <b>%s</b> corrompu !', array($file));
+
+        if($file_data['deletion_time'] < time()){
+            unlink($file);
+            return null;
+        }
+
+        if($remove)
+            unlink($file);
+
+        return $file_data['data'];
     }
 
-    /**
-     * Store some data in the cache
-     * @param string $key
-     * @param mixed $data
-     * @param int $time the store time
-     * @return bool
-     */
-    public function set($key, $data=null, $time=60){
-	return $this->getDriver($key)->set($key, $data, $time);
-    }
-
-    /**
-     * Delete a cache data
-     * @param string $key
-     * @return bool
-     */
     public function delete($key){
-	return $this->getDriver($key)->delete($key);
+        $file = $this->getFileName($key);
+
+        return unlink($file);
+    }
+
+    public function set($key, $data, $time = 60){
+        $file = $this->getFileName($key);
+
+        $data = array(
+            'deletion_time'=>time()+$time,
+            'data'=>$data
+        );
+
+        if(!is_dir(dirname($file)))
+            mkdir(dirname($file), 0777, true);
+
+        return file_put_contents($file, serialize($data));
+    }
+
+    private static function getFileName($key){
+        $file = CORE.'cache/data/';
+        $file.=str_replace('.', DIRECTORY_SEPARATOR, $key);
+        $file.='.cache';
+
+        return $file;
     }
 }

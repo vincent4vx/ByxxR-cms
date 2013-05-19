@@ -9,16 +9,7 @@
  * 
  * /!\ Les parties administrations ne sont pas touché par le cache /!\
  */
-return array(
-    
-    //Système de cache apc ou file.
-    //Sur mon ordinateur file est plus performant
-    //mais apc est une bonne alternative pour de fort trafique
-    //Pour ceux utilisant xampp ou wamp, apc n'est pas disponible.
-    //à vous de voir les performance, en mettant true à benchmark (sur index.php)
-    //et en changeant les drives de cache (après plusieur réactualisations !)
-    'driver' => 'file',
-    
+return array(    
     //ladders
     'ladder_perso' => 3600,
     'ladder_votes' => 3600,

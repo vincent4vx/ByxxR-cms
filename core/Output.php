@@ -126,12 +126,11 @@ class Output
     
     public function startCache($id)
     {
-	$data=$this->_instance->loader->get('Cache')
-                ->get($this->_instance->config['cache']['driver'].':pages.'.$id);
+	$data=$this->_instance->loader->get('Cache')->get('pages.'.$id);
 	if($data===null || DEBUG)
 	{
 	    $this->cache_on=true;
-	    $this->cache_id=$this->_instance->config['cache']['driver'].':pages.'.$id;
+	    $this->cache_id='pages.'.$id;
 	    return true;
 	}
 	$this->contents.=$data['contents'];
