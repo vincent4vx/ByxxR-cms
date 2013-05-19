@@ -1,7 +1,6 @@
 <?php
 class Output
 {
-    protected $stats;
     protected $contents=''; 
     protected $_vars=array();
        

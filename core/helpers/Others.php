@@ -134,4 +134,13 @@ class Others
 
         return $str;
     }
+
+    public static function getStats(){
+        if(($stats = Core::get_instance()->loader->get('Cache')->get('stats'))===null){
+            $stats = Core::get_instance()->loader->loadModel('Stats')->globalStats();
+            Core::get_instance()->loader->get('Cache')->set('stats', $stats, Core::get_instance()->config['cache']['stats']);
+        }
+
+        return $stats;
+    }
 }
