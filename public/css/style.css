@@ -42,7 +42,7 @@ table{
     margin: auto;
 }
 
-tr *{
+tr>*{
     padding: 4px;
     background-color: #6a6a6a;
     vertical-align: middle;
@@ -258,6 +258,7 @@ input:hover{
 
 #rates{
     font-weight: bold;
+    margin-left: 15px;
 }
 
 #rates em{
