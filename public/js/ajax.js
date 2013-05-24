@@ -35,16 +35,6 @@ function Ajax()
 	if(this.xhr.readyState != 0){
 	    this.xhr.abort();
 	}
-    
-	/*this.xhr.onreadystatechange = function(){
-	    alert(this.xhr.readyState);
-	    if(this.xhr.readyState == 4){
-		alert(this.xhr.responseText);
-		this.loaded = true;
-		this.response = this.xhr.responseText;
-		this.loading = false;
-	    }
-	};*/
        
 	this.xhr.open('POST', url, false);
 	this.xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -52,27 +42,13 @@ function Ajax()
 	this.loading = true;
 	this.loaded = false;
 	
-	//if(this.xhr.status == 200)
-	//{
-	    this.loaded = true;
-	    this.response = this.xhr.responseText;
-	    this.loading = false;	    
-	    return this.response;
-	//}
-	return false;
+	this.loaded = true;
+	this.response = this.xhr.responseText;
+	this.loading = false;	    
+	return this.response;
     };
     
-    this.parseJsonPage = function(url, vars){
-	/*if(!this.loading)
-	{
-	    alert('loading');
-	    if(!vars)
-		vars = '';
-	    this.loadPage(url, vars);
-	}*/
-    
-	//while(this.loaded){}
-	
+    this.parseJsonPage = function(url, vars){	
 	this.loadPage(url, vars);
 	if(this.loaded){
 	    return JSON.parse(this.response);
