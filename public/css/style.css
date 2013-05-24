@@ -316,3 +316,48 @@ ul{
     height: 100%;
     margin-left: 2px;
 }
+
+#chatBox{
+    width: 350px;
+    margin: auto;
+    border: 1px solid #8a8a8a;
+}
+
+#chatBox #title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+    border-bottom: 1px solid #8a8a8a;
+    background: -o-linear-gradient(top, rgb(63, 63, 63) 0%, rgb(30, 30, 30) 100%);
+}
+
+#chatContent{
+    height: 150px;
+    overflow-y: auto;
+    padding: 3px;
+    border-bottom: 1px solid #8a8a8a;
+}
+
+#chatBox form{
+    padding: 3px;
+}
+
+#chatBox #content{
+    width: 255px;
+}
+
+#chatBox #send{
+    width: 80px;
+}
+
+#chatContent .msg:nth-child(odd){
+    background: #444;
+}
+
+#chatContent .msg:nth-child(odd):hover{
+    background: #4a4a4a;
+}
+
+#chatContent .msg:nth-child(even):hover{
+    background: #393939;
+}

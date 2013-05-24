@@ -1,16 +1,22 @@
-var url = {
+var Url = {
     baseUrl: function(){
         return base_url;
     },
     generate: function(route){
-        return url.baseUrl()+route;
+        return Url.baseUrl()+route;
     }
 };
 
-var assets = {
+var Assets = {
     img: function(name, title){
-        return '<img src="' + url.baseUrl() + 'public/images/' + name + '" title="' + title + '" />';
+        return '<img src="' + Url.baseUrl() + 'public/images/' + name + '" title="' + title + '" />';
     }
 };
+
+function htmlentities(string){
+    return string.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;');
+}
+
+
 
 
