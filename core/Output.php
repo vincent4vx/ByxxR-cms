@@ -6,8 +6,9 @@ class Output
        
     protected $cache_id;
     protected $cache_vars=array();
-    protected $cache_contents='';
     protected $cache_on=false;
+
+    public $layout = 'layouts/layout';
 
     /**
      * The current session
@@ -26,6 +27,7 @@ class Output
     {
         $this->_instance =& Core::get_instance();
         $this->session =& $this->_instance->loader->get('Session');
+        ob_start();
     }
 
     /**
@@ -44,22 +46,10 @@ class Output
      * @param mixed $var
      */
     public function addHeaderInc($var){
-        if($this->cache_on){
-            if(!isset($this->cache_vars['headerInc']))
-                $this->cache_vars['headerInc'] = '';
-            if(!is_array($var))
-                $this->cache_vars['headerInc'].=$var;
-            else
-                    $this->cache_vars['headerInc'].=implode($var);
-            
-            return;
-        }
         if(!is_array($var))
             $this->headerInc.=$var;
-        else{
-            foreach ($var as $inc)
-                $this->headerInc.=$inc;
-        }
+        else
+            $this->headerInc.=implode($var);
     }
     
     public function __get($name)
@@ -67,20 +57,21 @@ class Output
 	if(isset($this->_vars[$name]))
 	    return $this->_vars[$name];
     }
+
+    public function __set($name, $value){
+        $this->_vars[$name] = $value;
+        if($this->cache_on)
+            $this->cache_vars[$name] = $value;
+    }
     
-    public function view($file, array $vars=array())
-    {
-	$view=new View($file, $vars);
-	if($this->cache_on===false)
-	{
-	    $this->contents.=$view->getContent();
-	    $this->_vars+=$view->getVars();
-	}
-	else
-	{
-	    $this->cache_contents.=$view->getContent();
-	    $this->cache_vars+=$view->getVars();
-	}
+    public function view($file, array $vars=array()){
+        $tpl = APP.'views/'.$file.'.html.php';
+
+        if(!file_exists($tpl))
+            throw new Exception('Vue "'.$this->file.'" inexistante !', '500');
+        
+        extract($vars);
+        include $tpl;
     }
     
     public function error_404()
@@ -117,31 +108,39 @@ class Output
         ));
     }
     
-    public function display()
-    {
+    public function display(){
+        $this->contents = ob_get_clean();
 	if(empty($this->contents))
 	    return;
-	require APP.'views/layouts/layout.html.php';
+
+        if(!empty($this->layout))
+            require APP.'views/'.$this->layout.'.html.php';
+        else
+            echo $this->contents;
     }
     
-    public function startCache($id)
-    {
+    public function startCache($id){
 	$data=$this->_instance->loader->get('Cache')->get('pages.'.$id);
-	if($data===null || DEBUG)
-	{
+	if($data===null || DEBUG){
+            ob_start();
 	    $this->cache_on=true;
 	    $this->cache_id='pages.'.$id;
 	    return true;
 	}
-	$this->contents.=$data['contents'];
+	echo $data['contents'];
 	$this->_vars+=$data['vars'];
 	return false;
     }
     
-    public function endCache($time=60)
-    {
-	Core::get_instance()->loader->get('Cache')->set($this->cache_id, array('vars'=>$this->cache_vars, 'contents'=>  $this->cache_contents), $time);
-	$this->_vars+=$this->cache_vars;
-	$this->contents.=$this->cache_contents;
+    public function endCache($time=60){
+        echo $contents = ob_get_clean();
+	Core::get_instance()->loader->get('Cache')->set(
+                $this->cache_id,
+                array(
+                    'vars'=>$this->cache_vars,
+                    'contents'=>$contents
+                ),
+                $time
+        );
     }
 }
