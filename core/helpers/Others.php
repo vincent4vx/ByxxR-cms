@@ -136,9 +136,9 @@ class Others
     }
 
     public static function getStats(){
-        if(($stats = Core::get_instance()->loader->get('Cache')->get('stats'))===null){
+        if(($stats = Core::get_instance()->loader->get('Cache')->get('data.stats'))===null){
             $stats = Core::get_instance()->loader->loadModel('Stats')->globalStats();
-            Core::get_instance()->loader->get('Cache')->set('stats', $stats, Core::get_instance()->config['cache']['stats']);
+            Core::get_instance()->loader->get('Cache')->set('data.stats', $stats, Core::get_instance()->config['cache']['stats']);
         }
 
         return $stats;
