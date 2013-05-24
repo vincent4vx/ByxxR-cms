@@ -12,10 +12,6 @@ class UserModel extends Model{
         return $this->db->count('accounts', array('pseudo'=>$pseudo));
     }
 
-    public function loadUser($id){
-        
-    }
-
     /**
      * load an user with pass and account name
      * @param string $user
@@ -23,7 +19,7 @@ class UserModel extends Model{
      * @return mixed
      */
     public function loadForLogin($user, $pass){
-        $data = $this->db->executeFirst('SELECT a.guid, a.level, a.pseudo, d.*, r.* FROM accounts a LEFT JOIN byxxr_accounts_data d ON d.account_id = a.guid LEFT JOIN byxxr_rigths r ON r.user_id = a.guid WHERE account = :account AND pass = :pass ', array('account'=>trim($user), 'pass'=>trim($pass)));
+        $data = $this->db->executeFirst('SELECT a.account, a.guid, a.level, a.pseudo, d.*, r.*, a.banned FROM accounts a LEFT JOIN byxxr_accounts_data d ON d.account_id = a.guid LEFT JOIN byxxr_rigths r ON r.user_id = a.guid WHERE account = :account AND pass = :pass ', array('account'=>trim($user), 'pass'=>trim($pass)));
 
         if($data['ip']==''){
             $this->createAccountData($data['guid'], $_SERVER['REMOTE_ADDR']);
@@ -136,5 +132,13 @@ class UserModel extends Model{
         $id = $this->db->lastInsertId();
 
         $this->createAccountData($id, $_SERVER['REMOTE_ADDR']);
+    }
+
+    public function isBanIp($ip){
+        return $this->db->count('banip', array('ip'=>$ip)) > 0;
+    }
+
+    public function loadAccount($id){
+        return $this->db->executeFirst('SELECT * FROM accounts WHERE guid = ?', array($id));
     }
 }

@@ -3,14 +3,15 @@ class UserController extends Controller{
     public function registerAction(){
         $ip = $_SERVER['REMOTE_ADDR'];
 
-        if($this->cache->get(str_replace('.', '_', $ip).'.cannot_register') === true){
-            $this->session->setFlashMsg("Vous vous êtes déjà inscript il y a moins de {$this->config['user']['inter_register_attemps']} heures, ou vous avez dépassé la limite maximale autorisé autorisé de compte ({$this->config['user']['per_ip']}).<br/>Vous ne pouvez donc pas vous inscrire pour le moment !", 'NO');
-            Url::redirect();
-            return;
+        $key = 'data.'.str_replace('.', '_', $ip).'.cannot_register';
+        $can_register = $this->cache->get($key);
+
+        if($can_register === null){
+            $can_register = $this->model('user')->canRegister($ip);
+            $this->cache->set($key, $can_register, 600);
         }
 
-        if(!$this->model('user')->canRegister($ip)){
-            $this->cache->set(str_replace('.', '_', $ip).'.cannot_register', true);
+        if($can_register === false){
             $this->session->setFlashMsg("Vous vous êtes déjà inscript il y a moins de {$this->config['user']['inter_register_attemps']} heures, ou vous avez dépassé la limite maximale autorisé autorisé de compte ({$this->config['user']['per_ip']}).<br/>Vous ne pouvez donc pas vous inscrire pour le moment !", 'NO');
             Url::redirect();
             return;
@@ -28,10 +29,26 @@ class UserController extends Controller{
     }
 
     public function loginAction(){
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $banip = $this->cache->get('data.'.str_replace('.', '_', $ip).'.banip');
+
+        if($banip === null){
+            $banip = $this->model('user')->isBanIp($ip);
+            $this->cache->set('data.'.str_replace('.', '_', $ip).'.banip', $banip, 600);
+        }
+
+        if($banip === true){
+            $this->session->setFlashMsg('Connexion impossible : votre IP a été bannie !', 'NO');
+            Url::redirect();
+            return;
+        }
+
         if(!empty($_POST['login']) && !empty($_POST['passlog']) && !$this->session->isLog()){
             $data = $this->model('user')->loadForLogin($_POST['login'], $_POST['passlog']);
             if(!$data)
                 $this->session->setFlashMsg('Erreur lors de la connexion : nom de compte ou mot de passe incorrect.', 'NO');
+            elseif($data['banned'] == 1)
+                $this->session->setFlashMsg('Connexion impossible : votre compte est banni !', 'NO');
             else{
                 $this->session->login($data);
                 $this->UserModel->setIp($data['guid'], $data['ip']);
@@ -50,5 +67,40 @@ class UserController extends Controller{
         $this->session->destroy();
         $this->session->setFlashMsg('Vous êtes déconnecté avec succès !');
         Url::redirect();
+    }
+
+    public function userAction($id = 0){
+        $id = (int)$id;
+    }
+
+    public function indexAction(){
+        if(!$this->session->isLog()){
+            $this->session->setFlashMsg('Veuillez vous connecter pour voir cette page...', 'NO');
+            return;
+        }
+
+        if(($account = $this->cache->get('data.account.'.$this->session->guid))===null){
+            $account=$this->model('user')->loadAccount($this->session->guid);
+            $this->cache->set('data.account.'.$this->session->guid, $account, $this->config['cache']['profil']);
+        }
+
+        $this->output->view('user/profile', array(
+            'account'=>$account
+        ));
+    }
+
+    public function actionAction($action = ''){
+        $this->output->layout = null;
+        $allowed = array('delete');
+
+        if(!in_array($action, $allowed) || !$this->session->isLog())
+            exit('false');
+
+        if(($account = $this->cache->get('data.account.'.$this->session->guid))===null){
+            $account=$this->model('user')->loadAccount($this->session->guid);
+            $this->cache->set('data.account.'.$this->session->guid, $account, $this->config['cache']['profil']);
+        }
+
+        $this->output->view('user/action/'.$action, array('account'=>$account));
     }
 }
