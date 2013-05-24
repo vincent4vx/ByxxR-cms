@@ -37,8 +37,6 @@ class Core
         require_once CORE.'Loader'.EXT;
         $this->loader = new Loader();
         $this->loader->preload();
-	self::$benchmarks['Loading Core']=number_format(microtime(true)-START_TIME, 4).'sec';
-	self::$benchmarks['Core memory use']=memory_get_usage().' Bytes';
     }
     
     public function run()
@@ -53,20 +51,19 @@ class Core
 		Loader::getClass('Output')->error_403();
 	}*/
         $this->loader->get('router')->run();
-	self::$benchmarks['Loading controller']=number_format(microtime(true)-$time,4).'sec';
     }
     
     public function display()
     {
 	$time=microtime(true);
 	$this->loader->get('Output')->display();
-	self::$benchmarks['Display']=number_format(microtime(true)-$time,4).'sec';
     }
     
     public function benchmarks()
     {
-	self::$benchmarks['Total execution time']=number_format(microtime(true)-START_TIME, 4).'sec';
-	self::$benchmarks['Total memory use']=memory_get_usage().' Bytes';
+	self::$benchmarks['Total execution time']=number_format(number_format((microtime(true)-START_TIME)*1000, 4), 1).'ms';
+	self::$benchmarks['Total memory use']=number_format(memory_get_usage() / 1024).' Ko';
+        self::$benchmarks['Queries']=Database::$num_req;
 	echo '<table>';
 	foreach (self::$benchmarks as $title=>$value)
 	{
