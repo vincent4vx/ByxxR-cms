@@ -4,9 +4,9 @@ class ErrorHandler{
      * initialize the error handler
      */
     public static function init(){
-        require_once __DIR__.'/BException'.EXT;
-        require_once __DIR__.'/SQLException'.EXT;
-        require_once __DIR__.'/LoaderException'.EXT;
+        require __DIR__.'/BException'.EXT;
+        require __DIR__.'/SQLException'.EXT;
+        require __DIR__.'/LoaderException'.EXT;
 
         set_error_handler(function($errno, $errstr, $errfile = '', $errline = 0){
             if($errno === E_USER_ERROR || $errno === E_ERROR){
