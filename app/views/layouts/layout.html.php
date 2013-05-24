@@ -4,6 +4,7 @@
         <title><?php echo Core::conf('server.name').' - '.$this->title?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <?php echo Assets::css('style')?>
+        <?php echo Assets::js('jquery-min')?>
         <?php require_once __DIR__.'/scripts.html.php'?>
 	<?php echo is_string($this->headerInc)?$this->headerInc:''?>
     </head> 
