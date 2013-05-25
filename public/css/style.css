@@ -16,6 +16,9 @@ par v4vx
     -webkit-transition-property: all;
     -webkit-transition-duration: 0.2s;
     -webkit-transition-timing-function: linear;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
 }
 
 body{
@@ -328,7 +331,10 @@ ul{
     font-weight: bold;
     font-size: 13px;
     border-bottom: 1px solid #8a8a8a;
+    background: linear-gradient(top, rgb(63, 63, 63) 0%, rgb(30, 30, 30) 100%);
+    background: -moz-linear-gradient(top, rgb(63, 63, 63) 0%, rgb(30, 30, 30) 100%);
     background: -o-linear-gradient(top, rgb(63, 63, 63) 0%, rgb(30, 30, 30) 100%);
+    background: -webkit-linear-gradient(top, rgb(63, 63, 63) 0%, rgb(30, 30, 30) 100%);
 }
 
 #chatContent{
