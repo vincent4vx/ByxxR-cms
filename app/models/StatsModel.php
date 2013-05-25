@@ -5,7 +5,7 @@ class StatsModel extends Model{
             'accounts' => $this->db->count('accounts'),
             'characters' => $this->db->count('personnages'),
             'online' => $this->db->count('accounts', array('logged'=>1)),
-            'state' => fsockopen($this->config['server']['ip'], $this->config['server']['port'], 0.1)
+            'state' => fsockopen($this->config['server']['ip'], $this->config['server']['port'], $errno, $errstr, 0.1)
         );
 
         $r = $this->db->queryFirst('SELECT AVG(level) FROM personnages');
