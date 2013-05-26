@@ -3,7 +3,7 @@
 <fieldset>
     <legend>Tutoriel</legend>
     <center><?php echo Assets::img("config.png")?></center><br><br>
-    Pour nous rejoindre, il suffit de telecharger le client dofus 1.29, puis la config et la mettre dans le dossier Dofus. Et enfin inscrivez-vous <?php echo $this->url->link("ici", "account", "register")?>.
+    Pour nous rejoindre, il suffit de telecharger le client dofus 1.29, puis la config et la mettre dans le dossier Dofus. Et enfin inscrivez-vous <?php echo Url::link("ici", "account", "register")?>.
 </fieldset><br/>
 
 <fieldset>
