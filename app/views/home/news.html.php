@@ -18,7 +18,7 @@
             Posté par <strong><?php echo $new['author']?></strong> le <em><?php echo date('d / m / Y', $new['date'])?></em>
         </small>
     </div>
-    <?php echo Others::bbcode($new['msg'])?><br/>
+    <?php echo BBCode::parse($new['content'])?><br/>
 </fieldset><br/>
 <?php endforeach?>
 <br/>

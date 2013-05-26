@@ -11,11 +11,14 @@ class NewsModel extends Model
             $page=1;
 	return $this->db->selectAll('news', '*', array(), 'ORDER BY id DESC LIMIT '.(($page-1)*$this->config['news_per_page']).', '.$this->config['news_per_page']);
     }
+
+    public function getList(){
+        return $this->db->queryAll('SELECT id, title, author, type FROM news ORDER BY id DESC');
+    }
     
     public function selectAll()
     {
-        $req = $this->db->query('SELECT * FROM news ORDER BY id DESC');
-        return $req->fetchAll();
+        return $this->db->queryAll('SELECT * FROM news ORDER BY id DESC');
     }
     
     public function selectLimit($start, $num)
@@ -33,14 +36,14 @@ class NewsModel extends Model
         $req->execute(array($id));
     }
     
-    public function addnew($type,$title,$new, $autor)
+    public function create($type, $title, $content, $author)
     {
-        $req = $this->db->prepare('INSERT INTO news(titre,text,auteur,type) VALUES(:title , :text, :autor, :type)');
-        $req->execute(array(
+        $this->db->create('news', array(
             'type' => $type,
             'title' => $title,
-            'text' => $new,
-            'autor' => $autor
+            'content' => $content,
+            'author' => $author,
+            'date' => time()
         ));
     }
     
