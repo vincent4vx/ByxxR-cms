@@ -94,7 +94,7 @@ fieldset{
     font-size: 10px;
 }
 
-input{
+input, select{
     border: none;
     width: 123px;
     background-color: #545252;
@@ -103,7 +103,7 @@ input{
     padding: 1px;
 }
 
-input:hover{
+input:hover, select:hover{
     color: #c2c2c2;
     text-shadow: 0em 0em 0.2em #c2c2c2;
 }
@@ -307,7 +307,7 @@ tr:hover .hiddenTools{
     display: inline;
 }
 
-ul{
+#menuLeft ul, #menuRight ul{
     margin: 0;
     padding: 0;
 }
