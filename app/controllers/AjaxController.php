@@ -19,7 +19,7 @@ class AjaxController extends Controller{
         )
             exit;
 
-        $this->model('chat')->send(
+        $this->model('chat')->add(
                 trim($_POST['content']),
                 $this->session->pseudo,
                 $_POST['time']
