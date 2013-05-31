@@ -153,4 +153,8 @@ class Loader{
     public function addIncludePath($path){
         $this->include_path[] = $path;
     }
+
+    public static function getClass($class_name){
+        return Core::get_instance()->loader->get($class_name);
+    }
 }
