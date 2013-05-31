@@ -53,4 +53,26 @@ class Url
 
         echo '<meta http-equiv="refresh" content="'.$time.';url: '.$url.'"/>';
     }
+
+    public static function forum($route = '', $encode = true){
+        if(is_array($route)){
+            if($encode)
+                $route = array_map('urlencode', $route);
+            $route = implode('/', $route);
+        }
+
+        if(($url = Core::conf('forum.forum_url')))
+            return $url.$route;
+        return self::genUrl('forum/'.$route);
+    }
+
+    public static function forumList(array $path, $encode = true){
+        array_unshift($path, 'list');
+        return self::forum($path, $encode);
+    }
+
+    public static function forumThread(array $path, $encode = true){
+        array_unshift($path, 'thread');
+        return self::forum($path, $encode);
+    }
 }

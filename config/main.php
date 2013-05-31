@@ -12,6 +12,7 @@ return array(
     'points' => require 'points.php',
     'session' => require 'session.php',
     'user' => require 'user.php',
+    'forum' => require 'forum.php',
     //FIN
     
     //url de base (url de racine du cms)
