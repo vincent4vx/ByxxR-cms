@@ -4,8 +4,8 @@ if(!$this->title){
     $this->titleImg = 'accueil';
 }
 ?>
-<div id="chatBox">
-    <div id="title">Chat Box</div>
+<div class="forumContainer" id="chatBox">
+    <div class="title">Chat Box</div>
     <div id="chatContent"></div>
     <?php if($this->session->isLog()):?>
     <form action="#">
@@ -30,7 +30,7 @@ if(!$this->title){
                 else
                     d_str += d.getMinutes();
 
-                contents = '<div class="msg">' + d_str + ' : ' + data[row]['author'] + ' > ' + htmlentities(data[row]['content']) + '</div>' + contents;
+                contents = '<div class="row">' + d_str + ' : ' + data[row]['author'] + ' > ' + htmlentities(data[row]['content']) + '</div>' + contents;
             }
             $('#chatContent').html(contents).scrollTop(1000);
             window.setTimeout(refreshChat, 4000);

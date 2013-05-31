@@ -320,13 +320,13 @@ tr:hover .hiddenTools{
     margin-left: 2px;
 }
 
-#chatBox{
-    width: 350px;
+.forumContainer{
+    width: 435px;
     margin: auto;
     border: 1px solid #8a8a8a;
 }
 
-#chatBox #title{
+.forumContainer .title{
     text-align: center;
     font-weight: bold;
     font-size: 13px;
@@ -337,33 +337,50 @@ tr:hover .hiddenTools{
     background: -webkit-linear-gradient(top, rgb(63, 63, 63) 0%, rgb(30, 30, 30) 100%);
 }
 
+.forumContainer .row{
+    padding-left: 3px;
+}
+
+.forumContainer .row:nth-child(odd){
+    background: #444;
+}
+
+.forumContainer .row:nth-child(odd):hover{
+    background: #4a4a4a;
+}
+
+.forumContainer .row:nth-child(even):hover{
+    background: #393939;
+}
+
+.forumContainer .row td{
+    background: transparent;
+    text-align: left;
+}
+
+.forumContainer .row table{
+    width: 100%;
+}
+
+#forumNavBar{
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
 #chatContent{
     height: 150px;
     overflow-y: auto;
-    padding: 3px;
-    border-bottom: 1px solid #8a8a8a;
 }
 
 #chatBox form{
+    border-top: 1px solid #8a8a8a;
     padding: 3px;
 }
 
 #chatBox #content{
-    width: 255px;
+    width: 343px;
 }
 
 #chatBox #send{
     width: 80px;
-}
-
-#chatContent .msg:nth-child(odd){
-    background: #444;
-}
-
-#chatContent .msg:nth-child(odd):hover{
-    background: #4a4a4a;
-}
-
-#chatContent .msg:nth-child(even):hover{
-    background: #393939;
 }
