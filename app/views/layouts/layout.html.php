@@ -4,9 +4,7 @@
         <title><?php echo Core::conf('server.name').' - '.$this->title?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <?php echo Assets::css('style')?>
-        <?php echo Assets::js('jquery-min')?>
-        <?php require_once __DIR__.'/scripts.html.php'?>
-	<?php echo is_string($this->headerInc)?$this->headerInc:''?>
+        <?php require __DIR__.'/scripts.html.php'?>
     </head> 
     <body>
         <span style="position:absolute;margin-top:161px;margin-left:190px;color:#ffffff;text-shadow:0em 0em 0.2em #000000;font-family:Vivaldi;font-size:35px;"><?php echo Core::conf('server.name')?></span>
