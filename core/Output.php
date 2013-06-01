@@ -80,34 +80,6 @@ class Output
         $this->view('statuts/error_404');
     }
     
-    public function error_403()
-    {
-        header('HTTP/1.1 403 Forbidden');
-        $this->view('statuts/error_403.html.twig');
-    }
-    
-    public function success($image, $title, $message, $controller = '', $method = '')
-    {
-        $this->view('statuts/success.html.twig', array(
-            'image' => $image,
-            'titre' => $title,
-            'message' => $message,
-            'controller' => $controller,
-            'method' => $method
-        ));
-    }
-    
-    public function error($image, $title, $message, $controller = '', $method = '')
-    {
-        $this->view('statuts/error.html.twig', array(
-            'image' => $image,
-            'titre' => $title,
-            'message' => $message,
-            'controller' => $controller,
-            'method' => $method
-        ));
-    }
-    
     public function display(){
         $this->contents = ob_get_clean();
 	if(empty($this->contents))

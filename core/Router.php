@@ -33,13 +33,17 @@ class Router
     public function run(){
         $ctrl = Core::get_instance()->loader->loadController($this->controller);
 
-        if(!$ctrl)
-            exit('erreur 404');
+        if(!$ctrl){
+            Loader::getClass('Output')->error_404();
+            return;
+        }
 
         $method = strtolower($this->method).'Action';
 
-        if(!method_exists($ctrl, $method))
-            exit('erreur 404');
+        if(!method_exists($ctrl, $method)){
+            Loader::getClass('Output')->error_404();
+            return;
+        }
 
         call_user_func_array(array($ctrl, $method), $this->vars);
     }
