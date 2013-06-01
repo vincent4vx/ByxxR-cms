@@ -25,8 +25,4 @@ class AjaxController extends Controller{
                 $_POST['time']
         );
     }
-
-    public function chatAction(){
-        $this->output->view('chat');
-    }
 }
