@@ -3,6 +3,10 @@ class ForumController extends Controller{
     public function __construct() {
         parent::__construct();
         $this->output->titleImg = 'forum';
+        if(!$this->config['forum']['integrated_forum']){
+            $this->output->error_404();
+            exit;
+        }
     }
     
     public function indexAction(){
