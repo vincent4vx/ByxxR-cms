@@ -50,8 +50,8 @@
             </td>
             <td><?php echo $new['title']?></td>
             <td><?php echo $new['author']?></td>
-            <td><?php echo Assets::img("devtool/delete.png")?></td>
-            <td><?php echo Assets::img("devtool/edit.png")?></td>
+            <td><a href="<?php echo Url::genUrl('admin/news/delete/'.$new['id'])?>"><?php echo Assets::img("devtool/delete.png")?></a></td>
+            <td><a href="<?php echo Url::genUrl('admin/news/edit/'.$new['id'])?>"><?php echo Assets::img("devtool/edit.png")?></a></td>
         </tr>
         <?php endforeach?>
     </table>
