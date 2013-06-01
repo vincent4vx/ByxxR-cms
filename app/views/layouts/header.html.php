@@ -7,7 +7,7 @@
                 <input class="input" type="submit" value="Connexion au site"/>
             </form>
         <?php else:?>
-        Bienvenue <b><?php echo $this->session->pseudo?></b> ! <a href="">Profil</a> - <a href="<?php echo Url::genUrl('user/logout')?>">Se déconnecter</a>
+        Bienvenue <b><?php echo $this->session->pseudo?></b> ! <a href="<?php echo Url::genUrl('user')?>">Profil</a> - <a href="<?php echo Url::genUrl('user/logout')?>">Se déconnecter</a>
          <?php endif?>
     </div>
 </div>
