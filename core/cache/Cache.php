@@ -26,7 +26,7 @@ class Cache
     public function delete($key){
         $files = $this->getFileName($key);
 
-        foreach(glob($files)as $file){
+        foreach(glob($files) as $file){
             unlink($file);
         }
         return true;
