@@ -24,9 +24,12 @@ class Cache
     }
 
     public function delete($key){
-        $file = $this->getFileName($key);
+        $files = $this->getFileName($key);
 
-        return unlink($file);
+        foreach(glob($files)as $file){
+            unlink($file);
+        }
+        return true;
     }
 
     public function set($key, $data, $time = 60){
