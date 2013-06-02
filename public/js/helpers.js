@@ -3,7 +3,7 @@ var Url = {
         return base_url;
     },
     generate: function(route){
-        return Url.baseUrl()+route;
+        return Url.baseUrl()+'index.php/'+route;
     }
 };
 
