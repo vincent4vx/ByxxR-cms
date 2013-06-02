@@ -51,7 +51,7 @@ class Url
             return;
         }
 
-        echo '<meta http-equiv="refresh" content="'.$time.';url: '.$url.'"/>';
+        echo '<meta http-equiv="refresh" content="'.$time.';url= '.$url.'"/>';
     }
 
     public static function forum($route = '', $encode = true){
