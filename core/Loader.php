@@ -9,14 +9,14 @@ class Loader{
      * The include path
      * @var array
      */
-    private $include_path;
+    protected $include_path;
 
     public function __construct() {
         $this->include_path = array(CORE, CORE.'helpers/', APP.'models/', BASE.'lib/');
         $_i =& $this;
 
         spl_autoload_register(function($class_name) use($_i){
-            $paths = $_i->include_path;
+            $paths = $_i->getIncludepath();
             $paths[] = CORE.strtolower($class_name).'/';
 
             foreach($paths as $path){
@@ -153,6 +153,10 @@ class Loader{
      */
     public function addIncludePath($path){
         $this->include_path[] = $path;
+    }
+
+    public function getIncludepath(){
+        return $this->include_path;
     }
 
     public static function getClass($class_name){
