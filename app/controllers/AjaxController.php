@@ -25,4 +25,22 @@ class AjaxController extends Controller{
                 $_POST['time']
         );
     }
+
+    public function getPhoneByCountryAction($country){
+        if(strlen($country) !== 2)
+            exit('erreur...');
+        $url = 'http://script.starpass.fr/numero_pays_light.php?pays='.$country.'&id_document='.$this->config['points']['idd'].'&type=';
+
+        if(($data = $this->cache->get('starpass.'.$country))===null){
+            $data = '<b>Audiotel : </b>';
+            $audio = file_get_contents($url.'audiotel');
+            $data .= $audio === '' ? '<em>Indisponible...</em>' : $audio;
+            $data .= '<br/><b>SMS : </b>';
+            $sms = file_get_contents($url.'sms');
+            $data .= $sms === '' ? '<em>Indisponible...</em>' : $sms;
+            $this->cache->set('starpass.'.$country, $data, 3600*24);
+        }
+
+        exit($data);
+    }
 }

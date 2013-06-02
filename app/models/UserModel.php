@@ -141,4 +141,9 @@ class UserModel extends Model{
     public function loadAccount($id){
         return $this->db->executeFirst('SELECT * FROM accounts WHERE guid = ?', array($id));
     }
+
+    public function addPoints($id, $points){
+        $stmt = $this->db->prepare('UPDATE byxxr_accounts_data SET points = points + :p WHERE id = :id');
+        $stmt->execute(array('p'=>$points, 'id'=>$id));
+    }
 }

@@ -46,4 +46,63 @@ class PointsController extends Controller{
         else
             Url::redirect();
     }
+
+    public function buyPointsAction(){
+        if(!$this->session->isLog()){
+            $this->session->setFlashMsg('Veuillez vous connecter pour accéder à cette page !', 'NO');
+            return Url::redirect();
+        }
+        $this->output->view('points/buy');
+    }
+
+    public function testCodeAction(){
+        if(!$this->session->isLog()){
+            $this->session->setFlashMsg('Veuillez vous connecter pour accéder à cette page !', 'NO');
+            return Url::redirect();
+        }
+        $idp = $this->config['points']['idp'];
+        $idd = $this->config['points']['idd'];
+        $ident=$idp.';;'.$idd;
+
+        if(empty($_POST['code'])){
+            $this->session->setFlashMsg('Veuillez rentrer le code !', 'NO');
+            return Url::redirect('points/buyPoints');
+        }
+
+        $codes=$_POST['code'].';;;;';
+
+        $ident=urlencode($ident);
+        $codes=urlencode($codes);
+
+        $get_f = file('http://script.starpass.fr/check_php.php?ident='.$ident.'&codes='.$codes.'&DATAS=');
+
+        if(!$get_f){
+            $this->session->setFlashMsg('Une erreur est survenue lors de la vérification du code. Il s\'agis peut-être d\'un problème interne à starpass, ou à l\'hébergeur...<br/>Veuillez réessayer plus tard (votre code sera toujours valide !)', 'NO');
+            return Url::redirect('points/buyPoints');
+        }
+        $tab = explode("|",$get_f[0]);
+
+        if(empty($tab[1])){
+            $this->session->setFlashMsg('Le code que vous avez rentré est incorrect !', 'NO');
+            return Url::redirect('points/buyPoints');
+        }
+
+        // dans $pays on a le pays de l'offre. exemple "fr"
+        $pays = $tab[2];
+        // dans $palier on a le palier de l'offre. exemple "Plus A"
+        $palier = urldecode($tab[3]);
+        // dans $id_palier on a l'identifiant de l'offre
+        $id_palier = urldecode($tab[4]);
+        // dans $type on a le type de l'offre. exemple "sms", "audiotel, "cb", etc.
+        $type = urldecode($tab[5]);
+
+        if(substr($tab[0],0,3) != "OUI"){
+            $this->session->setFlashMsg('Le code rentré est incorrect.', 'NO');
+            return Url::redirect('points/buyPoints');
+        }
+
+        $this->model('user')->addPoints($this->session->guid, $this->config['points']['per_code']);
+        $info = $_POST['code'].';'.$pays.';'.$palier.';'.$id_palier.';'.$type;
+        $this->model('log')->add('+', $this->config['points']['per_code'], $info);
+    }
 }

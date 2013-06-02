@@ -29,5 +29,10 @@ return array(
     //FIN config vote
     
     //active la boutique ou non.
-    'enable_shop' => false
+    'enable_shop' => false,
+
+    //achats points par starpass :
+    'idp' => 87603,
+    'idd' => 153507,
+    'per_code' => 200
 );
