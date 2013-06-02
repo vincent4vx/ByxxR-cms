@@ -21,7 +21,7 @@
                         <?php echo $msg[0]?>
                     </div>
                     <?php endforeach?>
-                    <center><?php echo Assets::img('title/img_'.$this->titleImg.'.png', 'titleImg')?></center>
+                    <center><?php echo Assets::img('title/img_'.$this->titleImg.'.png', array('class'=>'titleImg'))?></center>
                     <div class="bgContent">
 			<div class="textContent">
                             <?php echo $this->contents?>
