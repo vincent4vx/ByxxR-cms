@@ -6,12 +6,11 @@ class Assets
 	return '<link href="'.Core::conf('root').'public/css/'.$file.'.css" rel="stylesheet" type="text/css" />';
     }
     
-    public static function img($file, $class = '')
+    public static function img($file, array $attributes = array())
     {
         $img = '<img src="'.Core::conf('root').'public/images/'.$file.'" alt="image"';
-        if($class !== '')
-        {
-            $img .= ' class="'.$class.'"';
+        foreach($attributes as $name=>$value){
+            $img.=' '.$name.'="'.$value.'"';
         }
         $img .= ' />';
         return $img;
