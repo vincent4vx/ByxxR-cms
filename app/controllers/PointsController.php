@@ -39,6 +39,8 @@ class PointsController extends Controller{
 
         $this->UserModel->validateVote($this->session->account_id);
         $this->session->setFlashMsg('Vote confirmé. Vous gagnez <b>'.$this->config['points']['per_vote'].'</b> points !');
+        $this->session->points += $this->config['points']['per_vote'];
+        $this->model('log')->add('+', $this->config['points']['per_vote'], 'vote');
         $this->session->vote_time=time();
 
         if(!$this->config['points']['rpgapi'])
@@ -102,6 +104,7 @@ class PointsController extends Controller{
         }
 
         $this->model('user')->addPoints($this->session->guid, $this->config['points']['per_code']);
+        $this->session->points += $this->config['points']['per_code'];
         $info = $_POST['code'].';'.$pays.';'.$palier.';'.$id_palier.';'.$type;
         $this->model('log')->add('+', $this->config['points']['per_code'], $info);
     }

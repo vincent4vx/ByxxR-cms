@@ -1,5 +1,5 @@
 <?php
-class LoadModel extends Model{
+class LogModel extends Model{
     public function add($type, $value, $info){
         $this->db->create('points_log', array(
             'account' => $this->session->guid,
