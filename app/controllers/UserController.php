@@ -76,7 +76,7 @@ class UserController extends Controller{
     public function indexAction(){
         if(!$this->session->isLog()){
             $this->session->setFlashMsg('Veuillez vous connecter pour voir cette page...', 'NO');
-            return;
+            return Url::redirect();
         }
 
         if(($account = $this->cache->get('data.account.'.$this->session->guid))===null){
