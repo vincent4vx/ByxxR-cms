@@ -8,7 +8,8 @@ class Assets
     
     public static function img($file, array $attributes = array())
     {
-        $img = '<img src="'.Core::conf('root').'public/images/'.$file.'" alt="image"';
+        $attr = Core::conf('use_localstorage') ? 'url' : 'src';
+        $img = '<img '.$attr.'="'.Core::conf('root').'public/images/'.$file.'" alt="image"';
         foreach($attributes as $name=>$value){
             $img.=' '.$name.'="'.$value.'"';
         }

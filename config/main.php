@@ -20,7 +20,7 @@ return array(
     'root' => 'http://127.0.0.1/byxxr/',
     
     //mode rewrite activé (avec un .htaccess qui permet de ne pas écrire le index.php dans l'url)
-    'rewrite' => true,
+    'rewrite' => false,
     
     //Langage
     'lang'=>'fr',
@@ -29,5 +29,7 @@ return array(
 
     
     //nombre de nouvelles par page
-    'news_per_page' => 5
+    'news_per_page' => 5,
+
+    'use_localstorage' => true
 );

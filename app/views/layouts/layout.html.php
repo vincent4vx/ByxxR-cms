@@ -41,6 +41,7 @@
 	</div>
     </body>
 	<?php echo is_string($this->footerInc)?$this->footerInc:''?>
+	<?php if(Core::conf('use_localstorage'))echo Assets::js('localstorage')?>
 </html>
 
 
