@@ -21,6 +21,9 @@ class UserModel extends Model{
     public function loadForLogin($user, $pass){
         $data = $this->db->executeFirst('SELECT a.account, a.guid, a.level, a.pseudo, d.*, r.*, a.banned FROM accounts a LEFT JOIN byxxr_accounts_data d ON d.account_id = a.guid LEFT JOIN byxxr_rigths r ON r.user_id = a.guid WHERE account = :account AND pass = :pass ', array('account'=>trim($user), 'pass'=>trim($pass)));
 
+        if(!$data)
+            return false;
+
         if($data['ip']==''){
             $this->createAccountData($data['guid'], $_SERVER['REMOTE_ADDR']);
             $data['ip']=$_SERVER['REMOTE_ADDR'];
