@@ -105,5 +105,7 @@ class PointsController extends Controller{
         $this->session->points += $this->config['points']['per_code'];
         $info = $_POST['code'].';'.$pays.';'.$palier.';'.$id_palier.';'.$type;
         $this->model('log')->add('+', $this->config['points']['per_code'], $info);
+        $this->session->setFlashMsg('Vous avez été crédité de <b>'.$this->config['points']['per_code'].'</b> sur votre compte !');
+        Url::redirect('points/buyPoints');
     }
 }
