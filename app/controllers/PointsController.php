@@ -71,10 +71,8 @@ class PointsController extends Controller{
             return Url::redirect('points/buyPoints');
         }
 
-        $codes=$_POST['code'].';;;;';
-
         $ident=urlencode($ident);
-        $codes=urlencode($codes);
+        $codes=urlencode($_POST['code']);
 
         $get_f = file('http://script.starpass.fr/check_php.php?ident='.$ident.'&codes='.$codes.'&DATAS=');
 
