@@ -147,6 +147,8 @@ class UserModel extends Model{
 
     public function addPoints($id, $points){
         $stmt = $this->db->prepare('UPDATE byxxr_accounts_data SET points = points + :p WHERE id = :id');
-        $stmt->execute(array('p'=>$points, 'id'=>$id));
+        $stmt->bindParam('p', $points, PDO::PARAM_INT);
+        $stmt->bindParam('id', $id, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }
