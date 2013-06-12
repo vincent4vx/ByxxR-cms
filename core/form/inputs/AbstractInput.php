@@ -104,17 +104,18 @@ abstract class AbstractInput
 
     public function getScript()
     {
-        $script = 'function validate'.$this->name.'(){';
-        $script.= 'var id = "'.$this->name.'";var elem = document.getElementById(id);';
+        //$script = 'function validate'.$this->name.'(){';
+        $script = '$("#'.$this->name.'").blur(function(){';
+        //$script.= 'var id = "'.$this->name.'";var elem = document.getElementById(id);';
 
         if($this->required){
-            $script.='if(elem.value==""){formManager.displayError(id, "Ce champ est obligatoire !");return;}';
+            $script.='if(this.value==""){formManager.displayError(this.id, "Ce champ est obligatoire !");return;}';
         }
 
         if($this->pattern!==''){
             $script.='var regex = new RegExp("'.str_replace('\\', '\\\\', $this->pattern).'");';
-            $script.='if(!regex.test(elem.value) && elem.value!=""){';
-            $script.='formManager.displayError(id, "Champ invalide !");';
+            $script.='if(!regex.test(this.value) && this.value!=""){';
+            $script.='formManager.displayError(this.id, "Champ invalide !");';
             $script.='return;}';
         }
 
@@ -125,21 +126,22 @@ abstract class AbstractInput
                 $script.='if(document.getElementById("'.$name.'").value';
 
                 if($matches[1]==='equal'){
-                    $script.='!=elem.value){';
-                    $script.='formManager.displayError(id, "Le champ doit être égual au champ '.$name.' !");return}';
+                    $script.='!=this.value){';
+                    $script.='formManager.displayError(this.id, "Le champ doit être égual au champ '.$name.' !");return}';
                 }else{
-                    $script.='==elem.value){';
-                    $script.='formManager.displayError(id, "Le champ doit être différent du champ '.$name.' !");return}';
+                    $script.='==this.value){';
+                    $script.='formManager.displayError(this.id, "Le champ doit être différent du champ '.$name.' !");return}';
                 }
             }else{
                 trigger_error('La fonction de comparaison de l\'input <b>'.$this->name.'</b> n\'est pas valide !', E_USER_WARNING);
             }
         }
 
-        $script.='formManager.rowValid(id);}'.PHP_EOL;
+        $script.='formManager.rowValid(this.id);});'.PHP_EOL;
 	
 	return $script;
     }
+
 
     public function getName(){
         return $this->name;

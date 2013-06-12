@@ -10,7 +10,7 @@ class HForm{
         $name = str_replace('Form', '', $name);
         $output =& Core::get_instance()->loader->get('Output');
         $output->addHeaderInc(Assets::js(array('form', 'ajax')));
-        $output->addHeaderInc('<script type="text/javascript">'.PHP_EOL.$form->getScript().PHP_EOL.'</script>');
+        $output->addFooterInc('<script type="text/javascript">'.PHP_EOL.$form->getScript().PHP_EOL.'</script>');
         return '<form action="'.$form->url().'"  onsubmit="return formManager.validateForm(\''.$name.'\', this);">';
     }
 
@@ -49,9 +49,6 @@ class HForm{
             }
             $tag.=' '.$attr.'="'.$value.'"';
         }
-
-        if($ajax_validation)
-            $tag.=' onblur="validate'.$name.'();"';
 
         return $tag.' />';
     }

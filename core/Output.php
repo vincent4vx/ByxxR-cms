@@ -51,6 +51,13 @@ class Output
         else
             $this->headerInc.=implode($var);
     }
+
+    public function addFooterInc($var){
+        if(!is_array($var))
+            $this->footerInc .= $var;
+        else
+            $this->footerInc .= implode($var);
+    }
     
     public function __get($name)
     {
