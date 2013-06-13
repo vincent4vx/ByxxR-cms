@@ -35,7 +35,8 @@ if(!$this->title){
             $('#chatContent').html(contents).scrollTop(1000);
         });
     }
-    window.setInterval(refreshChat, 3000);
+    refreshChat();
+    window.setInterval(refreshChat, <?php echo Core::conf('forum.chat_refresh')?>);
 
 $('#send').click(function(){
     if($.trim($('#content').val()) == ''){
