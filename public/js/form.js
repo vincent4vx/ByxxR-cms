@@ -23,7 +23,7 @@ var formManager = {
             var errors = JSON.parse(data);
             
             if(errors == true){
-                document.location = $(form).attr('action');
+                window.location.href = $(form).attr('action');
                 return;
             }
 

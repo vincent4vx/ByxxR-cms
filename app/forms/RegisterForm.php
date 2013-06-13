@@ -24,12 +24,12 @@ class RegisterForm extends Form{
     protected function onFormValid() {
         if(!isset($_COOKIE['byxxr_register_token'])){
             $this->session->setFlashMsg('Protection anti-bot : Veuillez accepter le cookies pour pouvoir vous inscrire !', 'NO');
-            return;
+            return false;
         }
 
         if($_COOKIE['byxxr_register_token'] !== $this->session->register_token){
             $this->session->setFlashMsg('Protection anti-bot : le token est invalide !', 'NO');
-            return;
+            return false;
         }
 
         $model =& $this->loader->loadModel('user');
@@ -58,6 +58,7 @@ class RegisterForm extends Form{
         );
 
         $this->session->setFlashMsg('Compte créé avec succès.<br/>Vous pouvez maintenant vous connecter !', 'OK');
+        return true;
     }
 
     public function labels(){
