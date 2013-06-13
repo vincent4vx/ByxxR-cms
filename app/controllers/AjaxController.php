@@ -19,6 +19,12 @@ class AjaxController extends Controller{
         )
             exit;
 
+        if($_POST['content'] === '/clear' && $this->session->handle_chat){
+            $this->model('chat')->clear();
+            $this->ChatModel->add('La chatbox a été vidé !', '<span style="color: red;font-weight: bold;">Système</span>', time());
+            return;
+        }
+
         $this->model('chat')->add(
                 trim($_POST['content']),
                 $this->session->pseudo,

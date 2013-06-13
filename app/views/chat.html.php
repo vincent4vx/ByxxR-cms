@@ -33,10 +33,9 @@ if(!$this->title){
                 contents = '<div class="row">' + d_str + ' : ' + data[row]['author'] + ' > ' + htmlentities(data[row]['content']) + '</div>' + contents;
             }
             $('#chatContent').html(contents).scrollTop(1000);
-            window.setTimeout(refreshChat, 4000);
         });
     }
-    refreshChat();
+    window.setInterval(refreshChat, 3000);
 
 $('#send').click(function(){
     if($.trim($('#content').val()) == ''){
@@ -53,6 +52,9 @@ $('#send').click(function(){
     $.post(Url.generate('ajax/postChatMsg'), data, function(res){
         $('#send').val('Envoyer !').removeAttr('disabled');
         $('#content').val('');
+        if(res != '')
+            alert(res);
+        refreshChat();
     });
 });
 </script>
