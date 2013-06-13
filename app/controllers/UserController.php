@@ -1,6 +1,11 @@
 <?php
 class UserController extends Controller{
     public function registerAction(){
+        if($this->session->isLog()){
+            $this->session->setFlashMsg('Vous ne pouvez pas accéder à cette page !', 'NO');
+            return Url::redirect();
+        }
+
         $ip = $_SERVER['REMOTE_ADDR'];
 
         $key = 'data.'.str_replace('.', '_', $ip).'.cannot_register';
@@ -12,7 +17,7 @@ class UserController extends Controller{
         }
 
         if($can_register === false){
-            $this->session->setFlashMsg("Vous vous êtes déjà inscript il y a moins de {$this->config['user']['inter_register_attemps']} heures, ou vous avez dépassé la limite maximale autorisé autorisé de compte ({$this->config['user']['per_ip']}).<br/>Vous ne pouvez donc pas vous inscrire pour le moment !", 'NO');
+            $this->session->setFlashMsg("Vous vous êtes déjà inscrit il y a moins de {$this->config['user']['inter_register_attemps']} heures, ou vous avez créé plus de <b>{$this->config['user']['per_ip']}</b>.<br/>Vous ne pouvez donc pas vous inscrire pour le moment !", 'NO');
             Url::redirect();
             return;
         }
