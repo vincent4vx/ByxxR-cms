@@ -9,4 +9,8 @@ class LogModel extends Model{
             'time' => time()
         ));
     }
+
+    public function getByTime($account, $time){
+        return $this->db->executeAll('SELECT * FROM points_log WHERE account = ? AND time >= ?', array($account, $time));
+    }
 }

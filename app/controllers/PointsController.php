@@ -54,7 +54,18 @@ class PointsController extends Controller{
             $this->session->setFlashMsg('Veuillez vous connecter pour accéder à cette page !', 'NO');
             return Url::redirect();
         }
-        $this->output->view('points/buy');
+
+        if($this->output->startCache('buy-points-'.$this->session->guid)){
+            $mounth = strtotime('first day of now');
+            $this->output->view(
+                    'points/buy',
+                    array(
+                        'log'=>$this->model('log')->getByTime($this->session->guid, $mounth),
+                        'mounth'=>$mounth
+                    )
+            );
+            $this->output->endCache(3600);
+        }
     }
 
     public function testCodeAction(){
@@ -103,7 +114,7 @@ class PointsController extends Controller{
 
         $this->model('user')->addPoints($this->session->guid, $this->config['points']['per_code']);
         $this->session->points += $this->config['points']['per_code'];
-        $info = $_POST['code'].';'.$pays.';'.$palier.';'.$id_palier.';'.$type;
+        $info = 'Code : '.$_POST['code'].' ('.$pays.'-'.$palier.'-'.$id_palier.'-'.$type.')';
         $this->model('log')->add('+', $this->config['points']['per_code'], $info);
         $this->session->setFlashMsg('Vous avez été crédité de <b>'.$this->config['points']['per_code'].'</b> sur votre compte !');
         Url::redirect('points/buyPoints');

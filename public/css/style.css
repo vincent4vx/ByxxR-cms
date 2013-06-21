@@ -384,3 +384,29 @@ tr:hover .hiddenTools{
 #chatBox #send{
     width: 80px;
 }
+
+#points{
+    width: 95%;
+    text-align: center;
+}
+
+#points td{
+    color: #2c2c2c;
+    font-weight: bold;
+}
+
+#points .credit > td{
+    background: #1e8a00;
+}
+
+#points .t_p > td{
+    background: #6a7a6a;
+}
+
+#points .t_m > td{
+    background: #7a6a6a;
+}
+
+#points .debit > td{
+    background: #d30003;
+}

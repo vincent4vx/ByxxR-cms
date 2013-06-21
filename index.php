@@ -15,6 +15,8 @@ define('VERSION', '2.0a');
 define('DEBUG', true);
 define('START_TIME', microtime(true));
 
+setlocale(LC_TIME, 'fr_FR.UTF8', 'fr.UTF8', 'fr_FR.UTF-8', 'fr.UTF-8');
+
 require_once CORE.'Core'.EXT;
 $app=new Core();
 $app->run();
