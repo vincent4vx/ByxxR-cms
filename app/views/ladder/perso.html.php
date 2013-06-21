@@ -13,7 +13,7 @@
     <?php foreach($chars as $char):?>
     <?php echo Others::ladderTr($i)?>
         <td><?php echo $char['name']?></td>
-        <td></td>
+        <td><?php echo Assets::img(Others::getHead($char['class'], $char['sexe']))?></td>
         <td><?php echo $char['level']?></td>
         <td><?php echo $char['xp']?></td>
         <td><?php echo $char['kamas']?></td>

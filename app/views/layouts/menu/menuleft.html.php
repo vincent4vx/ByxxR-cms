@@ -15,9 +15,9 @@
         <li><a href="<?php echo Url::genUrl("user", "register")?>"><?php echo I18n::tr('register', 'layout')?></a></li>
         <?php endif?>
         <li><a target="_blank" href="<?php echo Url::forum()?>"><?php echo I18n::tr('forum', 'layout')?></a></li>
-        <li><a href="<?php echo Url::genUrl("ladder")?>"><?php echo I18n::tr('ladder', 'layout')?></a></li>
-        <li><a href="<?php echo Url::genUrl("ladder", "votes")?>"><?php echo I18n::tr('votes-ladder', 'layout')?></a></li>
-        <li><a href="<?php echo Url::genUrl("ladder", "guilds")?>"><?php echo I18n::tr('guilds-ladder', 'layout')?></a></li>
+        <li><a href="<?php echo Url::genUrl("ladder")?>">Classement</a></li>
+        <li><a href="<?php echo Url::genUrl("ladder", "votes")?>">Top Votes</a></li>
+        <li><a href="<?php echo Url::genUrl("ladder", "guilds")?>">Top Guildes</a></li>
     </ul>
     <br/>
                 <!--{# {% if session.isLog() %}
