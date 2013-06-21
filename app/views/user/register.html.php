@@ -36,7 +36,4 @@
         <td><?php echo HForm::submit('Enregister')?></td>
     </tr>
 </table>
-<script>
-<?php echo $form->account->getScript()?>
-</script>
 <?php echo HForm::close()?>
