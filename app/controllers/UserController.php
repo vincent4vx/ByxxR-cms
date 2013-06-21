@@ -17,7 +17,7 @@ class UserController extends Controller{
         }
 
         if($can_register === false){
-            $this->session->setFlashMsg("Vous vous êtes déjà inscrit il y a moins de {$this->config['user']['inter_register_attemps']} heures, ou vous avez créé plus de <b>{$this->config['user']['per_ip']}</b>.<br/>Vous ne pouvez donc pas vous inscrire pour le moment !", 'NO');
+            $this->session->setFlashMsg("Vous vous êtes déjà inscrit il y a moins de {$this->config['user']['inter_register_attemps']} heures, ou vous avez créé plus de <b>{$this->config['user']['per_ip']}</b> comptes.<br/>Vous ne pouvez donc pas vous inscrire pour le moment !", 'NO');
             Url::redirect();
             return;
         }
