@@ -399,14 +399,11 @@ tr:hover .hiddenTools{
     background: #1e8a00;
 }
 
-#points .t_p > td{
-    background: #6a7a6a;
-}
-
-#points .t_m > td{
-    background: #7a6a6a;
-}
-
 #points .debit > td{
     background: #d30003;
+}
+
+.flag{
+    padding: 1px;
+    vertical-align: middle;
 }
