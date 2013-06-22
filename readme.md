@@ -3,7 +3,8 @@
 ByxxR 2.0, le CMS alliant sécurité, fonctionnalités et performances !
 
 ## Déjà pourquoi ByxxR ?
- ByxxR pour Byxx Reload / Remake. ByxxR est une grosse reprise de Byxx !
+ ByxxR pour Byxx Reload / Remake. ByxxR la plus grosse reprise de Byxx'CMS jamais faite !
+ Tout a été revus, le code php, l'organisation, le css, l'html... Tout ça pour vous offrir le meilleur expérience possible sur un CMS Open-source !
 
 ## Que sera ce cms ?
  Ce cms n'aura en fait rien à voir question code à Byxx, contrairement à tout les dérivés de Byxx actuels.
@@ -26,7 +27,10 @@ ByxxR 2.0, le CMS alliant sécurité, fonctionnalités et performances !
 - Temps d'exécution moyen (avec cache) : 6ms (~30% plus rapide)
 - Temps d'exécution sans cache (page complexe) : 11ms (~90% plus rapide)
 - utilisation de mémoire : 300 Kb (~30% de moins)
+
+## Liens :
+ - Lien GitHub : https://github.com/vincent4vx/ByxxR-cms
+ - ByxxR 1.0 : http://byxxr.olympe.in/
+ - Lien de test : http://byxxr.ynova.fr/
  
- Lien GitHub : https://github.com/vincent4vx/ByxxR-cms
- 
- Merci de respecter notre travail, en laissant le copyright !
+Merci de respecter notre travail, en laissant le copyright !
