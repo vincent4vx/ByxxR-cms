@@ -1,37 +1,31 @@
-######################
-# ByxxR CMS v2.0     #
-# auteur : v4vx      #
-# Design : Nicow     #
-# CSS : Nicow & v4vx #
-# code : v4vx        #
-######################
+# ByxxR 2.0, l'apogé de l'évolution
 
-Je vous présente mon projet-cms, ByxxR.
+ByxxR 2.0, le CMS alliant sécurité, fonctionnalités et performances !
 
-Déjà pourquoi ByxxR ?
+## Déjà pourquoi ByxxR ?
  ByxxR pour Byxx Reload / Remake. ByxxR est une grosse reprise de Byxx !
 
-Que sera ce cms ?
+## Que sera ce cms ?
  Ce cms n'aura en fait rien à voir question code à Byxx, contrairement à tout les dérivés de Byxx actuels.
  D'où le Remake, il est totalement refait de A à Z.
  Seule chose qui ne changera pas trop, c'est sont design, quasi parfait.
 
-Les différences avec byxx
+## Les différences avec byxx
  - Sécurité : code refait à 100%, pas de shell, utilisation de PDO au lieu de mysql_
  - Propreté : codé suivant le pattern MVC, utilisant mieux php, code plus clair et organisé
  - Puissance : Pas de framework, donc pas de fonctions inutiles chargées, système de cache pour éviter les requêtes SQL trop nombreuses
- - Fonctionnalités : Les fonctionnalités présentes sont plus poussés que sur Byxx, en se basant sur des technologies web récentes, comme le ajax.
+ - Fonctionnalités : Les fonctionnalités présentes sont plus poussés que sur Byxx, en se basant sur des technologies web récentes, comme ajax.
 
-Et ByxxR 1.0 ?
- Après réflexion, j'ai remarqué que twig ne m'était pa de grande utilité, et ralentissait pluys qu'autre chose.
- J'ai donc choisi de le supprimé, permettant ainsi d'avoir de meilleurs performances. De ce fait, toute la base à dû être refaite.
+## Et ByxxR 1.0 ?
+ Après réflexion, j'ai remarqué que twig ne m'était pas de grande utilité, et ralentissait plus qu'autre chose.
+ J'ai donc choisi de le supprimer, permettant ainsi d'avoir de meilleurs performances. De ce fait, toute la base à dû être refaite.
  Cette nouvelle base garanti un meilleur code, et un puissance à la hausse (Benchmarks si dessous, par rapport à ByxxR 1.0).
- De plus de nouvelles fonctionnalités vont voir le jour, comme la validation des formulaire via ajax...
+ De plus de nouvelles fonctionnalités vont voir le jour, comme la validation des formulaires via ajax...
  
- Benchmarks :
+## Benchmarks :
 - Temps d'exécution moyen (avec cache) : 6ms (~30% plus rapide)
-- Temps d'exécution sans cache (page complexe) : 9ms (~96% plus rapide)
-- utilisation de mémoire : 250 Kb (~46% de moins)
+- Temps d'exécution sans cache (page complexe) : 11ms (~90% plus rapide)
+- utilisation de mémoire : 300 Kb (~30% de moins)
  
  Lien GitHub : https://github.com/vincent4vx/ByxxR-cms
  
