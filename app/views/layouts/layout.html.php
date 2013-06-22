@@ -3,7 +3,7 @@
     <head>
         <title><?php echo Core::conf('server.name').' - '.$this->title?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <?php echo Assets::css('style')?>
+        <?php echo Assets::css('min')?>
         <?php require __DIR__.'/scripts.html.php'?>
     </head> 
     <body>
