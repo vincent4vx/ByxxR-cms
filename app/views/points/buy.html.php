@@ -28,7 +28,7 @@
             font-size: 85%;
         }
     </style>
-    <div id="number">
+    <div id="number" style="height: 35px;vertical-align: middle;">
     
     </div>
     <br /><br />
@@ -50,6 +50,7 @@
 <br/>
 <fieldset>
     <legend>Tableau de comptes</legend>
+    <?php if($log!==array()):?>
     <table id="points">
         <tr>
             <th>Informations</th><th>Valeur</th><th>Date</th>
@@ -67,4 +68,7 @@
             <td>Total</td><td><font color="<?php echo $total<0?'red':'green'?>"><?php echo $total?></font></td><td><?php echo strftime('%B %G', $mounth)?></td>
         </tr>
     </table>
+    <?php else:?>
+    <div style="color: red;text-align: center;">Pas encore de transactions enregistré pour <b><?php echo strftime('%B %G', $mounth)?></b>.</div>
+    <?php endif?>
 </fieldset>
