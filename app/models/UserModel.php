@@ -151,4 +151,12 @@ class UserModel extends Model{
         $stmt->bindParam('id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }
+
+    public function delete($guid){
+        $guid = array((int)$guid);
+        $this->db->execute('DELETE FROM accounts WHERE guid = ?', $guid);
+        $this->db->execute('DELETE FROM byxxr_accounts_data WHERE account_id = ?', $guid);
+        $this->db->execute('DELETE FROM byxxr_rigths WHERE user_id = ?', $guid);
+        $this->db->execute('DELETE FROM personnages WHERE account = ?', $guid);
+    }
 }

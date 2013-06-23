@@ -24,6 +24,11 @@ class UaDeleteForm extends Form{
 
         if($err !== array())
             return $err;
+
+        $this->loader->loadModel('user')->delete($account['guid']);
+        $this->session->destroy();
+        $this->session->setFlashMsg('Votre compte a bien été supprimé avec succès !');
+        return true;
     }
 
     public function url() {
