@@ -15,7 +15,7 @@ class RegisterForm extends Form{
             'pseudo'=>array('text', array('required', 'pattern'=>'[a-zA-Z0-9\._-]{4,12}'), 'diff(account)'),
             'pass1'=>array('password', array('required', 'pattern'=>'.{4,32}')),
             'pass2'=>array('password', array('required'), 'equal(pass1)'),
-            'email'=>array('email'),
+            'email'=>array('email', array('required')),
             'answer'=>array('text', array('required')),
             'response'=>array('text', array('required'))
         );

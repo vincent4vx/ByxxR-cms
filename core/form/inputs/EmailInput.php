@@ -5,6 +5,6 @@ class EmailInput extends AbstractInput{
     }
 
     public function __toString() {
-        return HForm::input('password', $this->name, $this->attributes, true);
+        return HForm::input('email', $this->name, $this->attributes, true);
     }
 }
