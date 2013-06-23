@@ -53,7 +53,7 @@ class RegisterForm extends Form{
             $this->pseudo->value(),
             $this->pass1->value(),
             $this->email->value(),
-            $this->answer->value(),
+            $this->question->value(),
             $this->response->value()
         );
 
@@ -68,7 +68,7 @@ class RegisterForm extends Form{
             'pass1'=>'Mot de passe',
             'pass2'=>'Confirmation',
             'email'=>'E-mail',
-            'answer'=>'Question secrète',
+            'question'=>'Question secrète',
             'response'=>'Réponse'
         );
     }

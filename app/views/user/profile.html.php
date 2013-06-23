@@ -6,6 +6,7 @@
         $('#edit').load(Url.generate('user/action/' + name));
     }
 </script>
+<?php echo Assets::js('form')?>
 <fieldset>
             <legend>Mes informations</legend>
             <table style="width: 100%;">

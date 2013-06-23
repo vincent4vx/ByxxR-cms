@@ -95,7 +95,7 @@ class UserController extends Controller{
     }
 
     public function actionAction($action = ''){
-        $this->output->layout = null;
+        $this->output->layout = 'layouts/ua_layout';
         $allowed = array('delete');
 
         if(!in_array($action, $allowed) || !$this->session->isLog())
@@ -106,6 +106,11 @@ class UserController extends Controller{
             $this->cache->set('data.account.'.$this->session->guid, $account, $this->config['cache']['profil']);
         }
 
-        $this->output->view('user/action/'.$action, array('account'=>$account));
+        $form = $this->loader->loadForm('Ua'.ucfirst($action));
+
+        $this->output->view('user/action/'.$action, array(
+            'account'=>$account,
+            'form'=>$form
+        ));
     }
 }
