@@ -3,7 +3,7 @@ class RegisterForm extends Form{
     /**
      * @var AbstractInput
      */
-    public $account, $pseudo, $pass1, $pass2, $email, $answer, $response;
+    public $account, $pseudo, $pass1, $pass2, $email, $question, $response;
 
     public function url(){
         return Url::genUrl();
@@ -16,7 +16,7 @@ class RegisterForm extends Form{
             'pass1'=>array('password', array('required', 'pattern'=>'.{4,32}')),
             'pass2'=>array('password', array('required'), 'equal(pass1)'),
             'email'=>array('email', array('required')),
-            'answer'=>array('text', array('required')),
+            'question'=>array('text', array('required')),
             'response'=>array('text', array('required'))
         );
     }

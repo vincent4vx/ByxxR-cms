@@ -20,8 +20,8 @@
         <td><?php echo $form->pass2->toHTML()?></td>
     </tr>
     <tr>
-        <td><?php echo HForm::label($form->answer)?></td>
-        <td><?php echo $form->answer->toHTML()?></td>
+        <td><?php echo HForm::label($form->question)?></td>
+        <td><?php echo $form->question->toHTML()?></td>
     </tr>
     <tr>
         <td><?php echo HForm::label($form->response)?></td>
