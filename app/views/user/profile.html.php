@@ -1,15 +1,9 @@
 <?php $this->title='Mon compte'?>
 <?php $this->titleImg='profil'?>
-<?php echo Assets::js('ajax')?>
 <script type="text/javascript">
     function openItem(name){
-        var ajax = new Ajax();
-        var uri = Url.generate('user/action/' + name);
-        var page = ajax.loadPage(uri, null);
-        if(page == 'false')
-            alert('Erreur lors du chargement de la page !');
-        else
-            document.getElementById("edit").innerHTML = page;
+        $('#edit').html('<center style="margin-top: 25px;">' + Assets.img('loading.gif', 'Chargement...') + '</center>');
+        $('#edit').load(Url.generate('user/action/' + name));
     }
 </script>
 <fieldset>
