@@ -10,6 +10,9 @@ class UaDeleteForm extends Form{
     }
 
     protected function onFormValid() {
+        if(!$this->session->isLog())
+            return array('alert_msg'=>'Vous êtes déconnecté !');
+        
         if(($account = $this->cache->get('data.account.'.$this->session->guid))===null){
             $account=$this->model('user')->loadAccount($this->session->guid);
             $this->cache->set('data.account.'.$this->session->guid, $account, $this->config['cache']['profil']);

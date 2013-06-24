@@ -133,12 +133,11 @@ class Loader{
 
     public function &loadForm($name){
         $name = ucfirst($name).'Form';
-
         if(!isset($this->classes[$name])){
             $file = APP.'forms/'.$name.EXT;
 
             if(!file_exists($file))
-                exit('false');
+                exit('Fichier : '.$file.' inexistant !');
 
             require $file;
             $this->add(new $name(), $name);

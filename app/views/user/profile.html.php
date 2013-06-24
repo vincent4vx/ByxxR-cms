@@ -29,7 +29,7 @@
                 <tr>
                     <td>Email : </td>
                     <td><?php echo $account['email']?></td>
-                    <td><?php echo Assets::img("devtool/edit.png")?></td>
+                    <td><a href="#edit" onclick="openItem('changemail')"><?php echo Assets::img("devtool/edit.png")?></a></td>
                 </tr>
                 <tr>
                     <td>Question : </td>

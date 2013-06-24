@@ -96,10 +96,10 @@ class UserController extends Controller{
 
     public function actionAction($action = ''){
         $this->output->layout = 'layouts/ua_layout';
-        $allowed = array('delete');
+        $allowed = array('delete', 'changemail');
 
         if(!in_array($action, $allowed) || !$this->session->isLog())
-            exit('false');
+            exit('<div style="text-align: center;color:red;">Cette action n\'est pas permise !</div>');
 
         if(($account = $this->cache->get('data.account.'.$this->session->guid))===null){
             $account=$this->model('user')->loadAccount($this->session->guid);
