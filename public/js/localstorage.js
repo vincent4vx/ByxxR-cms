@@ -36,11 +36,14 @@ function preload(){
         'title/img_profil.png',
         'title/img_reglement.png',
         'title/img_vote.png',
+        'title/img_boutique.png',
         'imgInscription.png',
         'trophy/trophy_1.png',
         'trophy/trophy_2.png',
         'trophy/trophy_3.png',
-        'heads/SmallHead_0.png'
+        'heads/SmallHead_0.png',
+        'config.png',
+        'download.png'
     ];
 
     $(preload).each(function(index, value){
