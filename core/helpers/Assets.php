@@ -8,8 +8,15 @@ class Assets
     
     public static function img($file, array $attributes = array())
     {
-        $attr = Core::conf('use_localstorage') ? 'url' : 'src';
-        $img = '<img '.$attr.'="'.Core::conf('root').'public/images/'.$file.'" alt="image"';
+        $uri = Core::conf('root').'public/images/'.$file;
+        
+        if(Core::conf('use_localstorage')){
+            $attributes['data-url'] = $uri;
+            $attributes['src'] = '#';
+        }else{
+            $attributes['src'] = $uri;
+        }
+        $img = '<img alt="image"';
         foreach($attributes as $name=>$value){
             $img.=' '.$name.'="'.$value.'"';
         }

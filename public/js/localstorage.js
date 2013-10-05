@@ -9,14 +9,14 @@
     }
 
     $('img').each(function(){
-        var imgUrl = $(this).attr('url');
+        var imgUrl = $(this).data('url');
         if(imgUrl){
             var data = localStorage.getItem(imgUrl);
             if(!data)
                 $(this).attr('src', imgUrl);
             else
                 $(this).attr('src', data);
-            $(this).removeAttr('url');
+            $(this).removeAttr('data-url');
         }
     });
 })();
