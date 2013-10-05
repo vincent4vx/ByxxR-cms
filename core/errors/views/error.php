@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <header>
-    <title><?php echo I18n::tr('error_title', 'errors', $code, $name)?></title>
+    <title>Error <?php echo $code?> : <?php echo $name?></title>
     <meta charset="utf-8"/>
 </header>
 <div id="error">
@@ -32,9 +32,10 @@
             background: #F5F5F5;
         }
     </style>
-    <h1><?php echo I18n::tr('error_title', 'errors', $code, $name)?></h1>
-    <?php echo I18n::tr('error_msg', 'errors', $file, $line)?>
+    <h1>Error <?php echo $code?> : <?php echo $name?></h1>
+    An error was encountered on file <b><?php echo $file?></b> at line <b><?php echo $line?></b>.
+    
     <div id="message">
-        <?php echo I18n::tr($msg, 'errors')?>
+        <?php echo $msg?>
     </div>
 </div>

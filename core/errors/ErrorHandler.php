@@ -60,6 +60,6 @@ class ErrorHandler{
      * @param int $line
      */
     public static function error500($file, $line){
-        return self::error('error500_msg', $file, $line, 500, 'Internal server error');
+        return self::error('An internal error was encountered.<br/>If you\'re the webmaster, set DEBUG to true on <b>index.php</b> to see more details.', $file, $line, 500, 'Internal server error');
     }
 }
