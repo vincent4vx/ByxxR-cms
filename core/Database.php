@@ -124,7 +124,7 @@ class Database extends PDO
 	    return $statement;
 	}catch(Exception $e)
 	{
-	    throw new SQLException($e->getMessage(), $statement);
+	    throw new SQLException($e->getMessage(), $query);
 	}
     }
     
