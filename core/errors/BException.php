@@ -1,19 +1,19 @@
 <?php
 class BException extends Exception{
+    private $title = 'An Exception was encountered';
     /**
      * create a new exception
      * @param string $message
      * @param array $args
      */
-    public function __construct($message, array $args) {
-        $message = I18n::tr($message, 'errors', $args);
+    public function __construct($message, $title = '') {
         parent::__construct($message);
+        
+        if(!empty($title))
+            $this->title = $title;
     }
 
     public function __toString() {
-        $message = $this->message;
-        $title = 'An Exception was encountered';
-
         ob_start();
         require __DIR__.'/views/exception_layout.php';
         $contents = ob_get_contents();

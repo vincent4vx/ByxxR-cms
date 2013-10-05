@@ -23,8 +23,8 @@ class Database extends PDO
             );
 	}catch(Exception $e)
 	{
-	    exit($e->getMessage());
-	}
+            throw new SQLException($e->getMessage());
+        }
     }
     
     /*
@@ -39,8 +39,8 @@ class Database extends PDO
 	    return parent::query($statement);
 	}catch(Exception $e)
 	{
-	    exit('PDO error :<br/>'.$e->getFile().' ligne : '.$e->getLine().'<br/>'.$e->getMessage());
-	}
+	    throw new SQLException($e->getMessage(), $statement);
+        }
     }
     
     public function prepare($statement, $driver_options = array())
@@ -51,7 +51,7 @@ class Database extends PDO
 	    return parent::prepare($statement, $driver_options);
 	}catch(Exception $e)
 	{
-	    exit('PDO error :<br/>'.$e->getFile().' ligne : '.$e->getLine().'<br/>'.$e->getMessage());
+	    throw new SQLException($e->getMessage(), $statement);
 	}
     }
     
@@ -62,7 +62,7 @@ class Database extends PDO
 	    parent::exec($statement);
 	}catch(Exception $e)
 	{
-	    exit($e);
+	    throw new SQLException($e->getMessage(), $statement);
 	}
     }
 
@@ -124,7 +124,7 @@ class Database extends PDO
 	    return $statement;
 	}catch(Exception $e)
 	{
-	    exit('PDO error :<br/>'.$e->getFile().' ligne : '.$e->getLine().'<br/>'.$e->getMessage().'<br/>query : '.$query);
+	    throw new SQLException($e->getMessage(), $statement);
 	}
     }
     

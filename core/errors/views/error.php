@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <header>
     <title><?php echo I18n::tr('error_title', 'errors', $code, $name)?></title>
+    <meta charset="utf-8"/>
 </header>
 <div id="error">
     <style type="text/css">
