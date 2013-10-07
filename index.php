@@ -12,7 +12,7 @@ define('CORE', BASE.'core/');
 define('APP', BASE.'app/');
 define('EXT', '.php');
 define('VERSION', '2.0a');
-define('DEBUG', false);
+define('DEBUG', true);
 define('START_TIME', microtime(true));
 
 $ua = $_SERVER['HTTP_USER_AGENT'];

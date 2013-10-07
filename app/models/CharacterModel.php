@@ -11,4 +11,10 @@ class CharacterModel extends Model{
 
         return $stmt->fetchAll();
     }
+    
+    public function getAll(){
+        $stmt = $this->db->query('SELECT p.name, p.level, p.honor, p.xp, p.kamas, p.sexe, p.class FROM personnages p JOIN accounts ON p.account = accounts.guid WHERE accounts.level < 1');
+        
+        return $stmt->fetchAll();
+    }
 }

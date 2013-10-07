@@ -5,14 +5,15 @@ class LadderController extends Controller{
     }
 
     public function persoAction($order = 'xp'){
-        if($order!=='xp' && $order!=='kamas')
+        /*if($order!=='xp' && $order!=='kamas')
             $order='xp';
 
         if($this->output->startCache('ladder.perso.'.$order)){
             $chars = $this->model('character')->ladder(0, 20, $order);
             $this->output->view('ladder/perso', array('chars'=>$chars));
             $this->output->endCache($this->config['cache']['ladder_perso']);
-        }
+        }*/
+     $this->output->view('ladder/perso-js');
     }
 
     public function votesAction(){

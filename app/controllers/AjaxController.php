@@ -49,4 +49,8 @@ class AjaxController extends Controller{
 
         exit($data);
     }
+    
+    public function getPersosListAction(){
+        exit(json_encode($this->model('character')->getAll()));
+    }
 }
