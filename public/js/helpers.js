@@ -9,21 +9,21 @@ var Url = {
 
 var Assets = {
     img: function(name, title) {
-        if(!title){
+        if (!title) {
             title = name;
         }
         return '<img src="' + Url.baseUrl() + 'public/images/' + name + '" title="' + title + '" />';
     },
-    classImg: function(classID, sex){
+    classImg: function(classID, sex) {
         var classes = ['feca', 'osa', 'enu', 'sram', 'xel', 'eca', 'eni', 'iop', 'cra', 'sadi', 'sacri', 'pand'];
         var name;
-        
-        if(classID < 1 || classID > classes.length){
+
+        if (classID < 1 || classID > classes.length) {
             name = 'SmallHead_0';
-        }else{
+        } else {
             name = classes[classID - 1] + (sex == 0 ? '_m' : '_f');
         }
-        
+
         return this.img('heads/' + name + '.png', name);
     }
 };
@@ -44,30 +44,30 @@ var ArrayUtils = {
     orderRows: function(rows, column, asc) {
         var final = rows;
         ArrayUtils.internal.qsort(final, 0, rows.length, column);
-        
-        if(!asc)
+
+        if (!asc)
             return final.reverse();
-        
+
         return final;
     },
     internal: {
         partition: function(array, begin, end, pivot, column) {
             var piv = array[pivot][column];
-            
-            if(!isNaN(piv)){
+
+            if (!isNaN(piv)) {
                 piv = parseInt(piv);
             }
-            
+
             array.swap(pivot, end - 1);
             var store = begin;
             var ix;
             for (ix = begin; ix < end - 1; ++ix) {
                 var val = array[ix][column];
-                
-                if(!isNaN(val)){
+
+                if (!isNaN(val)) {
                     val = parseInt(val);
                 }
-                
+
                 if (val <= piv) {
                     array.swap(store, ix);
                     ++store;
@@ -77,7 +77,7 @@ var ArrayUtils = {
 
             return store;
         },
-        qsort: function(array, begin, end, column){
+        qsort: function(array, begin, end, column) {
             if (end - 1 > begin) {
                 var pivot = begin + Math.floor(Math.random() * (end - begin));
 
@@ -107,43 +107,54 @@ var Cache = {
      * Limitaion de la taille à 500Kio
      * @type Number
      */
-    MAXSIZE : 1024 * 500,
-    store: function(key, value, time){
+    MAXSIZE: 1024 * 500,
+    /**
+     * Enregistre une variable dans le cache
+     * @param {String} key la clé du cache
+     * @param {mixed} value La valeur à enregistrer
+     * @param {Numeric} time Durée (de vie) en seconde
+     * @returns {Boolean} true en succès, false sinon (+ message dans console)
+     */
+    store: function(key, value, time) {
+        if (!time) {
+            time = 60;
+        }
+        var d = new Date();
         var data = {
-            del: (new Date()).getTime() + time * 1000,
+            del: d.getTime() + time * 1000,
             value: value
         };
-        
+
         var str = JSON.stringify(data);
-        
-        if(str.length * 2 > this.MAXSIZE){
+
+        if (str.length * 2 > this.MAXSIZE) {
             console.log("Impossible d'enregistrer " + key + " dans la cache : taille maximal dépassé (" + str.length * 2 + "o)");
             return false;
         }
-        
-        try{
+
+        try {
             localStorage.setItem('cache_' + key, str);
-        }catch(e){
+        } catch (e) {
             console.log("Impossible d'enregistrer " + key + " dans la cache : " + e);
             return false;
         }
-        
+
         return true;
     },
-    get: function(key){
+    get: function(key) {
         var data = JSON.parse(localStorage.getItem('cache_' + key));
-        
-        if(!data){
+
+        if (!data) {
             return false;
         }
-        
+
         var curtime = (new Date()).getTime();
-        
-        if(data.del <= curtime){
+
+        if (data.del <= curtime) {
             Cache.remove(key);
             return false;
         }
-        
+
         return data.value;
     },
     /**
@@ -151,12 +162,12 @@ var Cache = {
      * @param {string} key
      * @returns {undefined}
      */
-    remove: function(key){
+    remove: function(key) {
         localStorage.removeItem('cache_' + key);
     }
 };
 
-function RecordsHandler(){
+function RecordsHandler() {
     /**
      * Tout les enregistrements à lister / trier
      * @type Array
@@ -171,19 +182,19 @@ function RecordsHandler(){
      * @returns {null}
      * @private
      */
-    this.__recordsLoader = function(JSON_uri, recordsLoaded, cache_time){
-        if(cache_time){
-            var data = Cache.get(JSON_uri);        
+    this.__recordsLoader = function(JSON_uri, recordsLoaded, cache_time) {
+        if (cache_time) {
+            var data = Cache.get(JSON_uri);
             var instance = this;
-            
-            if(data !== false){
+
+            if (data !== false) {
                 this.records = data;
                 recordsLoaded(instance);
                 return;
             }
-            
-            $.getJSON(JSON_uri, null, function(data){
-                if(cache_time){
+
+            $.getJSON(JSON_uri, null, function(data) {
+                if (cache_time) {
                     Cache.store(JSON_uri, data, cache_time);
                 }
                 instance.records = data;
@@ -203,22 +214,23 @@ function RecordsHandler(){
         this.clear();
         var list = ArrayUtils.orderRows(this.records, order_by, asc);
         var end;
-        
-        if(!length){
+
+        if (!length) {
             end = list.length;
-        }else{
+        } else {
             end = start + length;
-            
-            if(end > list.length){
+
+            if (end > list.length) {
                 end = list.length;
             }
         }
-        
-        for(var i = start; i < end; ++i){
+
+        for (var i = start; i < end; ++i) {
             this.displayRow(i + 1, list[i]);
         }
-            
+
     };
-    
+
     this.construct();
-};
+}
+;
