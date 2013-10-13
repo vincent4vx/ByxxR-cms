@@ -11,7 +11,11 @@
             <th><a href="#" data-column="kamas">Kamas</a></th>
         </tr>
     </thead>
-    <tbody id="ladder"></tbody>
+    <tbody id="ladder">
+        <tr>
+            <td colspan="6" style="text-align: center;font-weight: bold;">Chargement...</td>
+        </tr>
+    </tbody>
 </table>
 
 <?php echo Assets::js('ladder')?>
