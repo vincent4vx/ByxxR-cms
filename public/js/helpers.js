@@ -12,7 +12,14 @@ var Assets = {
         if (!title) {
             title = name;
         }
-        return '<img src="' + Url.baseUrl() + 'public/images/' + name + '" title="' + title + '" />';
+        var src = Url.baseUrl() + 'public/images/' + name;
+        var data;
+        
+        if((data = Cache.get(src)) !== false){
+            src = data;
+        }
+        
+        return '<img src="' + src + '" title="' + title + '" />';
     },
     classImg: function(classID, sex) {
         var classes = ['feca', 'osa', 'enu', 'sram', 'xel', 'eca', 'eni', 'iop', 'cra', 'sadi', 'sacri', 'pand'];

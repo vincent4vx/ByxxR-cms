@@ -10,7 +10,7 @@
 
     $('img[data-url]').each(function() {
         var imgUrl = $(this).data('url');
-        var data = localStorage.getItem(imgUrl);
+        var data = Cache.get(imgUrl);
         if (!data)
             $(this).attr('src', imgUrl);
         else
@@ -40,13 +40,36 @@ function preload() {
         'trophy/trophy_2.png',
         'trophy/trophy_3.png',
         'heads/SmallHead_0.png',
+        'heads/cra_f.png',
+        'heads/cra_m.png',
+        'heads/ca_f.png',
+        'heads/ca_m.png',
+        'heads/ni_f.png',
+        'heads/ni_m.png',
+        'heads/nu_f.png',
+        'heads/nu_m.png',
+        'heads/feca_f.png',
+        'heads/feca_m.png',
+        'heads/iop_f.png',
+        'heads/iop_m.png',
+        'heads/osa_f.png',
+        'heads/osa_m.png',
+        'heads/pand_f.png',
+        'heads/pand_m.png',
+        'heads/acri_f.png',
+        'heads/acri_m.png',
+        'heads/adi_f.png',
+        'heads/adi_m.png',
+        'heads/ram_f.png',
+        'heads/ram_m.png',
+        'heads/xel_f.png',
+        'heads/xel_m.png',
         'config.png',
         'download.png'
     ];
 
     $(preload).each(function(index, value) {
         var imgUrl = Url.baseUrl() + 'public/images/' + value;
-        var data = localStorage.getItem(imgUrl);
 
         var xhr = new XMLHttpRequest(),
                 blob,
@@ -66,12 +89,7 @@ function preload() {
                     // Read out file contents as a Data URL
                     var result = evt.target.result;
                     // Store Data URL in localStorage
-                    try {
-                        localStorage.setItem(imgUrl, result);
-                    }
-                    catch (e) {
-                        console.log("Storage failed: " + e);
-                    }
+                    Cache.store(imgUrl, result, 24 * 3600 * 7);
                 };
                 // Load blob as Data URL
                 fileReader.readAsDataURL(blob);
@@ -80,4 +98,8 @@ function preload() {
         // Send XHR
         xhr.send();
     });
+}
+
+function saveBase64Img(imgUrl) {
+
 }
