@@ -4,7 +4,7 @@
     <thead>
         <tr>
             <th width="8"></th>
-            <th>Nom</th>
+            <th><a href="#" data-column="name" data-asc="1">Nom</a></th>
             <th width="30"><?php echo Assets::img("heads/SmallHead_0.png") ?></th>
             <th>Level</th>
             <th><a href="#" data-column="xp">Xp</a></th>
