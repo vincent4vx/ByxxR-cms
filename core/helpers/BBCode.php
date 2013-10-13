@@ -16,7 +16,7 @@ class BBCode{
                 array('#\[img\](.+)\[/img\]#i', '<img src="$1"/>'),
                 array('#\[img=(\d+)x(\d+)\](.+)\[/img\]#', '<img src="$3" width="$1" height="$2"/>')
             ),
-            'color' => array('#\[color=(\#[a-f0-9]+)\](.+)\[/color\]#isU', '<font color="$1">$2</font>'),
+            'color' => array('#\[color=(\#[a-f0-9]+)\](.+)\[/color\]#isU', '<span style="color: $1;">$2</span>'),
             'size' => array('#\[size=(\d)\](.+)\[/size\]#isU', function($matches){
                 $size = '';
                 switch($matches[1]){

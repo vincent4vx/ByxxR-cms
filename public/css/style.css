@@ -407,3 +407,10 @@ tr:hover .hiddenTools{
     padding: 1px;
     vertical-align: middle;
 }
+
+.titleImg{
+    margin: auto;
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

@@ -3,7 +3,7 @@
     <head>
         <title><?php echo Core::conf('server.name').' - '.$this->title?></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <?php echo Assets::css('min')?>
+        <?php echo Assets::css('style')?>
         <?php require __DIR__.'/scripts.html.php'?>
     </head> 
     <body>
@@ -21,7 +21,7 @@
                         <?php echo $msg[0]?>
                     </div>
                     <?php endforeach?>
-                    <center><?php echo Assets::img('title/img_'.$this->titleImg.'.png', array('class'=>'titleImg'))?></center>
+                    <?php echo Assets::img('title/img_'.$this->titleImg.'.png', array('class'=>'titleImg'))?>
                     <div class="bgContent">
 			<div class="textContent">
                             <?php echo $this->contents?>
@@ -39,9 +39,9 @@
                     </div>
                 </div>
 	</div>
-    </body>
 	<?php echo is_string($this->footerInc)?$this->footerInc:''?>
 	<?php if(Core::conf('use_localstorage'))echo Assets::js('localstorage')?>
+    </body>
 </html>
 
 
