@@ -103,6 +103,11 @@ Array.prototype.swap = function(a, b) {
  * @type Object
  */
 var Cache = {
+    /**
+     * Limitaion de la taille à 500Kio
+     * @type Number
+     */
+    MAXSIZE : 1024 * 500,
     store: function(key, value, time){
         var data = {
             del: (new Date()).getTime() + time * 1000,
@@ -110,7 +115,20 @@ var Cache = {
         };
         
         var str = JSON.stringify(data);
-        localStorage.setItem('cache_' + key, str);
+        
+        if(str.length * 2 > this.MAXSIZE){
+            console.log("Impossible d'enregistrer " + key + " dans la cache : taille maximal dépassé (" + str.length * 2 + "o)");
+            return false;
+        }
+        
+        try{
+            localStorage.setItem('cache_' + key, str);
+        }catch(e){
+            console.log("Impossible d'enregistrer " + key + " dans la cache : " + e);
+            return false;
+        }
+        
+        return true;
     },
     get: function(key){
         var data = JSON.parse(localStorage.getItem('cache_' + key));
