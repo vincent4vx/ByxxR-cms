@@ -42,7 +42,7 @@
             $('a[href="#number"] img').css('border', 'none');
             $('img[src$="' + pays + '.png"], img[url$="' + pays + '.png"]').css('border', '1px solid #DDD');
             $('#number').html(Assets.img('loading.gif', 'Chargement en cours...'));
-            $('#number').load(Url.generate('ajax/getPhoneByCountry/' + pays));
+            $('#number').load(Url.generate('ajax/getPhoneByCountry/' + pays + '.json'));
         }
         getNumber('fr');
     </script>

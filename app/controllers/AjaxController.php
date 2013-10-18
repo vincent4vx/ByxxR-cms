@@ -1,14 +1,22 @@
 <?php
 class AjaxController extends Controller{
     public function validateformAction($name){
+        if($this->output->getExt() !== '.json'){
+            return $this->output->error_404();
+        }
+        
         $name = str_replace(array('.', '/'), '', $name);
         $form =& $this->loader->loadForm($name);
-        exit(json_encode($form->validate()));
+        echo json_encode($form->validate());
     }
 
     public function getChatMsgAction(){
+        if($this->output->getExt() !== '.json'){
+            return $this->output->error_404();
+        }
+        
         $return = $this->model('chat')->load();
-        exit(json_encode($return));
+        echo json_encode($return);
     }
 
     public function postChatMsgAction(){
@@ -33,6 +41,9 @@ class AjaxController extends Controller{
     }
 
     public function getPhoneByCountryAction($country){
+        if($this->output->getExt() !== '.json'){
+            return $this->output->error_404();
+        }
         if(strlen($country) !== 2)
             exit('erreur...');
         $url = 'http://script.starpass.fr/numero_pays_light.php?pays='.$country.'&id_document='.$this->config['points']['idd'].'&type=';
@@ -47,10 +58,14 @@ class AjaxController extends Controller{
             $this->cache->set('starpass.'.$country, $data, 3600*24);
         }
 
-        exit($data);
+        echo $data;
     }
     
     public function getPersosListAction(){
-        exit(json_encode($this->model('character')->getAll()));
+        if($this->output->getExt() !== '.json'){
+            return $this->output->error_404();
+        }
+        
+        echo json_encode($this->model('character')->getAll());
     }
 }

@@ -20,7 +20,7 @@ CharLadder.prototype.displayRow = function(pos, row) {
 
 CharLadder.prototype.construct = function(){
     this.__recordsLoader(
-            Url.generate('ajax/getPersosList'),
+            Url.generate('ajax/getPersosList.json'),
             function(instance){
                 instance.display('xp', false, 0, 20);
             },

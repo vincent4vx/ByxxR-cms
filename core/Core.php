@@ -61,6 +61,9 @@ class Core
     
     public function benchmarks()
     {
+        if($this->loader->get('Router')->ext !== '.html'){
+            return;
+        }
 	self::$benchmarks['Total execution time']=number_format(number_format((microtime(true)-START_TIME)*1000, 4), 1).'ms';
 	self::$benchmarks['Total memory use']=number_format(memory_get_usage() / 1024).' Ko';
         self::$benchmarks['Queries']=Database::$num_req;

@@ -8,7 +8,7 @@ var formManager = {
         $('#' + elemId + 'Error').html(Assets.img("devtool/ok.png", "Champ valide !"));
     },
     validateForm: function(name, form){
-        var uri = Url.generate('ajax/validateform/' + name);
+        var uri = Url.generate('ajax/validateform/' + name + '.json');
         var vars = '';
         
         $('input').each(function(){
