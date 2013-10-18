@@ -21,6 +21,8 @@ class Output {
      * @var Core
      */
     protected $_instance;
+    
+    private $headers = array();
 
     public function __construct() {
         $this->_instance = & Core::get_instance();
@@ -86,10 +88,15 @@ class Output {
     }
 
     public function display() {
-        
-        header('Content-Type: '.Mimes::ext2mime($this->getExt()).'; charset=utf-8');
-        header('HTTP/1.1 200');
-        
+        if ($this->headers === array()) {
+            header('Content-Type: ' . Mimes::ext2mime($this->getExt()) . '; charset=utf-8');
+            header('HTTP/1.1 200');
+        }else{
+            array_walk($this->headers, function($h){
+                header($h, true);
+            });
+        }
+
         $this->contents = ob_get_clean();
         if (empty($this->contents))
             return;
@@ -102,6 +109,7 @@ class Output {
                 return require $file;
         }
         echo $this->contents;
+        flush();
     }
 
     public function startCache($id) {
@@ -133,6 +141,10 @@ class Output {
         }
 
         return $this->ext;
+    }
+    
+    public function addHeader($header){
+        $this->headers[] = $header;
     }
 
 }

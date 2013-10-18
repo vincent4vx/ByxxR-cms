@@ -1,7 +1,7 @@
 <?php
 class EmailInput extends AbstractInput{
     protected function defaultPattern() {
-        return '[a-zA-A0-9\._-]+@[a-zA-A0-9\._-]+\.[a-zA-Z]{2,4}';
+        return '^[a-zA-A0-9\._-]+@[a-zA-A0-9\._-]+\.[a-zA-Z]{2,4}$';
     }
 
     public function __toString() {

@@ -61,7 +61,7 @@ class Core
     
     public function benchmarks()
     {
-        if($this->loader->get('Router')->ext !== '.html'){
+        if($this->loader->get('Router')->ext !== '.html' || headers_sent()){
             return;
         }
 	self::$benchmarks['Total execution time']=number_format(number_format((microtime(true)-START_TIME)*1000, 4), 1).'ms';

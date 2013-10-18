@@ -47,7 +47,8 @@ class Url
             $url = self::genUrl($route);
 
         if(!headers_sent() && $time===0){
-            header('location: '.$url);
+            Core::get_instance()->loader->get('Output')->addHeader('location: '.$url);
+            Core::get_instance()->loader->get('Output')->addHeader('HTTP/1.1 303');
             return;
         }
 
