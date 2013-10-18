@@ -12,7 +12,7 @@ class Assets
         
         if(Core::conf('use_localstorage')){
             $attributes['data-url'] = $uri;
-            $attributes['src'] = '#';
+            $attributes['src'] = Core::conf('root').'public/images/void';
         }else{
             $attributes['src'] = $uri;
         }

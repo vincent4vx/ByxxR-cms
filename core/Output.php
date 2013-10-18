@@ -88,6 +88,7 @@ class Output {
     public function display() {
         
         header('Content-Type: '.Mimes::ext2mime($this->getExt()).'; charset=utf-8');
+        header('HTTP/1.1 200');
         
         $this->contents = ob_get_clean();
         if (empty($this->contents))

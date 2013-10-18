@@ -65,7 +65,15 @@ function preload() {
         'heads/xel_f.png',
         'heads/xel_m.png',
         'config.png',
-        'download.png'
+        'download.png',
+        'devtool/zoom.png',
+        'devtool/cadeau.png',
+        'devtool/close.png',
+        'devtool/ok.png',
+        'devtool/error.png',
+        'devtool/user.png',
+        'devtool/money.png',
+        'emoticons/smile.png'
     ];
 
     $(preload).each(function(index, value) {
