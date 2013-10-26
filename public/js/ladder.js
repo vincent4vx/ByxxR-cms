@@ -38,6 +38,15 @@ CharLadder.prototype.construct = function(){
 
 var ladder = new CharLadder();
 
+var pagi = new Pagination();
+
+pagi.nb_pages = Math.ceil(ladder.size() / 20);
+pagi.registerCallback(function(page){
+   ladder.display('xp', false, (page - 1) * 20, 20);
+});
+
+pagi.display();
+
 
 
 

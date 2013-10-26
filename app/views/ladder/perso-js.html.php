@@ -18,4 +18,8 @@
     </tbody>
 </table>
 
+<nav id="pagination">
+    
+</nav>
+
 <?php echo Assets::js('ladder')?>

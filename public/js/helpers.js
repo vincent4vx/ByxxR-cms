@@ -237,7 +237,82 @@ function RecordsHandler() {
         }
 
     };
+    
+    this.size = function(){
+        return this.records.length;;
+    }
 
     this.construct();
+};
+
+
+function Pagination(){
+    this.cur_page = 1;
+    this.nb_pages = 1;
+    this.nb_links = 5;
+    this.selector = '#pagination';
+    var callback = function(page){
+        alert('Page = ' + page);
+    };
+    
+    this.registerCallback = function(func){
+        callback = func;
+    };
+    
+    this.display = function(){
+        if(this.nb_pages < 2){
+            return;
+        }
+        
+        $elem = $(this.selector);
+        $elem.html('');
+        
+        if(this.cur_page > 2){
+            $elem.append('<a href="#" data-page="1">&lt;&lt;</a>');
+        }
+        
+        if(this.cur_page > 1){
+            $elem.append('<a href="#" data-page="' + (this.cur_page - 1) + '">&lt;</a>');
+        }
+        
+        var page = this.cur_page - Math.floor(this.nb_links / 2) - 1;
+        
+        if(page < 0){
+            page = 0;
+        }
+        
+        var last = page + Math.ceil(this.nb_links / 2) + 2;
+        
+        if(last > this.nb_pages){
+            last = this.nb_pages;
+        }
+        
+        while(++page <= last){
+            if(page === this.cur_page)
+                $elem.append('<span class="current">' + page + '</span>');
+            else
+                $elem.append('<a href="#" data-page="' + page + '">' + page + '</a>');
+        }
+        
+        if(this.cur_page < this.nb_pages){
+            $elem.append('<a href="#" data-page="' + (this.cur_page + 1) + '">&gt;</a>');
+        }
+        
+        if(this.cur_page < this.nb_pages - 1){
+            $elem.append('<a href="#" data-page="' + this.nb_pages + '">&gt;&gt;</a>');
+        }
+        
+        prepareClick();
+    };
+    
+    var instance = this;
+    
+    var prepareClick = function(){
+        $(instance.selector).children('a').click(function(){
+            var page = $(this).data('page');
+            instance.cur_page = page;
+            callback(page);
+            instance.display();
+        });
+    };
 }
-;

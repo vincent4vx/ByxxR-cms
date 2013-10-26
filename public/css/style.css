@@ -270,6 +270,7 @@ input:hover, select:hover{
 
 #pagination{
     text-align: center;
+    margin-top: 10px;
 }
 
 #pagination *{

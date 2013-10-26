@@ -66,6 +66,9 @@ class AjaxController extends Controller{
             return $this->output->error_404();
         }
         
-        echo json_encode($this->model('character')->getAll());
+        if($this->output->startCache('persoslist.json')){
+            echo json_encode($this->model('character')->getAll());
+            $this->output->endCache(600);
+        }
     }
 }
