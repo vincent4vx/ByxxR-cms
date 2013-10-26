@@ -11,7 +11,8 @@ define('BASE', __DIR__.'/');
 define('CORE', BASE.'core/');
 define('APP', BASE.'app/');
 define('EXT', '.php');
-define('VERSION', '2.0a');
+define('REV', 190);
+define('VERSION', '2.0a (r'.REV.')');
 define('DEBUG', true);
 define('START_TIME', microtime(true));
 
