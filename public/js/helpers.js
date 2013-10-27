@@ -328,4 +328,9 @@ function Pagination(){
             instance.display();
         });
     };
+    
+    this.reset = function(){
+        this.cur_page = 1;
+        this.display();
+    };
 }

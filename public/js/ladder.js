@@ -27,13 +27,8 @@ CharLadder.prototype.construct = function(){
             },
             600
     );
-        
-    var _i = this;
     
-    $(document).on('click', 'a[data-column]', function(){
-        $a = $(this);
-        _i.display($a.data('column'), $a.data('asc'), 0, PER_PAGE);
-    });
+    $(document).on('click', 'a[data-column]', onHeaderClick);
 };
 
 
@@ -47,6 +42,12 @@ pagi.registerCallback(function(page){
 });
 
 pagi.display();
+
+function onHeaderClick(){
+    $a = $(this);
+    ladder.display($a.data('column'), $a.data('asc'), 0, PER_PAGE);
+    pagi.reset();
+}
 
 
 
