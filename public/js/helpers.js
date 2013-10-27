@@ -182,6 +182,12 @@ function RecordsHandler() {
      */
     var records = new Array();
     /**
+     * Enresgitrements triés
+     * @type Array
+     * @private
+     */
+    var ordered_records = new Array();
+    /**
      * Chargement des enregistrements
      * @param {string} JSON_uri l'url où on peut load les records (en JSON)
      * @param {callback} recordsLoaded Callback appelé après que les records soient chargées
@@ -219,7 +225,14 @@ function RecordsHandler() {
     this.display = function(order_by, asc, start, length) {
         //$('#ladder').html('');
         this.clear();
-        var list = ArrayUtils.orderRows(this.records, order_by, asc);
+        
+        var list;
+        if(order_by){
+            list = ArrayUtils.orderRows(this.records, order_by, asc);
+            ordered_records = list;
+        }else{
+            list = ordered_records;
+        }
         var end;
 
         if (!length) {

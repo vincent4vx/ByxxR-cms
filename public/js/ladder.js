@@ -1,3 +1,4 @@
+var PER_PAGE = 20;
 var CharLadder = RecordsHandler;
 
 CharLadder.prototype.clear = function() {
@@ -22,7 +23,7 @@ CharLadder.prototype.construct = function(){
     this.__recordsLoader(
             Url.generate('ajax/getPersosList.json'),
             function(instance){
-                instance.display('xp', false, 0, 20);
+                instance.display('xp', false, 0, PER_PAGE);
             },
             600
     );
@@ -31,7 +32,7 @@ CharLadder.prototype.construct = function(){
     
     $(document).on('click', 'a[data-column]', function(){
         $a = $(this);
-        _i.display($a.data('column'), $a.data('asc'), 0, 20);
+        _i.display($a.data('column'), $a.data('asc'), 0, PER_PAGE);
     });
 };
 
@@ -40,9 +41,9 @@ var ladder = new CharLadder();
 
 var pagi = new Pagination();
 
-pagi.nb_pages = Math.ceil(ladder.size() / 20);
+pagi.nb_pages = Math.ceil(ladder.size() / PER_PAGE);
 pagi.registerCallback(function(page){
-   ladder.display('xp', false, (page - 1) * 20, 20);
+   ladder.display(false, false, (page - 1) * PER_PAGE, PER_PAGE);
 });
 
 pagi.display();
